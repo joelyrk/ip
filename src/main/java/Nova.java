@@ -54,6 +54,21 @@ public class Nova {
                 } catch (NumberFormatException e) {
                     System.out.println(" Please enter a valid task number after mark.");
                 }
+            } else if (command.startsWith("unmark ")) {
+                try {
+                    int taskNumber = Integer.parseInt(command.substring(7).trim());
+                    int taskIndex = taskNumber - 1;
+
+                    if (taskIndex < 0 || taskIndex >= taskCount) {
+                        System.out.println(" Please enter the number of a task in your list.");
+                    } else {
+                        isDone[taskIndex] = false;
+                        System.out.println(" OK, I've marked this task as not done yet:");
+                        System.out.println("   [ ] " + tasks[taskIndex]);
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println(" Please enter a valid task number after unmark.");
+                }
             } else {
                 tasks[taskCount] = command;
                 taskCount++;
