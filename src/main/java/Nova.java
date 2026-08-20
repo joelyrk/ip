@@ -37,6 +37,30 @@ public class Nova {
                 for (int i = 0; i < taskCount; i++) {
                     System.out.println(" " + (i + 1) + "." + tasks[i]);
                 }
+            } else if (command.startsWith("todo ")) {
+                Task task = new Todo(command.substring(5).trim());
+                tasks[taskCount] = task;
+                taskCount++;
+                printTaskAdded(task, taskCount);
+            } else if (command.startsWith("deadline ") && command.contains(" /by ")) {
+                int bySeparator = command.indexOf(" /by ");
+                String description = command.substring(9, bySeparator).trim();
+                String by = command.substring(bySeparator + 5).trim();
+                Task task = new Deadline(description, by);
+                tasks[taskCount] = task;
+                taskCount++;
+                printTaskAdded(task, taskCount);
+            } else if (command.startsWith("event ")
+                    && command.contains(" /from ") && command.contains(" /to ")) {
+                int fromSeparator = command.indexOf(" /from ");
+                int toSeparator = command.indexOf(" /to ", fromSeparator + 7);
+                String description = command.substring(6, fromSeparator).trim();
+                String from = command.substring(fromSeparator + 7, toSeparator).trim();
+                String to = command.substring(toSeparator + 5).trim();
+                Task task = new Event(description, from, to);
+                tasks[taskCount] = task;
+                taskCount++;
+                printTaskAdded(task, taskCount);
             } else if (command.startsWith("mark ")) {
                 try {
                     int taskNumber = Integer.parseInt(command.substring(5).trim());
@@ -68,11 +92,21 @@ public class Nova {
                     System.out.println(" Please enter a valid task number after unmark.");
                 }
             } else {
-                tasks[taskCount] = new Task(command);
-                taskCount++;
-                System.out.println(" added: " + command);
+                System.out.println(" Please enter a todo, deadline, or event command.");
             }
             System.out.println(separator);
         }
+    }
+
+    /**
+     * Prints the confirmation shown after a task is added.
+     *
+     * @param task newly added task
+     * @param taskCount total number of tasks after the addition
+     */
+    private static void printTaskAdded(Task task, int taskCount) {
+        System.out.println(" Got it. I've added this task:");
+        System.out.println("   " + task);
+        System.out.println(" Now you have " + taskCount + " tasks in the list.");
     }
 }

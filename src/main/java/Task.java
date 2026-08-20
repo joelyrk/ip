@@ -1,7 +1,7 @@
 /**
  * Represents a task and whether it has been completed.
  */
-public class Task {
+public abstract class Task {
     protected String description;
     protected boolean isDone;
 
@@ -39,12 +39,19 @@ public class Task {
     }
 
     /**
+     * Returns the letter used to identify this task's type.
+     *
+     * @return the task type icon
+     */
+    protected abstract String getTypeIcon();
+
+    /**
      * Formats this task with its completion status and description.
      *
      * @return the display form of this task
      */
     @Override
     public String toString() {
-        return "[" + getStatusIcon() + "] " + description;
+        return "[" + getTypeIcon() + "][" + getStatusIcon() + "] " + description;
     }
 }
