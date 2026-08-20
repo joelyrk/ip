@@ -23,7 +23,7 @@ public class Nova {
         int taskCount = 0;
 
         while (scanner.hasNextLine()) {
-            String command = scanner.nextLine();
+            String command = scanner.nextLine().trim();
             System.out.println(separator);
 
             if (command.equals("bye")) {
@@ -32,69 +32,210 @@ public class Nova {
                 break;
             }
 
-            if (command.equals("list")) {
-                System.out.println(" Here are the tasks in your list:");
-                for (int i = 0; i < taskCount; i++) {
-                    System.out.println(" " + (i + 1) + "." + tasks[i]);
-                }
-            } else if (command.startsWith("todo ")) {
-                Task task = new Todo(command.substring(5).trim());
-                tasks[taskCount] = task;
-                taskCount++;
-                printTaskAdded(task, taskCount);
-            } else if (command.startsWith("deadline ") && command.contains(" /by ")) {
-                int bySeparator = command.indexOf(" /by ");
-                String description = command.substring(9, bySeparator).trim();
-                String by = command.substring(bySeparator + 5).trim();
-                Task task = new Deadline(description, by);
-                tasks[taskCount] = task;
-                taskCount++;
-                printTaskAdded(task, taskCount);
-            } else if (command.startsWith("event ")
-                    && command.contains(" /from ") && command.contains(" /to ")) {
-                int fromSeparator = command.indexOf(" /from ");
-                int toSeparator = command.indexOf(" /to ", fromSeparator + 7);
-                String description = command.substring(6, fromSeparator).trim();
-                String from = command.substring(fromSeparator + 7, toSeparator).trim();
-                String to = command.substring(toSeparator + 5).trim();
-                Task task = new Event(description, from, to);
-                tasks[taskCount] = task;
-                taskCount++;
-                printTaskAdded(task, taskCount);
-            } else if (command.startsWith("mark ")) {
-                try {
-                    int taskNumber = Integer.parseInt(command.substring(5).trim());
-                    int taskIndex = taskNumber - 1;
-
-                    if (taskIndex < 0 || taskIndex >= taskCount) {
-                        System.out.println(" Please enter the number of a task in your list.");
-                    } else {
-                        tasks[taskIndex].markAsDone();
-                        System.out.println(" Nice! I've marked this task as done:");
-                        System.out.println("   " + tasks[taskIndex]);
+            try {
+                if (command.isEmpty()) {
+                    throw new NovaException("You entered a blank command. Try todo, deadline, event, list, mark, "
+                            + "unmark, or bye.");
+                } else if (command.equals("list")) {
+                    System.out.println(" Here are the tasks in your list:");
+                    for (int i = 0; i < taskCount; i++) {
+                        System.out.println(" " + (i + 1) + "." + tasks[i]);
                     }
-                } catch (NumberFormatException e) {
-                    System.out.println(" Please enter a valid task number after mark.");
+                } else if (command.equals("todo") || command.startsWith("todo ")) {
+                    ensureTaskCanBeAdded(taskCount, tasks.length);
+                    Task task = parseTodo(command);
+                    tasks[taskCount] = task;
+                    taskCount++;
+                    printTaskAdded(task, taskCount);
+                } else if (command.equals("deadline") || command.startsWith("deadline ")) {
+                    ensureTaskCanBeAdded(taskCount, tasks.length);
+                    Task task = parseDeadline(command);
+                    tasks[taskCount] = task;
+                    taskCount++;
+                    printTaskAdded(task, taskCount);
+                } else if (command.equals("event") || command.startsWith("event ")) {
+                    ensureTaskCanBeAdded(taskCount, tasks.length);
+                    Task task = parseEvent(command);
+                    tasks[taskCount] = task;
+                    taskCount++;
+                    printTaskAdded(task, taskCount);
+                } else if (command.equals("mark") || command.startsWith("mark ")) {
+                    int taskIndex = parseTaskIndex(command, "mark", taskCount);
+                    tasks[taskIndex].markAsDone();
+                    System.out.println(" Nice! I've marked this task as done:");
+                    System.out.println("   " + tasks[taskIndex]);
+                } else if (command.equals("unmark") || command.startsWith("unmark ")) {
+                    int taskIndex = parseTaskIndex(command, "unmark", taskCount);
+                    tasks[taskIndex].markAsNotDone();
+                    System.out.println(" OK, I've marked this task as not done yet:");
+                    System.out.println("   " + tasks[taskIndex]);
+                } else {
+                    throw new NovaException("I don't recognize that command. Start with todo, deadline, event, "
+                            + "list, mark, unmark, or bye.");
                 }
-            } else if (command.startsWith("unmark ")) {
-                try {
-                    int taskNumber = Integer.parseInt(command.substring(7).trim());
-                    int taskIndex = taskNumber - 1;
-
-                    if (taskIndex < 0 || taskIndex >= taskCount) {
-                        System.out.println(" Please enter the number of a task in your list.");
-                    } else {
-                        tasks[taskIndex].markAsNotDone();
-                        System.out.println(" OK, I've marked this task as not done yet:");
-                        System.out.println("   " + tasks[taskIndex]);
-                    }
-                } catch (NumberFormatException e) {
-                    System.out.println(" Please enter a valid task number after unmark.");
-                }
-            } else {
-                System.out.println(" Please enter a todo, deadline, or event command.");
+            } catch (NovaException e) {
+                System.out.println(" OOPS!!! " + e.getMessage());
             }
             System.out.println(separator);
+        }
+    }
+
+    /**
+     * Creates a todo from a command after validating its description.
+     *
+     * @param command complete todo command
+     * @return the parsed todo
+     * @throws NovaException if the description is empty
+     */
+    private static Task parseTodo(String command) throws NovaException {
+        String description = command.substring("todo".length()).trim();
+        if (description.isEmpty()) {
+            throw new NovaException("A todo needs a description. Try: todo <description>.");
+        }
+        return new Todo(description);
+    }
+
+    /**
+     * Creates a deadline from a command after validating its description and due time.
+     *
+     * @param command complete deadline command
+     * @return the parsed deadline
+     * @throws NovaException if a required deadline field is missing
+     */
+    private static Task parseDeadline(String command) throws NovaException {
+        String arguments = command.substring("deadline".length()).trim();
+        if (arguments.isEmpty()) {
+            throw new NovaException("A deadline needs a description. "
+                    + "Try: deadline <description> /by <date or time>.");
+        }
+
+        int bySeparator = findMarker(arguments, "/by");
+        if (bySeparator < 0) {
+            throw new NovaException("A deadline needs a /by date or time. "
+                    + "Try: deadline " + arguments + " /by <date or time>.");
+        }
+
+        String description = arguments.substring(0, bySeparator).trim();
+        String by = arguments.substring(bySeparator + "/by".length()).trim();
+        if (description.isEmpty()) {
+            throw new NovaException("A deadline needs a description before /by.");
+        }
+        if (by.isEmpty()) {
+            throw new NovaException("The /by field cannot be empty. Add a date or time after /by.");
+        }
+        return new Deadline(description, by);
+    }
+
+    /**
+     * Creates an event from a command after validating its description and time range.
+     *
+     * @param command complete event command
+     * @return the parsed event
+     * @throws NovaException if a required event field is missing or out of order
+     */
+    private static Task parseEvent(String command) throws NovaException {
+        String arguments = command.substring("event".length()).trim();
+        if (arguments.isEmpty()) {
+            throw new NovaException("An event needs a description and a time range. "
+                    + "Try: event <description> /from <start> /to <end>.");
+        }
+
+        int fromSeparator = findMarker(arguments, "/from");
+        int toSeparator = findMarker(arguments, "/to");
+        if (fromSeparator < 0) {
+            throw new NovaException("An event needs a /from start date or time.");
+        }
+        if (toSeparator < 0) {
+            throw new NovaException("An event needs a /to end date or time.");
+        }
+        if (toSeparator < fromSeparator) {
+            throw new NovaException("Put /from before /to. "
+                    + "Try: event <description> /from <start> /to <end>.");
+        }
+
+        String description = arguments.substring(0, fromSeparator).trim();
+        String from = arguments.substring(fromSeparator + "/from".length(), toSeparator).trim();
+        String to = arguments.substring(toSeparator + "/to".length()).trim();
+        if (description.isEmpty()) {
+            throw new NovaException("An event needs a description before /from.");
+        }
+        if (from.isEmpty()) {
+            throw new NovaException("The /from field cannot be empty. Add a start date or time after /from.");
+        }
+        if (to.isEmpty()) {
+            throw new NovaException("The /to field cannot be empty. Add an end date or time after /to.");
+        }
+        return new Event(description, from, to);
+    }
+
+    /**
+     * Converts the task number in a mark or unmark command to an array index.
+     *
+     * @param command complete mark or unmark command
+     * @param commandName command keyword used in error guidance
+     * @param taskCount current number of tasks
+     * @return zero-based index of the selected task
+     * @throws NovaException if the task number is missing, invalid, or outside the list
+     */
+    private static int parseTaskIndex(String command, String commandName, int taskCount)
+            throws NovaException {
+        String taskNumberText = command.substring(commandName.length()).trim();
+        if (taskNumberText.isEmpty()) {
+            throw new NovaException("Tell me which task to " + commandName
+                    + ". Try: " + commandName + " <task number>.");
+        }
+
+        int taskNumber;
+        try {
+            taskNumber = Integer.parseInt(taskNumberText);
+        } catch (NumberFormatException e) {
+            throw new NovaException("The task number after " + commandName
+                    + " must be a whole number, for example: " + commandName + " 1.");
+        }
+
+        if (taskCount == 0) {
+            throw new NovaException("There are no tasks to " + commandName + " yet. Add a task first.");
+        }
+        if (taskNumber < 1 || taskNumber > taskCount) {
+            throw new NovaException("Task " + taskNumber + " does not exist. Choose a number from 1 to "
+                    + taskCount + ".");
+        }
+        return taskNumber - 1;
+    }
+
+    /**
+     * Finds a command marker only when it appears as a separate token.
+     *
+     * @param text command arguments to search
+     * @param marker marker such as {@code /by}, {@code /from}, or {@code /to}
+     * @return the marker's index, or {@code -1} when it is absent
+     */
+    private static int findMarker(String text, String marker) {
+        int markerIndex = text.indexOf(marker);
+        while (markerIndex >= 0) {
+            int afterMarker = markerIndex + marker.length();
+            boolean hasLeftBoundary = markerIndex == 0 || Character.isWhitespace(text.charAt(markerIndex - 1));
+            boolean hasRightBoundary = afterMarker == text.length()
+                    || Character.isWhitespace(text.charAt(afterMarker));
+            if (hasLeftBoundary && hasRightBoundary) {
+                return markerIndex;
+            }
+            markerIndex = text.indexOf(marker, markerIndex + 1);
+        }
+        return -1;
+    }
+
+    /**
+     * Prevents an addition from overflowing Nova's fixed-size task array.
+     *
+     * @param taskCount current number of tasks
+     * @param capacity maximum number of tasks
+     * @throws NovaException if the task list is full
+     */
+    private static void ensureTaskCanBeAdded(int taskCount, int capacity) throws NovaException {
+        if (taskCount >= capacity) {
+            throw new NovaException("The task list is full at " + capacity
+                    + " tasks. Marking or listing tasks still works, but no more can be added.");
         }
     }
 

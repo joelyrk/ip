@@ -166,3 +166,180 @@ ____________________________________________________________
  Bye. Hope to see you again soon!
 ____________________________________________________________
 ```
+
+## TC-04: Reject empty and unknown commands
+
+### Aim
+
+Verify that Nova uses specific exception messages for an empty todo, an unknown command, and a blank input while continuing to accept later commands.
+
+### Input
+
+```text
+todo
+blah
+
+bye
+```
+
+### Expected output
+
+```text
+____________________________________________________________
+ _   _                 
+| \ | | _____   ____ _ 
+|  \| |/ _ \ \ / / _` |
+| |\  | (_) \ V / (_| |
+|_| \_|\___/ \_/ \__,_|
+Hello! I'm Nova.
+What can I do for you?
+____________________________________________________________
+____________________________________________________________
+ OOPS!!! A todo needs a description. Try: todo <description>.
+____________________________________________________________
+____________________________________________________________
+ OOPS!!! I don't recognize that command. Start with todo, deadline, event, list, mark, unmark, or bye.
+____________________________________________________________
+____________________________________________________________
+ OOPS!!! You entered a blank command. Try todo, deadline, event, list, mark, unmark, or bye.
+____________________________________________________________
+____________________________________________________________
+ Bye. Hope to see you again soon!
+____________________________________________________________
+```
+
+## TC-05: Explain malformed deadlines and events
+
+### Aim
+
+Verify that every missing or misplaced deadline and event field produces guidance specific to that field.
+
+### Input
+
+```text
+deadline
+deadline return book
+deadline /by Sunday
+deadline return book /by
+event
+event meeting /to 4pm
+event meeting /from 2pm
+event meeting /to 4pm /from 2pm
+event /from 2pm /to 4pm
+event meeting /from /to 4pm
+event meeting /from 2pm /to
+bye
+```
+
+### Expected output
+
+```text
+____________________________________________________________
+ _   _                 
+| \ | | _____   ____ _ 
+|  \| |/ _ \ \ / / _` |
+| |\  | (_) \ V / (_| |
+|_| \_|\___/ \_/ \__,_|
+Hello! I'm Nova.
+What can I do for you?
+____________________________________________________________
+____________________________________________________________
+ OOPS!!! A deadline needs a description. Try: deadline <description> /by <date or time>.
+____________________________________________________________
+____________________________________________________________
+ OOPS!!! A deadline needs a /by date or time. Try: deadline return book /by <date or time>.
+____________________________________________________________
+____________________________________________________________
+ OOPS!!! A deadline needs a description before /by.
+____________________________________________________________
+____________________________________________________________
+ OOPS!!! The /by field cannot be empty. Add a date or time after /by.
+____________________________________________________________
+____________________________________________________________
+ OOPS!!! An event needs a description and a time range. Try: event <description> /from <start> /to <end>.
+____________________________________________________________
+____________________________________________________________
+ OOPS!!! An event needs a /from start date or time.
+____________________________________________________________
+____________________________________________________________
+ OOPS!!! An event needs a /to end date or time.
+____________________________________________________________
+____________________________________________________________
+ OOPS!!! Put /from before /to. Try: event <description> /from <start> /to <end>.
+____________________________________________________________
+____________________________________________________________
+ OOPS!!! An event needs a description before /from.
+____________________________________________________________
+____________________________________________________________
+ OOPS!!! The /from field cannot be empty. Add a start date or time after /from.
+____________________________________________________________
+____________________________________________________________
+ OOPS!!! The /to field cannot be empty. Add an end date or time after /to.
+____________________________________________________________
+____________________________________________________________
+ Bye. Hope to see you again soon!
+____________________________________________________________
+```
+
+## TC-06: Explain invalid mark and unmark commands
+
+### Aim
+
+Verify that missing, non-numeric, empty-list, and out-of-range task numbers each produce actionable guidance.
+
+### Input
+
+```text
+mark
+unmark
+mark first
+unmark 1
+todo read book
+mark 0
+mark 2
+unmark two
+bye
+```
+
+### Expected output
+
+```text
+____________________________________________________________
+ _   _                 
+| \ | | _____   ____ _ 
+|  \| |/ _ \ \ / / _` |
+| |\  | (_) \ V / (_| |
+|_| \_|\___/ \_/ \__,_|
+Hello! I'm Nova.
+What can I do for you?
+____________________________________________________________
+____________________________________________________________
+ OOPS!!! Tell me which task to mark. Try: mark <task number>.
+____________________________________________________________
+____________________________________________________________
+ OOPS!!! Tell me which task to unmark. Try: unmark <task number>.
+____________________________________________________________
+____________________________________________________________
+ OOPS!!! The task number after mark must be a whole number, for example: mark 1.
+____________________________________________________________
+____________________________________________________________
+ OOPS!!! There are no tasks to unmark yet. Add a task first.
+____________________________________________________________
+____________________________________________________________
+ Got it. I've added this task:
+   [T][ ] read book
+ Now you have 1 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+ OOPS!!! Task 0 does not exist. Choose a number from 1 to 1.
+____________________________________________________________
+____________________________________________________________
+ OOPS!!! Task 2 does not exist. Choose a number from 1 to 1.
+____________________________________________________________
+____________________________________________________________
+ OOPS!!! The task number after unmark must be a whole number, for example: unmark 1.
+____________________________________________________________
+____________________________________________________________
+ Bye. Hope to see you again soon!
+____________________________________________________________
+```
