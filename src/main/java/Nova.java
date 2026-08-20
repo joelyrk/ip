@@ -26,57 +26,74 @@ public class Nova {
             String command = scanner.nextLine().trim();
             System.out.println(separator);
 
-            if (command.equals("bye")) {
-                System.out.println(" Bye. Hope to see you again soon!");
-                System.out.println(separator);
-                break;
-            }
-
             try {
-                if (command.isEmpty()) {
-                    throw new NovaException("You entered a blank command. Try todo, deadline, event, list, mark, "
-                            + "unmark, delete, or bye.");
-                } else if (command.equals("list")) {
-                    System.out.println(" Here are the tasks in your list:");
-                    for (int i = 0; i < tasks.size(); i++) {
-                        System.out.println(" " + (i + 1) + "." + tasks.get(i));
-                    }
-                } else if (command.equals("todo") || command.startsWith("todo ")) {
-                    Task task = parseTodo(command);
-                    tasks.add(task);
-                    printTaskAdded(task, tasks.size());
-                } else if (command.equals("deadline") || command.startsWith("deadline ")) {
-                    Task task = parseDeadline(command);
-                    tasks.add(task);
-                    printTaskAdded(task, tasks.size());
-                } else if (command.equals("event") || command.startsWith("event ")) {
-                    Task task = parseEvent(command);
-                    tasks.add(task);
-                    printTaskAdded(task, tasks.size());
-                } else if (command.equals("mark") || command.startsWith("mark ")) {
-                    int taskIndex = parseTaskIndex(command, "mark", tasks.size());
-                    tasks.get(taskIndex).markAsDone();
+                CommandType commandType = CommandType.from(command);
+                switch (commandType) {
+                case LIST:
+                    printTaskList(tasks);
+                    break;
+                case TODO:
+                    addTask(parseTodo(command), tasks);
+                    break;
+                case DEADLINE:
+                    addTask(parseDeadline(command), tasks);
+                    break;
+                case EVENT:
+                    addTask(parseEvent(command), tasks);
+                    break;
+                case MARK:
+                    int markIndex = parseTaskIndex(command, "mark", tasks.size());
+                    tasks.get(markIndex).markAsDone();
                     System.out.println(" Nice! I've marked this task as done:");
-                    System.out.println("   " + tasks.get(taskIndex));
-                } else if (command.equals("unmark") || command.startsWith("unmark ")) {
-                    int taskIndex = parseTaskIndex(command, "unmark", tasks.size());
-                    tasks.get(taskIndex).markAsNotDone();
+                    System.out.println("   " + tasks.get(markIndex));
+                    break;
+                case UNMARK:
+                    int unmarkIndex = parseTaskIndex(command, "unmark", tasks.size());
+                    tasks.get(unmarkIndex).markAsNotDone();
                     System.out.println(" OK, I've marked this task as not done yet:");
-                    System.out.println("   " + tasks.get(taskIndex));
-                } else if (command.equals("delete") || command.startsWith("delete ")) {
-                    int taskIndex = parseTaskIndex(command, "delete", tasks.size());
-                    Task removedTask = tasks.remove(taskIndex);
+                    System.out.println("   " + tasks.get(unmarkIndex));
+                    break;
+                case DELETE:
+                    int deleteIndex = parseTaskIndex(command, "delete", tasks.size());
+                    Task removedTask = tasks.remove(deleteIndex);
                     System.out.println(" Noted. I've removed this task:");
                     System.out.println("   " + removedTask);
                     System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
-                } else {
-                    throw new NovaException("I don't recognize that command. Start with todo, deadline, event, "
-                            + "list, mark, unmark, delete, or bye.");
+                    break;
+                case BYE:
+                    System.out.println(" Bye. Hope to see you again soon!");
+                    System.out.println(separator);
+                    return;
+                default:
+                    throw new IllegalStateException("Unhandled command type: " + commandType);
                 }
             } catch (NovaException e) {
                 System.out.println(" OOPS!!! " + e.getMessage());
             }
             System.out.println(separator);
+        }
+    }
+
+    /**
+     * Adds a task and prints the standard confirmation.
+     *
+     * @param task task to add
+     * @param tasks list that stores Nova's tasks
+     */
+    private static void addTask(Task task, ArrayList<Task> tasks) {
+        tasks.add(task);
+        printTaskAdded(task, tasks.size());
+    }
+
+    /**
+     * Prints all tasks in their current list order.
+     *
+     * @param tasks tasks to display
+     */
+    private static void printTaskList(ArrayList<Task> tasks) {
+        System.out.println(" Here are the tasks in your list:");
+        for (int i = 0; i < tasks.size(); i++) {
+            System.out.println(" " + (i + 1) + "." + tasks.get(i));
         }
     }
 
