@@ -198,10 +198,158 @@ ____________________________________________________________
  OOPS!!! A todo needs a description. Try: todo <description>.
 ____________________________________________________________
 ____________________________________________________________
- OOPS!!! I don't recognize that command. Start with todo, deadline, event, list, mark, unmark, or bye.
+ OOPS!!! I don't recognize that command. Start with todo, deadline, event, list, mark, unmark, delete, or bye.
 ____________________________________________________________
 ____________________________________________________________
- OOPS!!! You entered a blank command. Try todo, deadline, event, list, mark, unmark, or bye.
+ OOPS!!! You entered a blank command. Try todo, deadline, event, list, mark, unmark, delete, or bye.
+____________________________________________________________
+____________________________________________________________
+ Bye. Hope to see you again soon!
+____________________________________________________________
+```
+
+## TC-07: Delete a task and renumber the list
+
+### Aim
+
+Verify that `delete` removes the selected task, reports it, updates the task count, and shifts later task numbers down.
+
+### Input
+
+```text
+todo read book
+deadline return book /by June 6th
+event project meeting /from Aug 6th 2pm /to 4pm
+todo join sports club
+todo borrow book
+mark 1
+mark 2
+mark 4
+delete 3
+list
+bye
+```
+
+### Expected output
+
+```text
+____________________________________________________________
+ _   _                 
+| \ | | _____   ____ _ 
+|  \| |/ _ \ \ / / _` |
+| |\  | (_) \ V / (_| |
+|_| \_|\___/ \_/ \__,_|
+Hello! I'm Nova.
+What can I do for you?
+____________________________________________________________
+____________________________________________________________
+ Got it. I've added this task:
+   [T][ ] read book
+ Now you have 1 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+ Got it. I've added this task:
+   [D][ ] return book (by: June 6th)
+ Now you have 2 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+ Got it. I've added this task:
+   [E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
+ Now you have 3 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+ Got it. I've added this task:
+   [T][ ] join sports club
+ Now you have 4 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+ Got it. I've added this task:
+   [T][ ] borrow book
+ Now you have 5 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+ Nice! I've marked this task as done:
+   [T][X] read book
+____________________________________________________________
+____________________________________________________________
+ Nice! I've marked this task as done:
+   [D][X] return book (by: June 6th)
+____________________________________________________________
+____________________________________________________________
+ Nice! I've marked this task as done:
+   [T][X] join sports club
+____________________________________________________________
+____________________________________________________________
+ Noted. I've removed this task:
+   [E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
+ Now you have 4 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+ Here are the tasks in your list:
+ 1.[T][X] read book
+ 2.[D][X] return book (by: June 6th)
+ 3.[T][X] join sports club
+ 4.[T][ ] borrow book
+____________________________________________________________
+____________________________________________________________
+ Bye. Hope to see you again soon!
+____________________________________________________________
+```
+
+## TC-08: Explain invalid delete commands
+
+### Aim
+
+Verify that missing, non-numeric, empty-list, and out-of-range delete task numbers produce actionable guidance without changing the list.
+
+### Input
+
+```text
+delete
+delete first
+delete 1
+todo read book
+delete 0
+delete 2
+list
+bye
+```
+
+### Expected output
+
+```text
+____________________________________________________________
+ _   _                 
+| \ | | _____   ____ _ 
+|  \| |/ _ \ \ / / _` |
+| |\  | (_) \ V / (_| |
+|_| \_|\___/ \_/ \__,_|
+Hello! I'm Nova.
+What can I do for you?
+____________________________________________________________
+____________________________________________________________
+ OOPS!!! Tell me which task to delete. Try: delete <task number>.
+____________________________________________________________
+____________________________________________________________
+ OOPS!!! The task number after delete must be a whole number, for example: delete 1.
+____________________________________________________________
+____________________________________________________________
+ OOPS!!! There are no tasks to delete yet. Add a task first.
+____________________________________________________________
+____________________________________________________________
+ Got it. I've added this task:
+   [T][ ] read book
+ Now you have 1 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+ OOPS!!! Task 0 does not exist. Choose a number from 1 to 1.
+____________________________________________________________
+____________________________________________________________
+ OOPS!!! Task 2 does not exist. Choose a number from 1 to 1.
+____________________________________________________________
+____________________________________________________________
+ Here are the tasks in your list:
+ 1.[T][ ] read book
 ____________________________________________________________
 ____________________________________________________________
  Bye. Hope to see you again soon!
