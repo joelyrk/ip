@@ -1,3 +1,4 @@
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -5,6 +6,8 @@ import java.util.Scanner;
  * Starts the Nova chatbot application.
  */
 public class Nova {
+    private static final Storage STORAGE = new Storage(Path.of("data", "nova.txt"));
+
     public static void main(String[] args) {
         String separator = "_".repeat(60);
         String banner = " _   _                 \n"
@@ -20,7 +23,14 @@ public class Nova {
         System.out.println(separator);
 
         Scanner scanner = new Scanner(System.in);
-        ArrayList<Task> tasks = new ArrayList<>();
+        ArrayList<Task> tasks;
+        try {
+            tasks = new ArrayList<>(STORAGE.load());
+        } catch (NovaException e) {
+            tasks = new ArrayList<>();
+            System.out.println(" OOPS!!! " + e.getMessage());
+            System.out.println(separator);
+        }
 
         while (scanner.hasNextLine()) {
             String command = scanner.nextLine().trim();
@@ -43,19 +53,19 @@ public class Nova {
                     break;
                 case MARK:
                     int markIndex = parseTaskIndex(command, "mark", tasks.size());
-                    tasks.get(markIndex).markAsDone();
+                    updateTaskStatus(tasks.get(markIndex), true, tasks);
                     System.out.println(" Nice! I've marked this task as done:");
                     System.out.println("   " + tasks.get(markIndex));
                     break;
                 case UNMARK:
                     int unmarkIndex = parseTaskIndex(command, "unmark", tasks.size());
-                    tasks.get(unmarkIndex).markAsNotDone();
+                    updateTaskStatus(tasks.get(unmarkIndex), false, tasks);
                     System.out.println(" OK, I've marked this task as not done yet:");
                     System.out.println("   " + tasks.get(unmarkIndex));
                     break;
                 case DELETE:
                     int deleteIndex = parseTaskIndex(command, "delete", tasks.size());
-                    Task removedTask = tasks.remove(deleteIndex);
+                    Task removedTask = deleteTask(deleteIndex, tasks);
                     System.out.println(" Noted. I've removed this task:");
                     System.out.println("   " + removedTask);
                     System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
@@ -80,9 +90,63 @@ public class Nova {
      * @param task task to add
      * @param tasks list that stores Nova's tasks
      */
-    private static void addTask(Task task, ArrayList<Task> tasks) {
+    private static void addTask(Task task, ArrayList<Task> tasks) throws NovaException {
         tasks.add(task);
+        try {
+            STORAGE.save(tasks);
+        } catch (NovaException e) {
+            tasks.remove(tasks.size() - 1);
+            throw e;
+        }
         printTaskAdded(task, tasks.size());
+    }
+
+    /**
+     * Changes a task's completion state and restores it if saving fails.
+     *
+     * @param task task whose status should change
+     * @param isDone desired completion state
+     * @param tasks complete task list to save
+     * @throws NovaException if the updated list cannot be saved
+     */
+    private static void updateTaskStatus(Task task, boolean isDone, ArrayList<Task> tasks)
+            throws NovaException {
+        boolean previousStatus = task.isDone();
+        if (isDone) {
+            task.markAsDone();
+        } else {
+            task.markAsNotDone();
+        }
+
+        try {
+            STORAGE.save(tasks);
+        } catch (NovaException e) {
+            if (previousStatus) {
+                task.markAsDone();
+            } else {
+                task.markAsNotDone();
+            }
+            throw e;
+        }
+    }
+
+    /**
+     * Deletes a task and reinserts it at the same position if saving fails.
+     *
+     * @param taskIndex zero-based index of the task to delete
+     * @param tasks task list to update
+     * @return the deleted task
+     * @throws NovaException if the updated list cannot be saved
+     */
+    private static Task deleteTask(int taskIndex, ArrayList<Task> tasks) throws NovaException {
+        Task removedTask = tasks.remove(taskIndex);
+        try {
+            STORAGE.save(tasks);
+        } catch (NovaException e) {
+            tasks.add(taskIndex, removedTask);
+            throw e;
+        }
+        return removedTask;
     }
 
     /**

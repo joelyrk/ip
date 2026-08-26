@@ -21,6 +21,11 @@ public class Deadline extends Task {
     }
 
     @Override
+    public String toFileString() {
+        return super.toFileString() + " | " + escapeFileField(by);
+    }
+
+    @Override
     public String toString() {
         return super.toString() + " (by: " + by + ")";
     }

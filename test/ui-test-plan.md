@@ -491,3 +491,302 @@ ____________________________________________________________
  Bye. Hope to see you again soon!
 ____________________________________________________________
 ```
+
+## TC-09: Save the task list after every change
+
+### Aim
+
+Verify that Nova creates a missing data folder and file, then rewrites the file after adding, marking, and deleting tasks.
+
+### Input
+
+```text
+todo read book
+deadline return book /by June 6th
+mark 2
+delete 1
+bye
+```
+
+### Expected output
+
+```text
+____________________________________________________________
+ _   _                 
+| \ | | _____   ____ _ 
+|  \| |/ _ \ \ / / _` |
+| |\  | (_) \ V / (_| |
+|_| \_|\___/ \_/ \__,_|
+Hello! I'm Nova.
+What can I do for you?
+____________________________________________________________
+____________________________________________________________
+ Got it. I've added this task:
+   [T][ ] read book
+ Now you have 1 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+ Got it. I've added this task:
+   [D][ ] return book (by: June 6th)
+ Now you have 2 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+ Nice! I've marked this task as done:
+   [D][X] return book (by: June 6th)
+____________________________________________________________
+____________________________________________________________
+ Noted. I've removed this task:
+   [T][ ] read book
+ Now you have 1 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+ Bye. Hope to see you again soon!
+____________________________________________________________
+```
+
+### Expected data file
+
+```text
+D | 1 | return book | June 6th
+```
+
+## TC-10: Load saved tasks when Nova starts
+
+### Aim
+
+Verify that Nova loads saved todos, deadlines, and events in order and restores each task's completion state.
+
+### Initial data file
+
+```text
+T | 1 | read book
+D | 0 | return book | June 6th
+E | 1 | project meeting | Aug 6th 2pm | 4pm
+```
+
+### Input
+
+```text
+list
+bye
+```
+
+### Expected output
+
+```text
+____________________________________________________________
+ _   _                 
+| \ | | _____   ____ _ 
+|  \| |/ _ \ \ / / _` |
+| |\  | (_) \ V / (_| |
+|_| \_|\___/ \_/ \__,_|
+Hello! I'm Nova.
+What can I do for you?
+____________________________________________________________
+____________________________________________________________
+ Here are the tasks in your list:
+ 1.[T][X] read book
+ 2.[D][ ] return book (by: June 6th)
+ 3.[E][X] project meeting (from: Aug 6th 2pm to: 4pm)
+____________________________________________________________
+____________________________________________________________
+ Bye. Hope to see you again soon!
+____________________________________________________________
+```
+
+## TC-11: Recover from corrupted saved data
+
+### Aim
+
+Verify that an invalid completion state produces an actionable startup warning and Nova continues with an empty task list.
+
+### Initial data file
+
+```text
+T | yes | read book
+```
+
+### Input
+
+```text
+list
+bye
+```
+
+### Expected output
+
+```text
+____________________________________________________________
+ _   _                 
+| \ | | _____   ____ _ 
+|  \| |/ _ \ \ / / _` |
+| |\  | (_) \ V / (_| |
+|_| \_|\___/ \_/ \__,_|
+Hello! I'm Nova.
+What can I do for you?
+____________________________________________________________
+ OOPS!!! I couldn't load your saved tasks because line 1 is invalid: the completion state must be 0 or 1. Starting with an empty task list.
+____________________________________________________________
+____________________________________________________________
+ Here are the tasks in your list:
+____________________________________________________________
+____________________________________________________________
+ Bye. Hope to see you again soon!
+____________________________________________________________
+```
+
+## TC-12: Recover when the data file cannot be written
+
+### Aim
+
+Verify that read and write failures are explained without crashing and a failed addition is rolled back in memory.
+
+### Initial data path
+
+```text
+directory
+```
+
+### Input
+
+```text
+todo read book
+list
+bye
+```
+
+### Expected output
+
+```text
+____________________________________________________________
+ _   _                 
+| \ | | _____   ____ _ 
+|  \| |/ _ \ \ / / _` |
+| |\  | (_) \ V / (_| |
+|_| \_|\___/ \_/ \__,_|
+Hello! I'm Nova.
+What can I do for you?
+____________________________________________________________
+ OOPS!!! I couldn't read the task data file. Starting with an empty task list.
+____________________________________________________________
+____________________________________________________________
+ OOPS!!! I couldn't save the task data file. Your latest change was not kept.
+____________________________________________________________
+____________________________________________________________
+ Here are the tasks in your list:
+____________________________________________________________
+____________________________________________________________
+ Bye. Hope to see you again soon!
+____________________________________________________________
+```
+
+## TC-13: Preserve storage separator characters in task text
+
+### Aim
+
+Verify that escaped pipes and backslashes load correctly and remain escaped when the updated task list is saved again.
+
+### Initial data file
+
+```text
+D | 0 | discuss \| review \\ notes | Fri \| 5pm
+```
+
+### Input
+
+```text
+mark 1
+list
+bye
+```
+
+### Expected output
+
+```text
+____________________________________________________________
+ _   _                 
+| \ | | _____   ____ _ 
+|  \| |/ _ \ \ / / _` |
+| |\  | (_) \ V / (_| |
+|_| \_|\___/ \_/ \__,_|
+Hello! I'm Nova.
+What can I do for you?
+____________________________________________________________
+____________________________________________________________
+ Nice! I've marked this task as done:
+   [D][X] discuss | review \ notes (by: Fri | 5pm)
+____________________________________________________________
+____________________________________________________________
+ Here are the tasks in your list:
+ 1.[D][X] discuss | review \ notes (by: Fri | 5pm)
+____________________________________________________________
+____________________________________________________________
+ Bye. Hope to see you again soon!
+____________________________________________________________
+```
+
+### Expected data file
+
+```text
+D | 1 | discuss \| review \\ notes | Fri \| 5pm
+```
+
+## TC-14: Roll back every task mutation when saving fails
+
+### Aim
+
+Verify that failed mark, unmark, and delete saves restore the original in-memory task states and list order.
+
+### Initial data file
+
+```text
+T | 0 | read book
+D | 1 | return book | Sunday
+```
+
+### Initial data path
+
+```text
+read-only-directory
+```
+
+### Input
+
+```text
+mark 1
+unmark 2
+delete 1
+list
+bye
+```
+
+### Expected output
+
+```text
+____________________________________________________________
+ _   _                 
+| \ | | _____   ____ _ 
+|  \| |/ _ \ \ / / _` |
+| |\  | (_) \ V / (_| |
+|_| \_|\___/ \_/ \__,_|
+Hello! I'm Nova.
+What can I do for you?
+____________________________________________________________
+____________________________________________________________
+ OOPS!!! I couldn't save the task data file. Your latest change was not kept.
+____________________________________________________________
+____________________________________________________________
+ OOPS!!! I couldn't save the task data file. Your latest change was not kept.
+____________________________________________________________
+____________________________________________________________
+ OOPS!!! I couldn't save the task data file. Your latest change was not kept.
+____________________________________________________________
+____________________________________________________________
+ Here are the tasks in your list:
+ 1.[T][ ] read book
+ 2.[D][X] return book (by: Sunday)
+____________________________________________________________
+____________________________________________________________
+ Bye. Hope to see you again soon!
+____________________________________________________________
+```
