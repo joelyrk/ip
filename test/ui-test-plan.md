@@ -549,3 +549,47 @@ ____________________________________________________________
 ```text
 D | 1 | return book | June 6th
 ```
+
+## TC-10: Load saved tasks when Nova starts
+
+### Aim
+
+Verify that Nova loads saved todos, deadlines, and events in order and restores each task's completion state.
+
+### Initial data file
+
+```text
+T | 1 | read book
+D | 0 | return book | June 6th
+E | 1 | project meeting | Aug 6th 2pm | 4pm
+```
+
+### Input
+
+```text
+list
+bye
+```
+
+### Expected output
+
+```text
+____________________________________________________________
+ _   _                 
+| \ | | _____   ____ _ 
+|  \| |/ _ \ \ / / _` |
+| |\  | (_) \ V / (_| |
+|_| \_|\___/ \_/ \__,_|
+Hello! I'm Nova.
+What can I do for you?
+____________________________________________________________
+____________________________________________________________
+ Here are the tasks in your list:
+ 1.[T][X] read book
+ 2.[D][ ] return book (by: June 6th)
+ 3.[E][X] project meeting (from: Aug 6th 2pm to: 4pm)
+____________________________________________________________
+____________________________________________________________
+ Bye. Hope to see you again soon!
+____________________________________________________________
+```

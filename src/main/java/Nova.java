@@ -24,7 +24,7 @@ public class Nova {
         System.out.println(separator);
 
         Scanner scanner = new Scanner(System.in);
-        ArrayList<Task> tasks = new ArrayList<>();
+        ArrayList<Task> tasks = new ArrayList<>(STORAGE.load());
 
         while (scanner.hasNextLine()) {
             String command = scanner.nextLine().trim();

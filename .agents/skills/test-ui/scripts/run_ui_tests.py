@@ -15,7 +15,6 @@ import tempfile
 
 REPO_ROOT = Path(__file__).resolve().parents[4]
 DEFAULT_PLAN = REPO_ROOT / "test" / "ui-test-plan.md"
-DEFAULT_DATA_FILE = REPO_ROOT / "data" / "nova.txt"
 REQUIRED_SDKMAN_JAVA = Path.home() / ".sdkman" / "candidates" / "java" / "25.0.3.fx-zulu"
 
 
@@ -83,6 +82,12 @@ def parse_plan(plan_path: Path) -> list[dict[str, str]]:
             if lines[index] == "### Expected data file":
                 case["expected_data"], index = parse_fenced_block(
                     lines, index + 1, "Expected data file"
+                )
+                continue
+
+            if lines[index] == "### Initial data file":
+                case["initial_data"], index = parse_fenced_block(
+                    lines, index + 1, "Initial data file"
                 )
                 continue
 
@@ -168,45 +173,52 @@ def run_tests(plan_path: Path, java_home: Path) -> int:
         for case in cases:
             entered_input = case["input"]
             process_input = entered_input + ("\n" if entered_input else "")
-            result = subprocess.run(
-                [str(java_home / "bin" / "java"), "-cp", build_directory, "Nova"],
-                cwd=REPO_ROOT,
-                input=process_input,
-                capture_output=True,
-                text=True,
-                timeout=10,
-                check=False,
-            )
+            with tempfile.TemporaryDirectory(prefix="nova-ui-case-") as case_directory:
+                case_root = Path(case_directory)
+                data_file = case_root / "data" / "nova.txt"
+                if "initial_data" in case:
+                    data_file.parent.mkdir(parents=True)
+                    data_file.write_text(case["initial_data"] + "\n", encoding="utf-8")
 
-            print(f"\n=== {case['title']} ===")
-            print(f"Aim: {case['aim']}")
-            show_block("console input", entered_input)
-            show_block("console output", result.stdout.rstrip("\n"))
+                result = subprocess.run(
+                    [str(java_home / "bin" / "java"), "-cp", build_directory, "Nova"],
+                    cwd=case_root,
+                    input=process_input,
+                    capture_output=True,
+                    text=True,
+                    timeout=10,
+                    check=False,
+                )
 
-            expected = normalize_output(case["expected"])
-            actual = normalize_output(result.stdout)
-            if result.returncode != 0 or actual != expected:
-                print("RESULT: FAIL")
-                show_block("expected output", expected)
-                show_block("actual output", actual)
-                if result.stderr:
-                    show_block("runtime error", result.stderr.rstrip("\n"))
-                print("Test session terminated after the first failure.")
-                return 1
+                print(f"\n=== {case['title']} ===")
+                print(f"Aim: {case['aim']}")
+                show_block("console input", entered_input)
+                show_block("console output", result.stdout.rstrip("\n"))
 
-            if "expected_data" in case:
-                actual_data = DEFAULT_DATA_FILE.read_text(encoding="utf-8")
-                expected_data = normalize_output(case["expected_data"])
-                normalized_data = normalize_output(actual_data)
-                show_block("saved data file", normalized_data)
-                if normalized_data != expected_data:
+                expected = normalize_output(case["expected"])
+                actual = normalize_output(result.stdout)
+                if result.returncode != 0 or actual != expected:
                     print("RESULT: FAIL")
-                    show_block("expected data file", expected_data)
-                    show_block("actual data file", normalized_data)
+                    show_block("expected output", expected)
+                    show_block("actual output", actual)
+                    if result.stderr:
+                        show_block("runtime error", result.stderr.rstrip("\n"))
                     print("Test session terminated after the first failure.")
                     return 1
 
-            print("RESULT: PASS")
+                if "expected_data" in case:
+                    actual_data = data_file.read_text(encoding="utf-8")
+                    expected_data = normalize_output(case["expected_data"])
+                    normalized_data = normalize_output(actual_data)
+                    show_block("saved data file", normalized_data)
+                    if normalized_data != expected_data:
+                        print("RESULT: FAIL")
+                        show_block("expected data file", expected_data)
+                        show_block("actual data file", normalized_data)
+                        print("Test session terminated after the first failure.")
+                        return 1
+
+                print("RESULT: PASS")
 
     print(f"\nAll {len(cases)} UI test cases passed.")
     return 0
