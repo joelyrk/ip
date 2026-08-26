@@ -593,3 +593,200 @@ ____________________________________________________________
  Bye. Hope to see you again soon!
 ____________________________________________________________
 ```
+
+## TC-11: Recover from corrupted saved data
+
+### Aim
+
+Verify that an invalid completion state produces an actionable startup warning and Nova continues with an empty task list.
+
+### Initial data file
+
+```text
+T | yes | read book
+```
+
+### Input
+
+```text
+list
+bye
+```
+
+### Expected output
+
+```text
+____________________________________________________________
+ _   _                 
+| \ | | _____   ____ _ 
+|  \| |/ _ \ \ / / _` |
+| |\  | (_) \ V / (_| |
+|_| \_|\___/ \_/ \__,_|
+Hello! I'm Nova.
+What can I do for you?
+____________________________________________________________
+ OOPS!!! I couldn't load your saved tasks because line 1 is invalid: the completion state must be 0 or 1. Starting with an empty task list.
+____________________________________________________________
+____________________________________________________________
+ Here are the tasks in your list:
+____________________________________________________________
+____________________________________________________________
+ Bye. Hope to see you again soon!
+____________________________________________________________
+```
+
+## TC-12: Recover when the data file cannot be written
+
+### Aim
+
+Verify that read and write failures are explained without crashing and a failed addition is rolled back in memory.
+
+### Initial data path
+
+```text
+directory
+```
+
+### Input
+
+```text
+todo read book
+list
+bye
+```
+
+### Expected output
+
+```text
+____________________________________________________________
+ _   _                 
+| \ | | _____   ____ _ 
+|  \| |/ _ \ \ / / _` |
+| |\  | (_) \ V / (_| |
+|_| \_|\___/ \_/ \__,_|
+Hello! I'm Nova.
+What can I do for you?
+____________________________________________________________
+ OOPS!!! I couldn't read ./data/nova.txt. Starting with an empty task list.
+____________________________________________________________
+____________________________________________________________
+ OOPS!!! I couldn't save your tasks to ./data/nova.txt. Your latest change was not kept.
+____________________________________________________________
+____________________________________________________________
+ Here are the tasks in your list:
+____________________________________________________________
+____________________________________________________________
+ Bye. Hope to see you again soon!
+____________________________________________________________
+```
+
+## TC-13: Preserve storage separator characters in task text
+
+### Aim
+
+Verify that escaped pipes and backslashes load correctly and remain escaped when the updated task list is saved again.
+
+### Initial data file
+
+```text
+D | 0 | discuss \| review \\ notes | Fri \| 5pm
+```
+
+### Input
+
+```text
+mark 1
+list
+bye
+```
+
+### Expected output
+
+```text
+____________________________________________________________
+ _   _                 
+| \ | | _____   ____ _ 
+|  \| |/ _ \ \ / / _` |
+| |\  | (_) \ V / (_| |
+|_| \_|\___/ \_/ \__,_|
+Hello! I'm Nova.
+What can I do for you?
+____________________________________________________________
+____________________________________________________________
+ Nice! I've marked this task as done:
+   [D][X] discuss | review \ notes (by: Fri | 5pm)
+____________________________________________________________
+____________________________________________________________
+ Here are the tasks in your list:
+ 1.[D][X] discuss | review \ notes (by: Fri | 5pm)
+____________________________________________________________
+____________________________________________________________
+ Bye. Hope to see you again soon!
+____________________________________________________________
+```
+
+### Expected data file
+
+```text
+D | 1 | discuss \| review \\ notes | Fri \| 5pm
+```
+
+## TC-14: Roll back every task mutation when saving fails
+
+### Aim
+
+Verify that failed mark, unmark, and delete saves restore the original in-memory task states and list order.
+
+### Initial data file
+
+```text
+T | 0 | read book
+D | 1 | return book | Sunday
+```
+
+### Initial data path
+
+```text
+read-only-directory
+```
+
+### Input
+
+```text
+mark 1
+unmark 2
+delete 1
+list
+bye
+```
+
+### Expected output
+
+```text
+____________________________________________________________
+ _   _                 
+| \ | | _____   ____ _ 
+|  \| |/ _ \ \ / / _` |
+| |\  | (_) \ V / (_| |
+|_| \_|\___/ \_/ \__,_|
+Hello! I'm Nova.
+What can I do for you?
+____________________________________________________________
+____________________________________________________________
+ OOPS!!! I couldn't save your tasks to ./data/nova.txt. Your latest change was not kept.
+____________________________________________________________
+____________________________________________________________
+ OOPS!!! I couldn't save your tasks to ./data/nova.txt. Your latest change was not kept.
+____________________________________________________________
+____________________________________________________________
+ OOPS!!! I couldn't save your tasks to ./data/nova.txt. Your latest change was not kept.
+____________________________________________________________
+____________________________________________________________
+ Here are the tasks in your list:
+ 1.[T][ ] read book
+ 2.[D][X] return book (by: Sunday)
+____________________________________________________________
+____________________________________________________________
+ Bye. Hope to see you again soon!
+____________________________________________________________
+```

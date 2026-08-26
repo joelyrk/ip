@@ -25,7 +25,8 @@ public class Event extends Task {
 
     @Override
     public String toFileString() {
-        return super.toFileString() + " | " + from + " | " + to;
+        return super.toFileString() + " | " + escapeFileField(from)
+                + " | " + escapeFileField(to);
     }
 
     @Override

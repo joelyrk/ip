@@ -22,7 +22,7 @@ public class Deadline extends Task {
 
     @Override
     public String toFileString() {
-        return super.toFileString() + " | " + by;
+        return super.toFileString() + " | " + escapeFileField(by);
     }
 
     @Override

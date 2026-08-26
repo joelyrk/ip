@@ -91,6 +91,12 @@ def parse_plan(plan_path: Path) -> list[dict[str, str]]:
                 )
                 continue
 
+            if lines[index] == "### Initial data path":
+                case["initial_data_path"], index = parse_fenced_block(
+                    lines, index + 1, "Initial data path"
+                )
+                continue
+
             index += 1
 
         missing = [key for key in ("aim", "input", "expected") if key not in case]
@@ -179,16 +185,25 @@ def run_tests(plan_path: Path, java_home: Path) -> int:
                 if "initial_data" in case:
                     data_file.parent.mkdir(parents=True)
                     data_file.write_text(case["initial_data"] + "\n", encoding="utf-8")
+                elif case.get("initial_data_path") == "directory":
+                    data_file.mkdir(parents=True)
 
-                result = subprocess.run(
-                    [str(java_home / "bin" / "java"), "-cp", build_directory, "Nova"],
-                    cwd=case_root,
-                    input=process_input,
-                    capture_output=True,
-                    text=True,
-                    timeout=10,
-                    check=False,
-                )
+                is_read_only = case.get("initial_data_path") == "read-only-directory"
+                if is_read_only:
+                    data_file.parent.chmod(0o555)
+                try:
+                    result = subprocess.run(
+                        [str(java_home / "bin" / "java"), "-cp", build_directory, "Nova"],
+                        cwd=case_root,
+                        input=process_input,
+                        capture_output=True,
+                        text=True,
+                        timeout=10,
+                        check=False,
+                    )
+                finally:
+                    if is_read_only:
+                        data_file.parent.chmod(0o755)
 
                 print(f"\n=== {case['title']} ===")
                 print(f"Aim: {case['aim']}")

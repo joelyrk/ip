@@ -25,6 +25,15 @@ public abstract class Task {
     }
 
     /**
+     * Returns whether this task has been completed.
+     *
+     * @return {@code true} if the task is done
+     */
+    public boolean isDone() {
+        return isDone;
+    }
+
+    /**
      * Marks this task as completed.
      */
     public void markAsDone() {
@@ -51,7 +60,18 @@ public abstract class Task {
      * @return the task type, completion state, and description
      */
     public String toFileString() {
-        return getTypeIcon() + " | " + (isDone ? "1" : "0") + " | " + description;
+        return getTypeIcon() + " | " + (isDone ? "1" : "0") + " | "
+                + escapeFileField(description);
+    }
+
+    /**
+     * Escapes storage separator characters so task text can be loaded exactly.
+     *
+     * @param value task text to store
+     * @return escaped text safe for the pipe-separated file format
+     */
+    protected String escapeFileField(String value) {
+        return value.replace("\\", "\\\\").replace("|", "\\|");
     }
 
     /**
