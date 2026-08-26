@@ -496,7 +496,7 @@ ____________________________________________________________
 
 ### Aim
 
-Verify that adding, marking, and deleting tasks rewrites the data file with the final task type, completion state, and details.
+Verify that Nova creates a missing data folder and file, then rewrites the file after adding, marking, and deleting tasks.
 
 ### Input
 
@@ -667,10 +667,10 @@ ____________________________________________________________
 Hello! I'm Nova.
 What can I do for you?
 ____________________________________________________________
- OOPS!!! I couldn't read ./data/nova.txt. Starting with an empty task list.
+ OOPS!!! I couldn't read the task data file. Starting with an empty task list.
 ____________________________________________________________
 ____________________________________________________________
- OOPS!!! I couldn't save your tasks to ./data/nova.txt. Your latest change was not kept.
+ OOPS!!! I couldn't save the task data file. Your latest change was not kept.
 ____________________________________________________________
 ____________________________________________________________
  Here are the tasks in your list:
@@ -773,13 +773,13 @@ Hello! I'm Nova.
 What can I do for you?
 ____________________________________________________________
 ____________________________________________________________
- OOPS!!! I couldn't save your tasks to ./data/nova.txt. Your latest change was not kept.
+ OOPS!!! I couldn't save the task data file. Your latest change was not kept.
 ____________________________________________________________
 ____________________________________________________________
- OOPS!!! I couldn't save your tasks to ./data/nova.txt. Your latest change was not kept.
+ OOPS!!! I couldn't save the task data file. Your latest change was not kept.
 ____________________________________________________________
 ____________________________________________________________
- OOPS!!! I couldn't save your tasks to ./data/nova.txt. Your latest change was not kept.
+ OOPS!!! I couldn't save the task data file. Your latest change was not kept.
 ____________________________________________________________
 ____________________________________________________________
  Here are the tasks in your list:

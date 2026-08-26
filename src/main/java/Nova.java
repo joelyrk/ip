@@ -6,7 +6,7 @@ import java.util.Scanner;
  * Starts the Nova chatbot application.
  */
 public class Nova {
-    private static final Storage STORAGE = new Storage(Path.of("./data/nova.txt"));
+    private static final Storage STORAGE = new Storage(Path.of("data", "nova.txt"));
 
     public static void main(String[] args) {
         String separator = "_".repeat(60);

@@ -49,8 +49,8 @@ public class Storage {
                 }
             }
         } catch (IOException e) {
-            throw new NovaException("I couldn't read " + filePath
-                    + ". Starting with an empty task list.", e);
+            throw new NovaException("I couldn't read the task data file. "
+                    + "Starting with an empty task list.", e);
         }
         return tasks;
     }
@@ -64,8 +64,12 @@ public class Storage {
     public void save(List<Task> tasks) throws NovaException {
         Path temporaryFile = null;
         try {
-            Path parentDirectory = filePath.toAbsolutePath().getParent();
-            Files.createDirectories(parentDirectory);
+            Path parentDirectory = filePath.getParent();
+            if (parentDirectory != null) {
+                Files.createDirectories(parentDirectory);
+            } else {
+                parentDirectory = Path.of(".");
+            }
 
             List<String> taskLines = tasks.stream()
                     .map(Task::toFileString)
@@ -75,8 +79,8 @@ public class Storage {
             replaceDataFile(temporaryFile);
             temporaryFile = null;
         } catch (IOException e) {
-            throw new NovaException("I couldn't save your tasks to " + filePath
-                    + ". Your latest change was not kept.", e);
+            throw new NovaException("I couldn't save the task data file. "
+                    + "Your latest change was not kept.", e);
         } finally {
             if (temporaryFile != null) {
                 try {
@@ -175,10 +179,10 @@ public class Storage {
      */
     private void replaceDataFile(Path temporaryFile) throws IOException {
         try {
-            Files.move(temporaryFile, filePath.toAbsolutePath(),
+            Files.move(temporaryFile, filePath,
                     StandardCopyOption.ATOMIC_MOVE, StandardCopyOption.REPLACE_EXISTING);
         } catch (AtomicMoveNotSupportedException e) {
-            Files.move(temporaryFile, filePath.toAbsolutePath(), StandardCopyOption.REPLACE_EXISTING);
+            Files.move(temporaryFile, filePath, StandardCopyOption.REPLACE_EXISTING);
         }
     }
 }
