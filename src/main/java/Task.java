@@ -46,6 +46,15 @@ public abstract class Task {
     protected abstract String getTypeIcon();
 
     /**
+     * Formats this task for storage in Nova's data file.
+     *
+     * @return the task type, completion state, and description
+     */
+    public String toFileString() {
+        return getTypeIcon() + " | " + (isDone ? "1" : "0") + " | " + description;
+    }
+
+    /**
      * Formats this task with its completion status and description.
      *
      * @return the display form of this task

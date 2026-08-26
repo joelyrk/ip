@@ -491,3 +491,61 @@ ____________________________________________________________
  Bye. Hope to see you again soon!
 ____________________________________________________________
 ```
+
+## TC-09: Save the task list after every change
+
+### Aim
+
+Verify that adding, marking, and deleting tasks rewrites the data file with the final task type, completion state, and details.
+
+### Input
+
+```text
+todo read book
+deadline return book /by June 6th
+mark 2
+delete 1
+bye
+```
+
+### Expected output
+
+```text
+____________________________________________________________
+ _   _                 
+| \ | | _____   ____ _ 
+|  \| |/ _ \ \ / / _` |
+| |\  | (_) \ V / (_| |
+|_| \_|\___/ \_/ \__,_|
+Hello! I'm Nova.
+What can I do for you?
+____________________________________________________________
+____________________________________________________________
+ Got it. I've added this task:
+   [T][ ] read book
+ Now you have 1 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+ Got it. I've added this task:
+   [D][ ] return book (by: June 6th)
+ Now you have 2 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+ Nice! I've marked this task as done:
+   [D][X] return book (by: June 6th)
+____________________________________________________________
+____________________________________________________________
+ Noted. I've removed this task:
+   [T][ ] read book
+ Now you have 1 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+ Bye. Hope to see you again soon!
+____________________________________________________________
+```
+
+### Expected data file
+
+```text
+D | 1 | return book | June 6th
+```

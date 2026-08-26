@@ -1,3 +1,5 @@
+import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -5,7 +7,9 @@ import java.util.Scanner;
  * Starts the Nova chatbot application.
  */
 public class Nova {
-    public static void main(String[] args) {
+    private static final Storage STORAGE = new Storage(Path.of("./data/nova.txt"));
+
+    public static void main(String[] args) throws IOException {
         String separator = "_".repeat(60);
         String banner = " _   _                 \n"
                 + "| \\ | | _____   ____ _ \n"
@@ -44,18 +48,21 @@ public class Nova {
                 case MARK:
                     int markIndex = parseTaskIndex(command, "mark", tasks.size());
                     tasks.get(markIndex).markAsDone();
+                    STORAGE.save(tasks);
                     System.out.println(" Nice! I've marked this task as done:");
                     System.out.println("   " + tasks.get(markIndex));
                     break;
                 case UNMARK:
                     int unmarkIndex = parseTaskIndex(command, "unmark", tasks.size());
                     tasks.get(unmarkIndex).markAsNotDone();
+                    STORAGE.save(tasks);
                     System.out.println(" OK, I've marked this task as not done yet:");
                     System.out.println("   " + tasks.get(unmarkIndex));
                     break;
                 case DELETE:
                     int deleteIndex = parseTaskIndex(command, "delete", tasks.size());
                     Task removedTask = tasks.remove(deleteIndex);
+                    STORAGE.save(tasks);
                     System.out.println(" Noted. I've removed this task:");
                     System.out.println("   " + removedTask);
                     System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
@@ -80,8 +87,9 @@ public class Nova {
      * @param task task to add
      * @param tasks list that stores Nova's tasks
      */
-    private static void addTask(Task task, ArrayList<Task> tasks) {
+    private static void addTask(Task task, ArrayList<Task> tasks) throws IOException {
         tasks.add(task);
+        STORAGE.save(tasks);
         printTaskAdded(task, tasks.size());
     }
 
