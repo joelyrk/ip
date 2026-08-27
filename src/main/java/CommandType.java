@@ -27,28 +27,15 @@ public enum CommandType {
     }
 
     /**
-     * Finds the type represented by a complete command string.
+     * Returns whether a complete command uses this command type.
      *
      * @param command trimmed command entered by the user
-     * @return matching command type
-     * @throws NovaException if the command is blank or has an unknown form
+     * @return {@code true} if the keyword and argument form match
      */
-    public static CommandType from(String command) throws NovaException {
-        if (command.isEmpty()) {
-            throw new NovaException("You entered a blank command. Try todo, deadline, event, on, list, mark, "
-                    + "unmark, delete, or bye.");
-        }
-
-        for (CommandType commandType : values()) {
-            boolean isExactMatch = command.equals(commandType.keyword);
-            boolean isCommandWithArguments = commandType.acceptsArguments
-                    && command.startsWith(commandType.keyword + " ");
-            if (isExactMatch || isCommandWithArguments) {
-                return commandType;
-            }
-        }
-
-        throw new NovaException("I don't recognize that command. Start with todo, deadline, event, on, "
-                + "list, mark, unmark, delete, or bye.");
+    boolean matches(String command) {
+        boolean isExactMatch = command.equals(keyword);
+        boolean isCommandWithArguments = acceptsArguments
+                && command.startsWith(keyword + " ");
+        return isExactMatch || isCommandWithArguments;
     }
 }
