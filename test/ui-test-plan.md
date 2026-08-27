@@ -8,15 +8,15 @@ The program is compiled from `src/main/java/*.java`, runs with main class `Nova`
 
 ### Aim
 
-Verify that todos, deadlines, and events are stored polymorphically, displayed in order with their type icons, and retain date/time text verbatim.
+Verify that todos, deadlines, and events are stored polymorphically, displayed in order with their type icons, and format typed dates and times readably.
 
 ### Input
 
 ```text
 todo read book
-deadline return book /by Sunday
-event project meeting /from Mon 2pm /to 4pm
-deadline do homework /by no idea :-p
+deadline return book /by 2/12/2019 1800
+event project meeting /from 2019-12-03 1400 /to 2019-12-03 1600
+deadline do homework /by 2019-12-04
 list
 bye
 ```
@@ -40,25 +40,25 @@ ____________________________________________________________
 ____________________________________________________________
 ____________________________________________________________
  Got it. I've added this task:
-   [D][ ] return book (by: Sunday)
+   [D][ ] return book (by: Dec 02 2019, 6:00 PM)
  Now you have 2 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
  Got it. I've added this task:
-   [E][ ] project meeting (from: Mon 2pm to: 4pm)
+   [E][ ] project meeting (from: Dec 03 2019, 2:00 PM to: Dec 03 2019, 4:00 PM)
  Now you have 3 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
  Got it. I've added this task:
-   [D][ ] do homework (by: no idea :-p)
+   [D][ ] do homework (by: Dec 04 2019)
  Now you have 4 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
  Here are the tasks in your list:
  1.[T][ ] read book
- 2.[D][ ] return book (by: Sunday)
- 3.[E][ ] project meeting (from: Mon 2pm to: 4pm)
- 4.[D][ ] do homework (by: no idea :-p)
+ 2.[D][ ] return book (by: Dec 02 2019, 6:00 PM)
+ 3.[E][ ] project meeting (from: Dec 03 2019, 2:00 PM to: Dec 03 2019, 4:00 PM)
+ 4.[D][ ] do homework (by: Dec 04 2019)
 ____________________________________________________________
 ____________________________________________________________
  Bye. Hope to see you again soon!
@@ -75,7 +75,7 @@ Verify that `mark` works through the shared `Task` type and preserves deadline-s
 
 ```text
 todo read book
-deadline return book /by Sunday
+deadline return book /by 2019-12-02
 mark 2
 list
 bye
@@ -100,17 +100,17 @@ ____________________________________________________________
 ____________________________________________________________
 ____________________________________________________________
  Got it. I've added this task:
-   [D][ ] return book (by: Sunday)
+   [D][ ] return book (by: Dec 02 2019)
  Now you have 2 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
  Nice! I've marked this task as done:
-   [D][X] return book (by: Sunday)
+   [D][X] return book (by: Dec 02 2019)
 ____________________________________________________________
 ____________________________________________________________
  Here are the tasks in your list:
  1.[T][ ] read book
- 2.[D][X] return book (by: Sunday)
+ 2.[D][X] return book (by: Dec 02 2019)
 ____________________________________________________________
 ____________________________________________________________
  Bye. Hope to see you again soon!
@@ -147,20 +147,20 @@ What can I do for you?
 ____________________________________________________________
 ____________________________________________________________
  Got it. I've added this task:
-   [E][ ] orientation week (from: 4/10/2019 to: 11/10/2019)
+   [E][ ] orientation week (from: Oct 04 2019 to: Oct 11 2019)
  Now you have 1 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
  Nice! I've marked this task as done:
-   [E][X] orientation week (from: 4/10/2019 to: 11/10/2019)
+   [E][X] orientation week (from: Oct 04 2019 to: Oct 11 2019)
 ____________________________________________________________
 ____________________________________________________________
  OK, I've marked this task as not done yet:
-   [E][ ] orientation week (from: 4/10/2019 to: 11/10/2019)
+   [E][ ] orientation week (from: Oct 04 2019 to: Oct 11 2019)
 ____________________________________________________________
 ____________________________________________________________
  Here are the tasks in your list:
- 1.[E][ ] orientation week (from: 4/10/2019 to: 11/10/2019)
+ 1.[E][ ] orientation week (from: Oct 04 2019 to: Oct 11 2019)
 ____________________________________________________________
 ____________________________________________________________
  Bye. Hope to see you again soon!
@@ -198,10 +198,10 @@ ____________________________________________________________
  OOPS!!! A todo needs a description. Try: todo <description>.
 ____________________________________________________________
 ____________________________________________________________
- OOPS!!! I don't recognize that command. Start with todo, deadline, event, list, mark, unmark, delete, or bye.
+ OOPS!!! I don't recognize that command. Start with todo, deadline, event, on, list, mark, unmark, delete, or bye.
 ____________________________________________________________
 ____________________________________________________________
- OOPS!!! You entered a blank command. Try todo, deadline, event, list, mark, unmark, delete, or bye.
+ OOPS!!! You entered a blank command. Try todo, deadline, event, on, list, mark, unmark, delete, or bye.
 ____________________________________________________________
 ____________________________________________________________
  Bye. Hope to see you again soon!
@@ -218,8 +218,8 @@ Verify that `delete` removes the selected task, reports it, updates the task cou
 
 ```text
 todo read book
-deadline return book /by June 6th
-event project meeting /from Aug 6th 2pm /to 4pm
+deadline return book /by 2019-06-06
+event project meeting /from 2019-08-06 1400 /to 2019-08-06 1600
 todo join sports club
 todo borrow book
 mark 1
@@ -249,12 +249,12 @@ ____________________________________________________________
 ____________________________________________________________
 ____________________________________________________________
  Got it. I've added this task:
-   [D][ ] return book (by: June 6th)
+   [D][ ] return book (by: Jun 06 2019)
  Now you have 2 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
  Got it. I've added this task:
-   [E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
+   [E][ ] project meeting (from: Aug 06 2019, 2:00 PM to: Aug 06 2019, 4:00 PM)
  Now you have 3 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
@@ -273,7 +273,7 @@ ____________________________________________________________
 ____________________________________________________________
 ____________________________________________________________
  Nice! I've marked this task as done:
-   [D][X] return book (by: June 6th)
+   [D][X] return book (by: Jun 06 2019)
 ____________________________________________________________
 ____________________________________________________________
  Nice! I've marked this task as done:
@@ -281,13 +281,13 @@ ____________________________________________________________
 ____________________________________________________________
 ____________________________________________________________
  Noted. I've removed this task:
-   [E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
+   [E][ ] project meeting (from: Aug 06 2019, 2:00 PM to: Aug 06 2019, 4:00 PM)
  Now you have 4 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
  Here are the tasks in your list:
  1.[T][X] read book
- 2.[D][X] return book (by: June 6th)
+ 2.[D][X] return book (by: Jun 06 2019)
  3.[T][X] join sports club
  4.[T][ ] borrow book
 ____________________________________________________________
@@ -502,7 +502,7 @@ Verify that Nova creates a missing data folder and file, then rewrites the file 
 
 ```text
 todo read book
-deadline return book /by June 6th
+deadline return book /by 2019-06-06
 mark 2
 delete 1
 bye
@@ -527,12 +527,12 @@ ____________________________________________________________
 ____________________________________________________________
 ____________________________________________________________
  Got it. I've added this task:
-   [D][ ] return book (by: June 6th)
+   [D][ ] return book (by: Jun 06 2019)
  Now you have 2 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
  Nice! I've marked this task as done:
-   [D][X] return book (by: June 6th)
+   [D][X] return book (by: Jun 06 2019)
 ____________________________________________________________
 ____________________________________________________________
  Noted. I've removed this task:
@@ -547,7 +547,7 @@ ____________________________________________________________
 ### Expected data file
 
 ```text
-D | 1 | return book | June 6th
+D | 1 | return book | 2019-06-06
 ```
 
 ## TC-10: Load saved tasks when Nova starts
@@ -560,8 +560,8 @@ Verify that Nova loads saved todos, deadlines, and events in order and restores 
 
 ```text
 T | 1 | read book
-D | 0 | return book | June 6th
-E | 1 | project meeting | Aug 6th 2pm | 4pm
+D | 0 | return book | 2019-06-06
+E | 1 | project meeting | 2019-08-06 1400 | 2019-08-06 1600
 ```
 
 ### Input
@@ -586,8 +586,8 @@ ____________________________________________________________
 ____________________________________________________________
  Here are the tasks in your list:
  1.[T][X] read book
- 2.[D][ ] return book (by: June 6th)
- 3.[E][X] project meeting (from: Aug 6th 2pm to: 4pm)
+ 2.[D][ ] return book (by: Jun 06 2019)
+ 3.[E][X] project meeting (from: Aug 06 2019, 2:00 PM to: Aug 06 2019, 4:00 PM)
 ____________________________________________________________
 ____________________________________________________________
  Bye. Hope to see you again soon!
@@ -684,12 +684,12 @@ ____________________________________________________________
 
 ### Aim
 
-Verify that escaped pipes and backslashes load correctly and remain escaped when the updated task list is saved again.
+Verify that escaped pipes and backslashes in task descriptions load correctly and remain escaped when the updated task list is saved again.
 
 ### Initial data file
 
 ```text
-D | 0 | discuss \| review \\ notes | Fri \| 5pm
+D | 0 | discuss \| review \\ notes | 2019-08-09 1700
 ```
 
 ### Input
@@ -714,11 +714,11 @@ What can I do for you?
 ____________________________________________________________
 ____________________________________________________________
  Nice! I've marked this task as done:
-   [D][X] discuss | review \ notes (by: Fri | 5pm)
+   [D][X] discuss | review \ notes (by: Aug 09 2019, 5:00 PM)
 ____________________________________________________________
 ____________________________________________________________
  Here are the tasks in your list:
- 1.[D][X] discuss | review \ notes (by: Fri | 5pm)
+ 1.[D][X] discuss | review \ notes (by: Aug 09 2019, 5:00 PM)
 ____________________________________________________________
 ____________________________________________________________
  Bye. Hope to see you again soon!
@@ -728,7 +728,7 @@ ____________________________________________________________
 ### Expected data file
 
 ```text
-D | 1 | discuss \| review \\ notes | Fri \| 5pm
+D | 1 | discuss \| review \\ notes | 2019-08-09 1700
 ```
 
 ## TC-14: Roll back every task mutation when saving fails
@@ -741,7 +741,7 @@ Verify that failed mark, unmark, and delete saves restore the original in-memory
 
 ```text
 T | 0 | read book
-D | 1 | return book | Sunday
+D | 1 | return book | 2019-12-02
 ```
 
 ### Initial data path
@@ -784,7 +784,81 @@ ____________________________________________________________
 ____________________________________________________________
  Here are the tasks in your list:
  1.[T][ ] read book
- 2.[D][X] return book (by: Sunday)
+ 2.[D][X] return book (by: Dec 02 2019)
+____________________________________________________________
+____________________________________________________________
+ Bye. Hope to see you again soon!
+____________________________________________________________
+```
+
+## TC-15: Find scheduled tasks by date
+
+### Aim
+
+Verify that Nova parses real dates and times into typed values, finds deadlines and multi-day events on a requested date, excludes todos, reports an empty result, and explains invalid dates or ranges.
+
+### Input
+
+```text
+deadline return book /by 2/12/2019 1800
+event conference /from 1/12/2019 /to 3/12/2019
+todo undated
+on 2/12/2019
+on 4/12/2019
+deadline impossible /by 31/2/2019
+event backwards /from 2019-12-03 /to 2019-12-02
+on
+on 2019-13-01
+bye
+```
+
+### Expected output
+
+```text
+____________________________________________________________
+ _   _                 
+| \ | | _____   ____ _ 
+|  \| |/ _ \ \ / / _` |
+| |\  | (_) \ V / (_| |
+|_| \_|\___/ \_/ \__,_|
+Hello! I'm Nova.
+What can I do for you?
+____________________________________________________________
+____________________________________________________________
+ Got it. I've added this task:
+   [D][ ] return book (by: Dec 02 2019, 6:00 PM)
+ Now you have 1 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+ Got it. I've added this task:
+   [E][ ] conference (from: Dec 01 2019 to: Dec 03 2019)
+ Now you have 2 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+ Got it. I've added this task:
+   [T][ ] undated
+ Now you have 3 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+ Here are the tasks occurring on Dec 02 2019:
+ 1.[D][ ] return book (by: Dec 02 2019, 6:00 PM)
+ 2.[E][ ] conference (from: Dec 01 2019 to: Dec 03 2019)
+____________________________________________________________
+____________________________________________________________
+ Here are the tasks occurring on Dec 04 2019:
+ No deadlines or events occur on this date.
+____________________________________________________________
+____________________________________________________________
+ OOPS!!! The /by date/time must be a real date in yyyy-MM-dd or d/M/yyyy format, optionally followed by HHmm, for example: 2019-12-02 1800.
+____________________________________________________________
+____________________________________________________________
+ OOPS!!! An event's /to date/time cannot be before its /from date/time.
+____________________________________________________________
+____________________________________________________________
+ OOPS!!! Tell me which date to search. Try: on 2019-12-02.
+____________________________________________________________
+____________________________________________________________
+ OOPS!!! The date after on must be a real date in yyyy-MM-dd or d/M/yyyy format, for example: on 2019-12-02.
 ____________________________________________________________
 ____________________________________________________________
  Bye. Hope to see you again soon!

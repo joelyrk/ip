@@ -124,12 +124,27 @@ public class Storage {
             }
         }
 
-        Task task = switch (taskType) {
-        case "T" -> new Todo(fields.get(2));
-        case "D" -> new Deadline(fields.get(2), fields.get(3));
-        case "E" -> new Event(fields.get(2), fields.get(3), fields.get(4));
-        default -> throw new IllegalStateException("Task type was already validated: " + taskType);
-        };
+        Task task;
+        switch (taskType) {
+        case "T":
+            task = new Todo(fields.get(2));
+            break;
+        case "D":
+            TaskDateTime.ParsedValue due = TaskDateTime.parse(fields.get(3), "stored /by");
+            task = new Deadline(fields.get(2), due.dateTime(), due.hasTime());
+            break;
+        case "E":
+            TaskDateTime.ParsedValue start = TaskDateTime.parse(fields.get(3), "stored /from");
+            TaskDateTime.ParsedValue end = TaskDateTime.parse(fields.get(4), "stored /to");
+            if (end.dateTime().isBefore(start.dateTime())) {
+                throw new NovaException("the stored event ends before it starts.");
+            }
+            task = new Event(fields.get(2), start.dateTime(), start.hasTime(),
+                    end.dateTime(), end.hasTime());
+            break;
+        default:
+            throw new IllegalStateException("Task type was already validated: " + taskType);
+        }
 
         if (fields.get(1).equals("1")) {
             task.markAsDone();

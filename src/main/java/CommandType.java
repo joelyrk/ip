@@ -5,6 +5,7 @@ public enum CommandType {
     TODO("todo", true),
     DEADLINE("deadline", true),
     EVENT("event", true),
+    ON("on", true),
     LIST("list", false),
     MARK("mark", true),
     UNMARK("unmark", true),
@@ -34,7 +35,7 @@ public enum CommandType {
      */
     public static CommandType from(String command) throws NovaException {
         if (command.isEmpty()) {
-            throw new NovaException("You entered a blank command. Try todo, deadline, event, list, mark, "
+            throw new NovaException("You entered a blank command. Try todo, deadline, event, on, list, mark, "
                     + "unmark, delete, or bye.");
         }
 
@@ -47,7 +48,7 @@ public enum CommandType {
             }
         }
 
-        throw new NovaException("I don't recognize that command. Start with todo, deadline, event, "
+        throw new NovaException("I don't recognize that command. Start with todo, deadline, event, on, "
                 + "list, mark, unmark, delete, or bye.");
     }
 }
