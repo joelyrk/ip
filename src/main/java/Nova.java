@@ -1,47 +1,35 @@
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 /**
  * Starts the Nova chatbot application.
  */
 public class Nova {
     private static final Storage STORAGE = new Storage(Path.of("data", "nova.txt"));
+    private static final Ui UI = new Ui();
 
     public static void main(String[] args) {
-        String separator = "_".repeat(60);
-        String banner = " _   _                 \n"
-                + "| \\ | | _____   ____ _ \n"
-                + "|  \\| |/ _ \\ \\ / / _` |\n"
-                + "| |\\  | (_) \\ V / (_| |\n"
-                + "|_| \\_|\\___/ \\_/ \\__,_|\n";
+        UI.showWelcome();
 
-        System.out.println(separator);
-        System.out.print(banner);
-        System.out.println("Hello! I'm Nova.");
-        System.out.println("What can I do for you?");
-        System.out.println(separator);
-
-        Scanner scanner = new Scanner(System.in);
         ArrayList<Task> tasks;
         try {
             tasks = new ArrayList<>(STORAGE.load());
         } catch (NovaException e) {
             tasks = new ArrayList<>();
-            System.out.println(" OOPS!!! " + e.getMessage());
-            System.out.println(separator);
+            UI.showError(e);
+            UI.showSeparator();
         }
 
-        while (scanner.hasNextLine()) {
-            String command = scanner.nextLine().trim();
-            System.out.println(separator);
+        while (UI.hasNextCommand()) {
+            String command = UI.readCommand();
+            UI.showSeparator();
 
             try {
                 CommandType commandType = CommandType.from(command);
                 switch (commandType) {
                 case LIST:
-                    printTaskList(tasks);
+                    UI.showTaskList(tasks);
                     break;
                 case TODO:
                     addTask(parseTodo(command), tasks);
@@ -53,38 +41,33 @@ public class Nova {
                     addTask(parseEvent(command), tasks);
                     break;
                 case ON:
-                    printTasksOn(parseSearchDate(command), tasks);
+                    UI.showTasksOn(parseSearchDate(command), tasks);
                     break;
                 case MARK:
                     int markIndex = parseTaskIndex(command, "mark", tasks.size());
                     updateTaskStatus(tasks.get(markIndex), true, tasks);
-                    System.out.println(" Nice! I've marked this task as done:");
-                    System.out.println("   " + tasks.get(markIndex));
+                    UI.showTaskMarked(tasks.get(markIndex));
                     break;
                 case UNMARK:
                     int unmarkIndex = parseTaskIndex(command, "unmark", tasks.size());
                     updateTaskStatus(tasks.get(unmarkIndex), false, tasks);
-                    System.out.println(" OK, I've marked this task as not done yet:");
-                    System.out.println("   " + tasks.get(unmarkIndex));
+                    UI.showTaskUnmarked(tasks.get(unmarkIndex));
                     break;
                 case DELETE:
                     int deleteIndex = parseTaskIndex(command, "delete", tasks.size());
                     Task removedTask = deleteTask(deleteIndex, tasks);
-                    System.out.println(" Noted. I've removed this task:");
-                    System.out.println("   " + removedTask);
-                    System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
+                    UI.showTaskDeleted(removedTask, tasks.size());
                     break;
                 case BYE:
-                    System.out.println(" Bye. Hope to see you again soon!");
-                    System.out.println(separator);
+                    UI.showGoodbye();
                     return;
                 default:
                     throw new IllegalStateException("Unhandled command type: " + commandType);
                 }
             } catch (NovaException e) {
-                System.out.println(" OOPS!!! " + e.getMessage());
+                UI.showError(e);
             }
-            System.out.println(separator);
+            UI.showSeparator();
         }
     }
 
@@ -102,7 +85,7 @@ public class Nova {
             tasks.remove(tasks.size() - 1);
             throw e;
         }
-        printTaskAdded(task, tasks.size());
+        UI.showTaskAdded(task, tasks.size());
     }
 
     /**
@@ -151,18 +134,6 @@ public class Nova {
             throw e;
         }
         return removedTask;
-    }
-
-    /**
-     * Prints all tasks in their current list order.
-     *
-     * @param tasks tasks to display
-     */
-    private static void printTaskList(ArrayList<Task> tasks) {
-        System.out.println(" Here are the tasks in your list:");
-        for (int i = 0; i < tasks.size(); i++) {
-            System.out.println(" " + (i + 1) + "." + tasks.get(i));
-        }
     }
 
     /**
@@ -276,28 +247,6 @@ public class Nova {
     }
 
     /**
-     * Prints deadlines due and events occurring on a specific date.
-     * Original task numbers are retained so displayed tasks can be marked or deleted.
-     *
-     * @param date date to search
-     * @param tasks complete task list
-     */
-    private static void printTasksOn(LocalDate date, ArrayList<Task> tasks) {
-        System.out.println(" Here are the tasks occurring on "
-                + date.format(java.time.format.DateTimeFormatter.ofPattern("MMM dd uuuu")) + ":");
-        boolean foundTask = false;
-        for (int i = 0; i < tasks.size(); i++) {
-            if (tasks.get(i).occursOn(date)) {
-                System.out.println(" " + (i + 1) + "." + tasks.get(i));
-                foundTask = true;
-            }
-        }
-        if (!foundTask) {
-            System.out.println(" No deadlines or events occur on this date.");
-        }
-    }
-
-    /**
      * Converts a task number in a mark, unmark, or delete command to a list index.
      *
      * @param command complete mark, unmark, or delete command
@@ -354,15 +303,4 @@ public class Nova {
         return -1;
     }
 
-    /**
-     * Prints the confirmation shown after a task is added.
-     *
-     * @param task newly added task
-     * @param taskCount total number of tasks after the addition
-     */
-    private static void printTaskAdded(Task task, int taskCount) {
-        System.out.println(" Got it. I've added this task:");
-        System.out.println("   " + task);
-        System.out.println(" Now you have " + taskCount + " tasks in the list.");
-    }
 }
