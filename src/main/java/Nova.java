@@ -1,4 +1,5 @@
 import java.nio.file.Path;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -50,6 +51,9 @@ public class Nova {
                     break;
                 case EVENT:
                     addTask(parseEvent(command), tasks);
+                    break;
+                case ON:
+                    printTasksOn(parseSearchDate(command), tasks);
                     break;
                 case MARK:
                     int markIndex = parseTaskIndex(command, "mark", tasks.size());
@@ -204,7 +208,8 @@ public class Nova {
         if (by.isEmpty()) {
             throw new NovaException("The /by field cannot be empty. Add a date or time after /by.");
         }
-        return new Deadline(description, by);
+        TaskDateTime.ParsedValue dueDateTime = TaskDateTime.parse(by, "/by");
+        return new Deadline(description, dueDateTime.dateTime(), dueDateTime.hasTime());
     }
 
     /**
@@ -246,7 +251,50 @@ public class Nova {
         if (to.isEmpty()) {
             throw new NovaException("The /to field cannot be empty. Add an end date or time after /to.");
         }
-        return new Event(description, from, to);
+        TaskDateTime.ParsedValue start = TaskDateTime.parse(from, "/from");
+        TaskDateTime.ParsedValue end = TaskDateTime.parse(to, "/to");
+        if (end.dateTime().isBefore(start.dateTime())) {
+            throw new NovaException("An event's /to date/time cannot be before its /from date/time.");
+        }
+        return new Event(description, start.dateTime(), start.hasTime(),
+                end.dateTime(), end.hasTime());
+    }
+
+    /**
+     * Parses the date supplied to the stretch-goal search command.
+     *
+     * @param command complete {@code on} command
+     * @return date whose scheduled tasks should be shown
+     * @throws NovaException if no valid date follows {@code on}
+     */
+    private static LocalDate parseSearchDate(String command) throws NovaException {
+        String dateText = command.substring("on".length()).trim();
+        if (dateText.isEmpty()) {
+            throw new NovaException("Tell me which date to search. Try: on 2019-12-02.");
+        }
+        return TaskDateTime.parseDate(dateText);
+    }
+
+    /**
+     * Prints deadlines due and events occurring on a specific date.
+     * Original task numbers are retained so displayed tasks can be marked or deleted.
+     *
+     * @param date date to search
+     * @param tasks complete task list
+     */
+    private static void printTasksOn(LocalDate date, ArrayList<Task> tasks) {
+        System.out.println(" Here are the tasks occurring on "
+                + date.format(java.time.format.DateTimeFormatter.ofPattern("MMM dd uuuu")) + ":");
+        boolean foundTask = false;
+        for (int i = 0; i < tasks.size(); i++) {
+            if (tasks.get(i).occursOn(date)) {
+                System.out.println(" " + (i + 1) + "." + tasks.get(i));
+                foundTask = true;
+            }
+        }
+        if (!foundTask) {
+            System.out.println(" No deadlines or events occur on this date.");
+        }
     }
 
     /**

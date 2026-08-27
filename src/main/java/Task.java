@@ -1,3 +1,5 @@
+import java.time.LocalDate;
+
 /**
  * Represents a task and whether it has been completed.
  */
@@ -53,6 +55,17 @@ public abstract class Task {
      * @return the task type icon
      */
     protected abstract String getTypeIcon();
+
+    /**
+     * Returns whether this task is scheduled on the given date.
+     * Todos have no date, so subclasses with dates override this method.
+     *
+     * @param date date being searched
+     * @return {@code true} if the task occurs on that date
+     */
+    public boolean occursOn(LocalDate date) {
+        return false;
+    }
 
     /**
      * Formats this task for storage in Nova's data file.
