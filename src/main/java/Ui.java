@@ -130,18 +130,14 @@ public class Ui {
      * Displays scheduled tasks occurring on a date while retaining their original numbers.
      *
      * @param date date being searched
-     * @param tasks complete task list
+     * @param tasks matching tasks with their original task numbers
      */
-    public void showTasksOn(LocalDate date, List<Task> tasks) {
+    public void showTasksOn(LocalDate date, List<TaskList.NumberedTask> tasks) {
         System.out.println(" Here are the tasks occurring on " + date.format(DISPLAY_DATE) + ":");
-        boolean foundTask = false;
-        for (int i = 0; i < tasks.size(); i++) {
-            if (tasks.get(i).occursOn(date)) {
-                System.out.println(" " + (i + 1) + "." + tasks.get(i));
-                foundTask = true;
-            }
+        for (TaskList.NumberedTask numberedTask : tasks) {
+            System.out.println(" " + numberedTask.number() + "." + numberedTask.task());
         }
-        if (!foundTask) {
+        if (tasks.isEmpty()) {
             System.out.println(" No deadlines or events occur on this date.");
         }
     }
