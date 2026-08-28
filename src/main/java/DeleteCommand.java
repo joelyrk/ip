@@ -1,16 +1,14 @@
 /**
  * Deletes a task and persists the updated task list.
  */
-public class DeleteCommand extends Command {
-    private final int taskIndex;
-
+public class DeleteCommand extends TaskCommand {
     /**
      * Creates a command that deletes the selected task.
      *
-     * @param taskIndex zero-based index of the task to delete
+     * @param taskNumber one-based number of the task to delete
      */
-    public DeleteCommand(int taskIndex) {
-        this.taskIndex = taskIndex;
+    public DeleteCommand(int taskNumber) {
+        super(taskNumber, "delete");
     }
 
     /**
@@ -23,6 +21,7 @@ public class DeleteCommand extends Command {
      */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws NovaException {
+        int taskIndex = resolveTaskIndex(tasks);
         Task removedTask = tasks.remove(taskIndex);
         try {
             storage.save(tasks.getTasks());

@@ -1,18 +1,18 @@
 /**
  * Changes and persists a task's completion status.
  */
-public abstract class TaskStatusCommand extends Command {
-    private final int taskIndex;
+public abstract class TaskStatusCommand extends TaskCommand {
     private final boolean isDone;
 
     /**
      * Creates a status command for a task.
      *
-     * @param taskIndex zero-based index of the task to update
+     * @param taskNumber one-based number of the task to update
+     * @param commandName command keyword used in error guidance
      * @param isDone desired completion state
      */
-    protected TaskStatusCommand(int taskIndex, boolean isDone) {
-        this.taskIndex = taskIndex;
+    protected TaskStatusCommand(int taskNumber, String commandName, boolean isDone) {
+        super(taskNumber, commandName);
         this.isDone = isDone;
     }
 
@@ -26,14 +26,15 @@ public abstract class TaskStatusCommand extends Command {
      */
     @Override
     public final void execute(TaskList tasks, Ui ui, Storage storage) throws NovaException {
+        int taskIndex = resolveTaskIndex(tasks);
         Task task = tasks.get(taskIndex);
         boolean previousStatus = task.isDone();
-        setStatus(tasks, isDone);
+        setStatus(tasks, taskIndex, isDone);
 
         try {
             storage.save(tasks.getTasks());
         } catch (NovaException e) {
-            setStatus(tasks, previousStatus);
+            setStatus(tasks, taskIndex, previousStatus);
             throw e;
         }
         showConfirmation(ui, task);
@@ -47,7 +48,7 @@ public abstract class TaskStatusCommand extends Command {
      */
     protected abstract void showConfirmation(Ui ui, Task task);
 
-    private void setStatus(TaskList tasks, boolean isDone) {
+    private void setStatus(TaskList tasks, int taskIndex, boolean isDone) {
         if (isDone) {
             tasks.mark(taskIndex);
         } else {

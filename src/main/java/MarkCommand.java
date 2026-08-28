@@ -5,10 +5,10 @@ public class MarkCommand extends TaskStatusCommand {
     /**
      * Creates a command that marks the selected task as completed.
      *
-     * @param taskIndex zero-based index of the task to mark
+     * @param taskNumber one-based number of the task to mark
      */
-    public MarkCommand(int taskIndex) {
-        super(taskIndex, true);
+    public MarkCommand(int taskNumber) {
+        super(taskNumber, "mark", true);
     }
 
     @Override

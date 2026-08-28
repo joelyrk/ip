@@ -138,16 +138,14 @@ public class Parser {
     }
 
     /**
-     * Converts a task number in a mark, unmark, or delete command to a list index.
+     * Parses the task number in a mark, unmark, or delete command.
      *
      * @param command complete mark, unmark, or delete command
      * @param commandName command keyword used in error guidance
-     * @param taskCount current number of tasks
-     * @return zero-based index of the selected task
-     * @throws NovaException if the task number is missing, invalid, or outside the list
+     * @return one-based task number entered by the user
+     * @throws NovaException if the task number is missing or is not a whole number
      */
-    public int parseTaskIndex(String command, String commandName, int taskCount)
-            throws NovaException {
+    public int parseTaskNumber(String command, String commandName) throws NovaException {
         String taskNumberText = command.substring(commandName.length()).trim();
         if (taskNumberText.isEmpty()) {
             throw new NovaException("Tell me which task to " + commandName
@@ -162,14 +160,7 @@ public class Parser {
                     + " must be a whole number, for example: " + commandName + " 1.");
         }
 
-        if (taskCount == 0) {
-            throw new NovaException("There are no tasks to " + commandName + " yet. Add a task first.");
-        }
-        if (taskNumber < 1 || taskNumber > taskCount) {
-            throw new NovaException("Task " + taskNumber + " does not exist. Choose a number from 1 to "
-                    + taskCount + ".");
-        }
-        return taskNumber - 1;
+        return taskNumber;
     }
 
     /**

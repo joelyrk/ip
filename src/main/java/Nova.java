@@ -72,18 +72,18 @@ public class Nova {
                     findCommand.execute(tasks, ui, storage);
                     break;
                 case MARK:
-                    int markIndex = parser.parseTaskIndex(command, "mark", tasks.size());
-                    Command markCommand = new MarkCommand(markIndex);
+                    int markTaskNumber = parser.parseTaskNumber(command, "mark");
+                    Command markCommand = new MarkCommand(markTaskNumber);
                     markCommand.execute(tasks, ui, storage);
                     break;
                 case UNMARK:
-                    int unmarkIndex = parser.parseTaskIndex(command, "unmark", tasks.size());
-                    Command unmarkCommand = new UnmarkCommand(unmarkIndex);
+                    int unmarkTaskNumber = parser.parseTaskNumber(command, "unmark");
+                    Command unmarkCommand = new UnmarkCommand(unmarkTaskNumber);
                     unmarkCommand.execute(tasks, ui, storage);
                     break;
                 case DELETE:
-                    int deleteIndex = parser.parseTaskIndex(command, "delete", tasks.size());
-                    Command deleteCommand = new DeleteCommand(deleteIndex);
+                    int deleteTaskNumber = parser.parseTaskNumber(command, "delete");
+                    Command deleteCommand = new DeleteCommand(deleteTaskNumber);
                     deleteCommand.execute(tasks, ui, storage);
                     break;
                 case BYE:
