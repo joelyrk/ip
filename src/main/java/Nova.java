@@ -56,13 +56,16 @@ public class Nova {
                     listCommand.execute(tasks, ui, storage);
                     break;
                 case TODO:
-                    addTask(parser.parseTodo(command));
+                    Command todoCommand = new AddCommand(parser.parseTodo(command));
+                    todoCommand.execute(tasks, ui, storage);
                     break;
                 case DEADLINE:
-                    addTask(parser.parseDeadline(command));
+                    Command deadlineCommand = new AddCommand(parser.parseDeadline(command));
+                    deadlineCommand.execute(tasks, ui, storage);
                     break;
                 case EVENT:
-                    addTask(parser.parseEvent(command));
+                    Command eventCommand = new AddCommand(parser.parseEvent(command));
+                    eventCommand.execute(tasks, ui, storage);
                     break;
                 case ON:
                     Command findCommand = new FindCommand(parser.parseSearchDate(command));
@@ -105,22 +108,6 @@ public class Nova {
      */
     public static void main(String[] args) {
         new Nova("data/nova.txt").run();
-    }
-
-    /**
-     * Adds a task and prints the standard confirmation.
-     *
-     * @param task task to add
-     */
-    private void addTask(Task task) throws NovaException {
-        tasks.add(task);
-        try {
-            storage.save(tasks.getTasks());
-        } catch (NovaException e) {
-            tasks.remove(tasks.size() - 1);
-            throw e;
-        }
-        ui.showTaskAdded(task, tasks.size());
     }
 
     /**
