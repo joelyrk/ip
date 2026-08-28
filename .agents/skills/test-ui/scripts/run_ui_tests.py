@@ -153,7 +153,7 @@ def show_block(label: str, content: str) -> None:
 def run_tests(plan_path: Path, java_home: Path) -> int:
     """Compile Nova and run plan cases, stopping at the first failure."""
     cases = parse_plan(plan_path)
-    source_files = sorted((REPO_ROOT / "src" / "main" / "java").glob("*.java"))
+    source_files = sorted((REPO_ROOT / "src" / "main" / "java").rglob("*.java"))
     if not source_files:
         raise RuntimeError("No Java source files found in src/main/java")
 
@@ -193,7 +193,12 @@ def run_tests(plan_path: Path, java_home: Path) -> int:
                     data_file.parent.chmod(0o555)
                 try:
                     result = subprocess.run(
-                        [str(java_home / "bin" / "java"), "-cp", build_directory, "Nova"],
+                        [
+                            str(java_home / "bin" / "java"),
+                            "-cp",
+                            build_directory,
+                            "nova.Nova",
+                        ],
                         cwd=case_root,
                         input=process_input,
                         capture_output=True,

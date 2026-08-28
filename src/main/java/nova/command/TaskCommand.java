@@ -1,3 +1,8 @@
+package nova.command;
+
+import nova.exception.NovaException;
+import nova.task.TaskList;
+
 /**
  * Represents a command that targets a task by its user-facing task number.
  */

@@ -2,7 +2,7 @@
 
 Run the cases with the repository-local `test-ui` skill. Each case starts a fresh Nova process. The expected output is the program's complete standard output; comparisons normalize CRLF to LF and ignore trailing newline characters only.
 
-The program is compiled from `src/main/java/*.java`, runs with main class `Nova`, and requires Java 25. The test runner stops immediately after the first compilation, runtime, or output-comparison failure.
+The program is compiled recursively from `src/main/java`, runs with main class `nova.Nova`, and requires Java 25. The test runner stops immediately after the first compilation, runtime, or output-comparison failure.
 
 ## TC-01: Add and list all task types
 

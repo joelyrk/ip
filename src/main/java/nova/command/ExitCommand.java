@@ -1,3 +1,9 @@
+package nova.command;
+
+import nova.storage.Storage;
+import nova.task.TaskList;
+import nova.ui.Ui;
+
 /**
  * Displays Nova's farewell and ends the command loop.
  */

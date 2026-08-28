@@ -1,3 +1,5 @@
+package nova.parser;
+
 /**
  * Identifies the commands that Nova can execute.
  */
