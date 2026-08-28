@@ -5,13 +5,35 @@ import java.time.LocalDate;
  */
 public class Parser {
     /**
+     * Converts a complete line of user input into an executable command.
+     *
+     * @param fullCommand complete command entered by the user
+     * @return command containing the parsed arguments
+     * @throws NovaException if the command or any of its arguments is invalid
+     */
+    public Command parse(String fullCommand) throws NovaException {
+        CommandType commandType = parseCommandType(fullCommand);
+        return switch (commandType) {
+        case LIST -> new ListCommand();
+        case TODO -> new AddCommand(parseTodo(fullCommand));
+        case DEADLINE -> new AddCommand(parseDeadline(fullCommand));
+        case EVENT -> new AddCommand(parseEvent(fullCommand));
+        case ON -> new FindCommand(parseSearchDate(fullCommand));
+        case MARK -> new MarkCommand(parseTaskNumber(fullCommand, "mark"));
+        case UNMARK -> new UnmarkCommand(parseTaskNumber(fullCommand, "unmark"));
+        case DELETE -> new DeleteCommand(parseTaskNumber(fullCommand, "delete"));
+        case BYE -> new ExitCommand();
+        };
+    }
+
+    /**
      * Identifies the type of a complete command.
      *
      * @param command trimmed command entered by the user
      * @return matching command type
      * @throws NovaException if the command is blank or has an unknown form
      */
-    public CommandType parseCommandType(String command) throws NovaException {
+    private CommandType parseCommandType(String command) throws NovaException {
         if (command.isEmpty()) {
             throw new NovaException("You entered a blank command. Try todo, deadline, event, on, list, mark, "
                     + "unmark, delete, or bye.");
@@ -34,7 +56,7 @@ public class Parser {
      * @return the parsed todo
      * @throws NovaException if the description is empty
      */
-    public Task parseTodo(String command) throws NovaException {
+    private Task parseTodo(String command) throws NovaException {
         String description = command.substring("todo".length()).trim();
         if (description.isEmpty()) {
             throw new NovaException("A todo needs a description. Try: todo <description>.");
@@ -49,7 +71,7 @@ public class Parser {
      * @return the parsed deadline
      * @throws NovaException if a required deadline field is missing
      */
-    public Task parseDeadline(String command) throws NovaException {
+    private Task parseDeadline(String command) throws NovaException {
         String arguments = command.substring("deadline".length()).trim();
         if (arguments.isEmpty()) {
             throw new NovaException("A deadline needs a description. "
@@ -81,7 +103,7 @@ public class Parser {
      * @return the parsed event
      * @throws NovaException if a required event field is missing or out of order
      */
-    public Task parseEvent(String command) throws NovaException {
+    private Task parseEvent(String command) throws NovaException {
         String arguments = command.substring("event".length()).trim();
         if (arguments.isEmpty()) {
             throw new NovaException("An event needs a description and a time range. "
@@ -129,7 +151,7 @@ public class Parser {
      * @return date whose scheduled tasks should be shown
      * @throws NovaException if no valid date follows {@code on}
      */
-    public LocalDate parseSearchDate(String command) throws NovaException {
+    private LocalDate parseSearchDate(String command) throws NovaException {
         String dateText = command.substring("on".length()).trim();
         if (dateText.isEmpty()) {
             throw new NovaException("Tell me which date to search. Try: on 2019-12-02.");
@@ -145,7 +167,7 @@ public class Parser {
      * @return one-based task number entered by the user
      * @throws NovaException if the task number is missing or is not a whole number
      */
-    public int parseTaskNumber(String command, String commandName) throws NovaException {
+    private int parseTaskNumber(String command, String commandName) throws NovaException {
         String taskNumberText = command.substring(commandName.length()).trim();
         if (taskNumberText.isEmpty()) {
             throw new NovaException("Tell me which task to " + commandName
