@@ -83,8 +83,8 @@ public class Nova {
                     break;
                 case DELETE:
                     int deleteIndex = parser.parseTaskIndex(command, "delete", tasks.size());
-                    Task removedTask = deleteTask(deleteIndex);
-                    ui.showTaskDeleted(removedTask, tasks.size());
+                    Command deleteCommand = new DeleteCommand(deleteIndex);
+                    deleteCommand.execute(tasks, ui, storage);
                     break;
                 case BYE:
                     Command exitCommand = new ExitCommand();
@@ -108,23 +108,5 @@ public class Nova {
      */
     public static void main(String[] args) {
         new Nova("data/nova.txt").run();
-    }
-
-    /**
-     * Deletes a task and reinserts it at the same position if saving fails.
-     *
-     * @param taskIndex zero-based index of the task to delete
-     * @return the deleted task
-     * @throws NovaException if the updated list cannot be saved
-     */
-    private Task deleteTask(int taskIndex) throws NovaException {
-        Task removedTask = tasks.remove(taskIndex);
-        try {
-            storage.save(tasks.getTasks());
-        } catch (NovaException e) {
-            tasks.add(taskIndex, removedTask);
-            throw e;
-        }
-        return removedTask;
     }
 }
