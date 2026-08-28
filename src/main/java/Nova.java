@@ -1,5 +1,4 @@
 import java.nio.file.Path;
-import java.time.LocalDate;
 
 /**
  * Coordinates Nova's storage, task list, parser, and user interface.
@@ -44,7 +43,8 @@ public class Nova {
             ui.showSeparator();
         }
 
-        while (ui.hasNextCommand()) {
+        boolean isExit = false;
+        while (!isExit && ui.hasNextCommand()) {
             String command = ui.readCommand();
             ui.showSeparator();
 
@@ -65,8 +65,8 @@ public class Nova {
                     addTask(parser.parseEvent(command));
                     break;
                 case ON:
-                    LocalDate searchDate = parser.parseSearchDate(command);
-                    ui.showTasksOn(searchDate, tasks.findTasksOn(searchDate));
+                    Command findCommand = new FindCommand(parser.parseSearchDate(command));
+                    findCommand.execute(tasks, ui, storage);
                     break;
                 case MARK:
                     int markIndex = parser.parseTaskIndex(command, "mark", tasks.size());
@@ -84,8 +84,10 @@ public class Nova {
                     ui.showTaskDeleted(removedTask, tasks.size());
                     break;
                 case BYE:
-                    ui.showGoodbye();
-                    return;
+                    Command exitCommand = new ExitCommand();
+                    exitCommand.execute(tasks, ui, storage);
+                    isExit = exitCommand.isExit();
+                    break;
                 default:
                     throw new IllegalStateException("Unhandled command type: " + commandType);
                 }

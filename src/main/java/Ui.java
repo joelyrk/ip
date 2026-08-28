@@ -143,10 +143,9 @@ public class Ui {
     }
 
     /**
-     * Displays Nova's farewell.
+     * Displays Nova's farewell message.
      */
     public void showGoodbye() {
         System.out.println(" Bye. Hope to see you again soon!");
-        System.out.println(SEPARATOR);
     }
 }
