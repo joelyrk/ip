@@ -1,3 +1,10 @@
+package nova.command;
+
+import nova.exception.NovaException;
+import nova.storage.Storage;
+import nova.task.TaskList;
+import nova.ui.Ui;
+
 /**
  * Represents an executable command understood by Nova.
  */

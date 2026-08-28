@@ -1,3 +1,11 @@
+package nova.command;
+
+import nova.exception.NovaException;
+import nova.storage.Storage;
+import nova.task.Task;
+import nova.task.TaskList;
+import nova.ui.Ui;
+
 /**
  * Deletes a task and persists the updated task list.
  */

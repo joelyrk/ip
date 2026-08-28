@@ -1,3 +1,8 @@
+package nova.command;
+
+import nova.task.Task;
+import nova.ui.Ui;
+
 /**
  * Marks a task as completed.
  */

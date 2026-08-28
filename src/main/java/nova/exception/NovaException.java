@@ -1,3 +1,5 @@
+package nova.exception;
+
 /**
  * Represents an input or command error that Nova can explain to the user.
  */
