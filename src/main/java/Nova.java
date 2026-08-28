@@ -73,13 +73,13 @@ public class Nova {
                     break;
                 case MARK:
                     int markIndex = parser.parseTaskIndex(command, "mark", tasks.size());
-                    updateTaskStatus(markIndex, true);
-                    ui.showTaskMarked(tasks.get(markIndex));
+                    Command markCommand = new MarkCommand(markIndex);
+                    markCommand.execute(tasks, ui, storage);
                     break;
                 case UNMARK:
                     int unmarkIndex = parser.parseTaskIndex(command, "unmark", tasks.size());
-                    updateTaskStatus(unmarkIndex, false);
-                    ui.showTaskUnmarked(tasks.get(unmarkIndex));
+                    Command unmarkCommand = new UnmarkCommand(unmarkIndex);
+                    unmarkCommand.execute(tasks, ui, storage);
                     break;
                 case DELETE:
                     int deleteIndex = parser.parseTaskIndex(command, "delete", tasks.size());
@@ -108,34 +108,6 @@ public class Nova {
      */
     public static void main(String[] args) {
         new Nova("data/nova.txt").run();
-    }
-
-    /**
-     * Changes a task's completion state and restores it if saving fails.
-     *
-     * @param taskIndex zero-based index of the task whose status should change
-     * @param isDone desired completion state
-     * @throws NovaException if the updated list cannot be saved
-     */
-    private void updateTaskStatus(int taskIndex, boolean isDone) throws NovaException {
-        Task task = tasks.get(taskIndex);
-        boolean previousStatus = task.isDone();
-        if (isDone) {
-            tasks.mark(taskIndex);
-        } else {
-            tasks.unmark(taskIndex);
-        }
-
-        try {
-            storage.save(tasks.getTasks());
-        } catch (NovaException e) {
-            if (previousStatus) {
-                tasks.mark(taskIndex);
-            } else {
-                tasks.unmark(taskIndex);
-            }
-            throw e;
-        }
     }
 
     /**
