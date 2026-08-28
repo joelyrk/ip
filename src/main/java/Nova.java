@@ -52,7 +52,8 @@ public class Nova {
                 CommandType commandType = parser.parseCommandType(command);
                 switch (commandType) {
                 case LIST:
-                    ui.showTaskList(tasks.getTasks());
+                    Command listCommand = new ListCommand();
+                    listCommand.execute(tasks, ui, storage);
                     break;
                 case TODO:
                     addTask(parser.parseTodo(command));
