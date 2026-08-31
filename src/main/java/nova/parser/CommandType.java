@@ -4,14 +4,23 @@ package nova.parser;
  * Identifies the commands that Nova can execute.
  */
 public enum CommandType {
+    /** Adds a task without a date or time. */
     TODO("todo", true),
+    /** Adds a task with a due date or time. */
     DEADLINE("deadline", true),
+    /** Adds a task with a start and end date or time. */
     EVENT("event", true),
+    /** Finds scheduled tasks occurring on a date. */
     ON("on", true),
+    /** Displays all tasks. */
     LIST("list", false),
+    /** Marks a task as completed. */
     MARK("mark", true),
+    /** Marks a task as not completed. */
     UNMARK("unmark", true),
+    /** Removes a task. */
     DELETE("delete", true),
+    /** Exits Nova. */
     BYE("bye", false);
 
     private final String keyword;

@@ -10,6 +10,13 @@ import nova.ui.Ui;
  */
 public abstract class Command {
     /**
+     * Creates a command.
+     */
+    public Command() {
+        // Command-specific arguments are initialized by subclasses.
+    }
+
+    /**
      * Performs this command using Nova's application components.
      *
      * @param tasks task list to query or update

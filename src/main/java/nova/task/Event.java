@@ -30,11 +30,17 @@ public class Event extends Task {
         this.toHasTime = toHasTime;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected String getTypeIcon() {
         return "E";
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean occursOn(LocalDate date) {
         LocalDate startDate = from.toLocalDate();
@@ -42,6 +48,9 @@ public class Event extends Task {
         return !date.isBefore(startDate) && !date.isAfter(endDate);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toFileString() {
         return super.toFileString() + " | "
@@ -49,6 +58,9 @@ public class Event extends Task {
                 + " | " + TaskDateTime.formatForStorage(to, toHasTime);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         return super.toString() + " (from: "
