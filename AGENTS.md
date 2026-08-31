@@ -54,6 +54,8 @@ Do not change an expected output merely to make a failing test pass. Update it o
 
 ## Git
 
+Before proposing, creating, or reviewing any commit or commit message, invoke and follow the project-specific `seedu-git-standard` skill in `.agents/skills/seedu-git-standard`. Treat its subject and body rules as mandatory for every future commit in this repository. Also follow its branch-naming rules when creating a branch unless the user specifies an exact branch name.
+
 Use lightweight tags unless the user requests an annotated tag.
 When proposing or creating a commit message, include enough detail to explain the rationale for the change.
 Do not commit or push unless explicitly asked.
