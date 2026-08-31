@@ -13,13 +13,13 @@ import nova.task.TaskList;
  * Handles Nova's console input and output.
  */
 public class Ui {
-    private static final String SEPARATOR = "_".repeat(60);
-    private static final String BANNER = " _   _                 \n"
+    private static final String DISPLAY_SEPARATOR = "_".repeat(60);
+    private static final String DISPLAY_BANNER = " _   _                 \n"
             + "| \\ | | _____   ____ _ \n"
             + "|  \\| |/ _ \\ \\ / / _` |\n"
             + "| |\\  | (_) \\ V / (_| |\n"
             + "|_| \\_|\\___/ \\_/ \\__,_|\n";
-    private static final DateTimeFormatter DISPLAY_DATE =
+    private static final DateTimeFormatter DISPLAY_DATE_FORMATTER =
             DateTimeFormatter.ofPattern("MMM dd uuuu");
 
     private final Scanner scanner;
@@ -35,17 +35,17 @@ public class Ui {
      * Displays Nova's greeting when the application starts.
      */
     public void showWelcome() {
-        System.out.println(SEPARATOR);
-        System.out.print(BANNER);
+        System.out.println(DISPLAY_SEPARATOR);
+        System.out.print(DISPLAY_BANNER);
         System.out.println("Hello! I'm Nova.");
         System.out.println("What can I do for you?");
-        System.out.println(SEPARATOR);
+        System.out.println(DISPLAY_SEPARATOR);
     }
 
     /**
      * Returns whether another command is available from the user.
      *
-     * @return {@code true} when another input line can be read
+     * @return {@code true} when another input line can be read.
      */
     public boolean hasNextCommand() {
         return scanner.hasNextLine();
@@ -54,7 +54,7 @@ public class Ui {
     /**
      * Reads and trims the next command entered by the user.
      *
-     * @return the next command
+     * @return the next command.
      */
     public String readCommand() {
         return scanner.nextLine().trim();
@@ -64,13 +64,13 @@ public class Ui {
      * Displays the line used to separate command responses.
      */
     public void showSeparator() {
-        System.out.println(SEPARATOR);
+        System.out.println(DISPLAY_SEPARATOR);
     }
 
     /**
      * Displays a user-friendly error message.
      *
-     * @param error error to explain to the user
+     * @param error error to explain to the user.
      */
     public void showError(NovaException error) {
         System.out.println(" OOPS!!! " + error.getMessage());
@@ -79,7 +79,7 @@ public class Ui {
     /**
      * Displays all tasks in their current list order.
      *
-     * @param tasks tasks to display
+     * @param tasks tasks to display.
      */
     public void showTaskList(List<Task> tasks) {
         System.out.println(" Here are the tasks in your list:");
@@ -91,8 +91,8 @@ public class Ui {
     /**
      * Displays the confirmation shown after a task is added.
      *
-     * @param task newly added task
-     * @param taskCount total number of tasks after the addition
+     * @param task newly added task.
+     * @param taskCount total number of tasks after the addition.
      */
     public void showTaskAdded(Task task, int taskCount) {
         System.out.println(" Got it. I've added this task:");
@@ -103,7 +103,7 @@ public class Ui {
     /**
      * Displays the confirmation shown after a task is marked as done.
      *
-     * @param task task that was marked
+     * @param task task that was marked.
      */
     public void showTaskMarked(Task task) {
         System.out.println(" Nice! I've marked this task as done:");
@@ -113,7 +113,7 @@ public class Ui {
     /**
      * Displays the confirmation shown after a task is marked as not done.
      *
-     * @param task task that was unmarked
+     * @param task task that was unmarked.
      */
     public void showTaskUnmarked(Task task) {
         System.out.println(" OK, I've marked this task as not done yet:");
@@ -123,8 +123,8 @@ public class Ui {
     /**
      * Displays the confirmation shown after a task is deleted.
      *
-     * @param task deleted task
-     * @param taskCount total number of remaining tasks
+     * @param task deleted task.
+     * @param taskCount total number of remaining tasks.
      */
     public void showTaskDeleted(Task task, int taskCount) {
         System.out.println(" Noted. I've removed this task:");
@@ -135,11 +135,11 @@ public class Ui {
     /**
      * Displays scheduled tasks occurring on a date while retaining their original numbers.
      *
-     * @param date date being searched
-     * @param tasks matching tasks with their original task numbers
+     * @param date date being searched.
+     * @param tasks matching tasks with their original task numbers.
      */
     public void showTasksOn(LocalDate date, List<TaskList.NumberedTask> tasks) {
-        System.out.println(" Here are the tasks occurring on " + date.format(DISPLAY_DATE) + ":");
+        System.out.println(" Here are the tasks occurring on " + date.format(DISPLAY_DATE_FORMATTER) + ":");
         for (TaskList.NumberedTask numberedTask : tasks) {
             System.out.println(" " + numberedTask.number() + "." + numberedTask.task());
         }

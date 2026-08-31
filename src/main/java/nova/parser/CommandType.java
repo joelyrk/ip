@@ -20,8 +20,8 @@ public enum CommandType {
     /**
      * Creates a command type with its user-facing keyword and argument policy.
      *
-     * @param keyword word that starts this command
-     * @param acceptsArguments whether text may follow the keyword
+     * @param keyword word that starts this command.
+     * @param acceptsArguments whether text may follow the keyword.
      */
     CommandType(String keyword, boolean acceptsArguments) {
         this.keyword = keyword;
@@ -31,8 +31,8 @@ public enum CommandType {
     /**
      * Returns whether a complete command uses this command type.
      *
-     * @param command trimmed command entered by the user
-     * @return {@code true} if the keyword and argument form match
+     * @param command trimmed command entered by the user.
+     * @return {@code true} if the keyword and argument form match.
      */
     boolean matches(String command) {
         boolean isExactMatch = command.equals(keyword);

@@ -20,7 +20,7 @@ public class TaskList {
     /**
      * Creates a task list containing the supplied tasks in their current order.
      *
-     * @param initialTasks tasks loaded when Nova starts
+     * @param initialTasks tasks loaded when Nova starts.
      */
     public TaskList(List<Task> initialTasks) {
         tasks = new ArrayList<>(initialTasks);
@@ -29,7 +29,7 @@ public class TaskList {
     /**
      * Returns the number of tasks in the list.
      *
-     * @return current task count
+     * @return current task count.
      */
     public int size() {
         return tasks.size();
@@ -38,8 +38,8 @@ public class TaskList {
     /**
      * Returns the task at a zero-based index.
      *
-     * @param index zero-based task index
-     * @return task at the index
+     * @param index zero-based task index.
+     * @return task at the index.
      */
     public Task get(int index) {
         return tasks.get(index);
@@ -48,7 +48,7 @@ public class TaskList {
     /**
      * Returns an immutable snapshot of the tasks in list order.
      *
-     * @return current tasks
+     * @return current tasks.
      */
     public List<Task> getTasks() {
         return List.copyOf(tasks);
@@ -57,7 +57,7 @@ public class TaskList {
     /**
      * Adds a task to the end of the list.
      *
-     * @param task task to add
+     * @param task task to add.
      */
     public void add(Task task) {
         tasks.add(task);
@@ -67,8 +67,8 @@ public class TaskList {
      * Inserts a task at a specific position.
      * This supports restoring a deletion when saving fails.
      *
-     * @param index zero-based insertion index
-     * @param task task to insert
+     * @param index zero-based insertion index.
+     * @param task task to insert.
      */
     public void add(int index, Task task) {
         tasks.add(index, task);
@@ -77,8 +77,8 @@ public class TaskList {
     /**
      * Removes and returns the task at a zero-based index.
      *
-     * @param index zero-based task index
-     * @return removed task
+     * @param index zero-based task index.
+     * @return removed task.
      */
     public Task remove(int index) {
         return tasks.remove(index);
@@ -87,7 +87,7 @@ public class TaskList {
     /**
      * Marks a task as completed.
      *
-     * @param index zero-based task index
+     * @param index zero-based task index.
      */
     public void mark(int index) {
         tasks.get(index).markAsDone();
@@ -96,7 +96,7 @@ public class TaskList {
     /**
      * Marks a task as not completed.
      *
-     * @param index zero-based task index
+     * @param index zero-based task index.
      */
     public void unmark(int index) {
         tasks.get(index).markAsNotDone();
@@ -105,8 +105,8 @@ public class TaskList {
     /**
      * Finds scheduled tasks occurring on a date and retains their original task numbers.
      *
-     * @param date date to search
-     * @return matching tasks with their one-based task numbers
+     * @param date date to search.
+     * @return matching tasks with their one-based task numbers.
      */
     public List<NumberedTask> findTasksOn(LocalDate date) {
         List<NumberedTask> matchingTasks = new ArrayList<>();
@@ -122,8 +122,8 @@ public class TaskList {
     /**
      * Couples a task with its one-based number in the complete task list.
      *
-     * @param number task number shown to the user
-     * @param task matching task
+     * @param number task number shown to the user.
+     * @param task matching task.
      */
     public record NumberedTask(int number, Task task) {
     }

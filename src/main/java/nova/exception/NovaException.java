@@ -7,7 +7,7 @@ public class NovaException extends Exception {
     /**
      * Creates an exception with a user-friendly explanation of the error.
      *
-     * @param message explanation shown to the user
+     * @param message explanation shown to the user.
      */
     public NovaException(String message) {
         super(message);
@@ -16,8 +16,8 @@ public class NovaException extends Exception {
     /**
      * Creates an exception with a user-friendly explanation and its technical cause.
      *
-     * @param message explanation shown to the user
-     * @param cause lower-level error that caused this exception
+     * @param message explanation shown to the user.
+     * @param cause lower-level error that caused this exception.
      */
     public NovaException(String message, Throwable cause) {
         super(message, cause);

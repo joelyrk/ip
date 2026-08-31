@@ -13,7 +13,7 @@ public class DeleteCommand extends TaskCommand {
     /**
      * Creates a command that deletes the selected task.
      *
-     * @param taskNumber one-based number of the task to delete
+     * @param taskNumber one-based number of the task to delete.
      */
     public DeleteCommand(int taskNumber) {
         super(taskNumber, "delete");
@@ -22,10 +22,10 @@ public class DeleteCommand extends TaskCommand {
     /**
      * Deletes and saves the task, restoring it at its original index if saving fails.
      *
-     * @param tasks task list to update
-     * @param ui user interface used to display the confirmation
-     * @param storage storage used to persist the updated list
-     * @throws NovaException if the updated list cannot be saved
+     * @param tasks task list to update.
+     * @param ui user interface used to display the confirmation.
+     * @param storage storage used to persist the updated list.
+     * @throws NovaException if the updated list cannot be saved.
      */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws NovaException {

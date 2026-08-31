@@ -16,18 +16,21 @@ import nova.exception.NovaException;
  * Parses and formats the date/time values used by deadlines and events.
  */
 public final class TaskDateTime {
-    private static final DateTimeFormatter ISO_DATE = strictFormatter("uuuu-MM-dd");
-    private static final DateTimeFormatter SLASH_DATE = strictFormatter("d/M/uuuu");
-    private static final DateTimeFormatter ISO_DATE_TIME = strictFormatter("uuuu-MM-dd HHmm");
-    private static final DateTimeFormatter SLASH_DATE_TIME = strictFormatter("d/M/uuuu HHmm");
-    private static final List<DateTimeFormatter> DATE_FORMATTERS = List.of(ISO_DATE, SLASH_DATE);
-    private static final List<DateTimeFormatter> DATE_TIME_FORMATTERS =
-            List.of(ISO_DATE_TIME, SLASH_DATE_TIME);
-    private static final DateTimeFormatter DISPLAY_DATE =
+    private static final DateTimeFormatter DATE_TIME_FORMATTER_ISO_DATE = strictFormatter("uuuu-MM-dd");
+    private static final DateTimeFormatter DATE_TIME_FORMATTER_SLASH_DATE = strictFormatter("d/M/uuuu");
+    private static final DateTimeFormatter DATE_TIME_FORMATTER_ISO_DATE_TIME =
+            strictFormatter("uuuu-MM-dd HHmm");
+    private static final DateTimeFormatter DATE_TIME_FORMATTER_SLASH_DATE_TIME =
+            strictFormatter("d/M/uuuu HHmm");
+    private static final List<DateTimeFormatter> DATE_TIME_FORMATTERS_DATE =
+            List.of(DATE_TIME_FORMATTER_ISO_DATE, DATE_TIME_FORMATTER_SLASH_DATE);
+    private static final List<DateTimeFormatter> DATE_TIME_FORMATTERS_DATE_TIME =
+            List.of(DATE_TIME_FORMATTER_ISO_DATE_TIME, DATE_TIME_FORMATTER_SLASH_DATE_TIME);
+    private static final DateTimeFormatter DATE_TIME_FORMATTER_DISPLAY_DATE =
             DateTimeFormatter.ofPattern("MMM dd uuuu", Locale.ENGLISH);
-    private static final DateTimeFormatter DISPLAY_DATE_TIME =
+    private static final DateTimeFormatter DATE_TIME_FORMATTER_DISPLAY_DATE_TIME =
             DateTimeFormatter.ofPattern("MMM dd uuuu, h:mm a", Locale.ENGLISH);
-    private static final DateTimeFormatter STORAGE_DATE_TIME =
+    private static final DateTimeFormatter DATE_TIME_FORMATTER_STORAGE_DATE_TIME =
             DateTimeFormatter.ofPattern("uuuu-MM-dd HHmm");
 
     private TaskDateTime() {
@@ -37,14 +40,16 @@ public final class TaskDateTime {
     /**
      * Parses a date, with an optional four-digit 24-hour time.
      *
-     * @param value user-entered date/time text
-     * @param fieldName name used in error guidance, such as {@code /by}
-     * @return parsed value and whether the user supplied a time
-     * @throws NovaException if the value is not a real date/time in a supported format
+     * @param value user-entered date/time text.
+     * @param fieldName name used in error guidance, such as {@code /by}.
+     * @return parsed value and whether the user supplied a time.
+     * @throws NovaException if the value is not a real date/time in a supported format.
      */
     public static ParsedValue parse(String value, String fieldName) throws NovaException {
         boolean hasTime = value.contains(" ");
-        List<DateTimeFormatter> formatters = hasTime ? DATE_TIME_FORMATTERS : DATE_FORMATTERS;
+        List<DateTimeFormatter> formatters = hasTime
+                ? DATE_TIME_FORMATTERS_DATE_TIME
+                : DATE_TIME_FORMATTERS_DATE;
         for (DateTimeFormatter formatter : formatters) {
             try {
                 LocalDateTime dateTime = hasTime
@@ -63,12 +68,12 @@ public final class TaskDateTime {
     /**
      * Parses a date used by the {@code on} search command.
      *
-     * @param value user-entered date text
-     * @return parsed date
-     * @throws NovaException if the value is not a supported date without a time
+     * @param value user-entered date text.
+     * @return parsed date.
+     * @throws NovaException if the value is not a supported date without a time.
      */
     public static LocalDate parseDate(String value) throws NovaException {
-        for (DateTimeFormatter formatter : DATE_FORMATTERS) {
+        for (DateTimeFormatter formatter : DATE_TIME_FORMATTERS_DATE) {
             try {
                 return LocalDate.parse(value, formatter);
             } catch (DateTimeParseException ignored) {
@@ -82,23 +87,27 @@ public final class TaskDateTime {
     /**
      * Formats a task date/time for display.
      *
-     * @param dateTime typed date/time value
-     * @param hasTime whether the time was explicitly supplied
-     * @return readable display value
+     * @param dateTime typed date/time value.
+     * @param hasTime whether the time was explicitly supplied.
+     * @return readable display value.
      */
     public static String formatForDisplay(LocalDateTime dateTime, boolean hasTime) {
-        return dateTime.format(hasTime ? DISPLAY_DATE_TIME : DISPLAY_DATE);
+        return dateTime.format(hasTime
+                ? DATE_TIME_FORMATTER_DISPLAY_DATE_TIME
+                : DATE_TIME_FORMATTER_DISPLAY_DATE);
     }
 
     /**
      * Formats a task date/time in a stable form for storage.
      *
-     * @param dateTime typed date/time value
-     * @param hasTime whether a time should be retained
-     * @return canonical storage value
+     * @param dateTime typed date/time value.
+     * @param hasTime whether a time should be retained.
+     * @return canonical storage value.
      */
     public static String formatForStorage(LocalDateTime dateTime, boolean hasTime) {
-        return dateTime.format(hasTime ? STORAGE_DATE_TIME : ISO_DATE);
+        return dateTime.format(hasTime
+                ? DATE_TIME_FORMATTER_STORAGE_DATE_TIME
+                : DATE_TIME_FORMATTER_ISO_DATE);
     }
 
     private static DateTimeFormatter strictFormatter(String pattern) {
@@ -111,8 +120,8 @@ public final class TaskDateTime {
     /**
      * Couples a typed date/time with the precision supplied by the user.
      *
-     * @param dateTime parsed date/time
-     * @param hasTime whether the original value included a time
+     * @param dateTime parsed date/time.
+     * @param hasTime whether the original value included a time.
      */
     public record ParsedValue(LocalDateTime dateTime, boolean hasTime) {
         public ParsedValue {
