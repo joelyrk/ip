@@ -48,7 +48,9 @@ jar {
 }
 
 shadowJar {
-    archiveFileName = 'duke.jar'
+    archiveFileName = 'nova.jar'
+    // Preserve service-provider metadata when dependencies contribute files under META-INF/services.
+    mergeServiceFiles()
 }
 
 run {
