@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import nova.command.AddCommand;
 import nova.command.DeleteCommand;
 import nova.command.ExitCommand;
+import nova.command.FindDateCommand;
 import nova.command.FindCommand;
 import nova.command.ListCommand;
 import nova.command.MarkCommand;
@@ -30,7 +31,8 @@ public class ParserTest {
                         parser.parse("deadline return book /by 2019-12-02 1800")),
                 () -> assertInstanceOf(AddCommand.class,
                         parser.parse("event meeting /from 2019-12-02 1400 /to 2019-12-02 1600")),
-                () -> assertInstanceOf(FindCommand.class, parser.parse("on 2019-12-02")),
+                () -> assertInstanceOf(FindCommand.class, parser.parse("find book")),
+                () -> assertInstanceOf(FindDateCommand.class, parser.parse("on 2019-12-02")),
                 () -> assertInstanceOf(ListCommand.class, parser.parse("list")),
                 () -> assertInstanceOf(MarkCommand.class, parser.parse("mark 1")),
                 () -> assertInstanceOf(UnmarkCommand.class, parser.parse("unmark 1")),
@@ -43,8 +45,8 @@ public class ParserTest {
     public void parse_blankCommand_throwsActionableException() {
         NovaException exception = assertThrows(NovaException.class, () -> parser.parse(""));
 
-        assertEquals("You entered a blank command. Try todo, deadline, event, on, list, mark, "
-                + "unmark, delete, or bye.", exception.getMessage());
+        assertEquals("You entered a blank command. Try todo, deadline, event, find, on, list, "
+                + "mark, unmark, delete, or bye.", exception.getMessage());
     }
 
     @Test
@@ -52,8 +54,8 @@ public class ParserTest {
         NovaException exception = assertThrows(NovaException.class,
                 () -> parser.parse("list everything"));
 
-        assertEquals("I don't recognize that command. Start with todo, deadline, event, on, list, "
-                + "mark, unmark, delete, or bye.", exception.getMessage());
+        assertEquals("I don't recognize that command. Start with todo, deadline, event, find, on, "
+                + "list, mark, unmark, delete, or bye.", exception.getMessage());
     }
 
     @Test
@@ -105,5 +107,12 @@ public class ParserTest {
         NovaException exception = assertThrows(NovaException.class, () -> parser.parse("on"));
 
         assertEquals("Tell me which date to search. Try: on 2019-12-02.", exception.getMessage());
+    }
+
+    @Test
+    public void parse_findWithoutKeyword_throwsActionableException() {
+        NovaException exception = assertThrows(NovaException.class, () -> parser.parse("find"));
+
+        assertEquals("Tell me what to find. Try: find <keyword>.", exception.getMessage());
     }
 }

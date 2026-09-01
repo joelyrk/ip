@@ -7,6 +7,7 @@ public enum CommandType {
     TODO("todo", true),
     DEADLINE("deadline", true),
     EVENT("event", true),
+    FIND("find", true),
     ON("on", true),
     LIST("list", false),
     MARK("mark", true),
