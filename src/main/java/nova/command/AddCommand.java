@@ -15,7 +15,7 @@ public class AddCommand extends Command {
     /**
      * Creates a command that adds the supplied task.
      *
-     * @param task parsed task to add
+     * @param task parsed task to add.
      */
     public AddCommand(Task task) {
         this.task = task;
@@ -24,10 +24,10 @@ public class AddCommand extends Command {
     /**
      * Adds and saves the task, rolling back the addition if saving fails.
      *
-     * @param tasks task list to update
-     * @param ui user interface used to display the confirmation
-     * @param storage storage used to persist the updated list
-     * @throws NovaException if the updated list cannot be saved
+     * @param tasks task list to update.
+     * @param ui user interface used to display the confirmation.
+     * @param storage storage used to persist the updated list.
+     * @throws NovaException if the updated list cannot be saved.
      */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws NovaException {

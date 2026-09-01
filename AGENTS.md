@@ -24,6 +24,10 @@ Unless the user says otherwise, assume that you are assisting a student working 
 
 # Project-specific requirements
 
+## Java coding standard
+
+For every Java code creation, edit, refactoring, or review in this repository, invoke and follow the project-specific `seedu-java-coding-standard` skill in `.agents/skills/seedu-java-coding-standard`. Treat all basic and intermediate rules captured by that skill as mandatory for production and test code. Use Google Java Style only for topics the SE-EDU standard does not cover.
+
 ## Java version:
 
 Ensure that Java 25 is used when running the application or build tasks. On macOS, use `sdk use java 25.0.3.fx-zulu` to switch to Java 25 if needed.
@@ -49,6 +53,8 @@ After every code update:
 Do not change an expected output merely to make a failing test pass. Update it only when the intended behavior has changed.
 
 ## Git
+
+Before proposing, creating, or reviewing any commit or commit message, invoke and follow the project-specific `seedu-git-standard` skill in `.agents/skills/seedu-git-standard`. Treat its subject and body rules as mandatory for every future commit in this repository. Also follow its branch-naming rules when creating a branch unless the user specifies an exact branch name.
 
 Use lightweight tags unless the user requests an annotated tag.
 When proposing or creating a commit message, include enough detail to explain the rationale for the change.

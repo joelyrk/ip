@@ -31,31 +31,31 @@ public class Parser {
     /**
      * Converts a complete line of user input into an executable command.
      *
-     * @param fullCommand complete command entered by the user
-     * @return command containing the parsed arguments
-     * @throws NovaException if the command or any of its arguments is invalid
+     * @param fullCommand complete command entered by the user.
+     * @return command containing the parsed arguments.
+     * @throws NovaException if the command or any of its arguments is invalid.
      */
     public Command parse(String fullCommand) throws NovaException {
         CommandType commandType = parseCommandType(fullCommand);
         return switch (commandType) {
-        case LIST -> new ListCommand();
-        case TODO -> new AddCommand(parseTodo(fullCommand));
-        case DEADLINE -> new AddCommand(parseDeadline(fullCommand));
-        case EVENT -> new AddCommand(parseEvent(fullCommand));
-        case ON -> new FindCommand(parseSearchDate(fullCommand));
-        case MARK -> new MarkCommand(parseTaskNumber(fullCommand, "mark"));
-        case UNMARK -> new UnmarkCommand(parseTaskNumber(fullCommand, "unmark"));
-        case DELETE -> new DeleteCommand(parseTaskNumber(fullCommand, "delete"));
-        case BYE -> new ExitCommand();
+            case LIST -> new ListCommand();
+            case TODO -> new AddCommand(parseTodo(fullCommand));
+            case DEADLINE -> new AddCommand(parseDeadline(fullCommand));
+            case EVENT -> new AddCommand(parseEvent(fullCommand));
+            case ON -> new FindCommand(parseSearchDate(fullCommand));
+            case MARK -> new MarkCommand(parseTaskNumber(fullCommand, "mark"));
+            case UNMARK -> new UnmarkCommand(parseTaskNumber(fullCommand, "unmark"));
+            case DELETE -> new DeleteCommand(parseTaskNumber(fullCommand, "delete"));
+            case BYE -> new ExitCommand();
         };
     }
 
     /**
      * Identifies the type of a complete command.
      *
-     * @param command trimmed command entered by the user
-     * @return matching command type
-     * @throws NovaException if the command is blank or has an unknown form
+     * @param command trimmed command entered by the user.
+     * @return matching command type.
+     * @throws NovaException if the command is blank or has an unknown form.
      */
     private CommandType parseCommandType(String command) throws NovaException {
         if (command.isEmpty()) {
@@ -76,9 +76,9 @@ public class Parser {
     /**
      * Creates a todo from a command after validating its description.
      *
-     * @param command complete todo command
-     * @return the parsed todo
-     * @throws NovaException if the description is empty
+     * @param command complete todo command.
+     * @return the parsed todo.
+     * @throws NovaException if the description is empty.
      */
     private Task parseTodo(String command) throws NovaException {
         String description = command.substring("todo".length()).trim();
@@ -91,9 +91,9 @@ public class Parser {
     /**
      * Creates a deadline from a command after validating its description and due time.
      *
-     * @param command complete deadline command
-     * @return the parsed deadline
-     * @throws NovaException if a required deadline field is missing
+     * @param command complete deadline command.
+     * @return the parsed deadline.
+     * @throws NovaException if a required deadline field is missing.
      */
     private Task parseDeadline(String command) throws NovaException {
         String arguments = command.substring("deadline".length()).trim();
@@ -109,23 +109,24 @@ public class Parser {
         }
 
         String description = arguments.substring(0, bySeparator).trim();
-        String by = arguments.substring(bySeparator + "/by".length()).trim();
+        String dueDateTimeText = arguments.substring(bySeparator + "/by".length()).trim();
         if (description.isEmpty()) {
             throw new NovaException("A deadline needs a description before /by.");
         }
-        if (by.isEmpty()) {
+        if (dueDateTimeText.isEmpty()) {
             throw new NovaException("The /by field cannot be empty. Add a date or time after /by.");
         }
-        TaskDateTime.ParsedValue dueDateTime = TaskDateTime.parse(by, "/by");
+
+        TaskDateTime.ParsedValue dueDateTime = TaskDateTime.parse(dueDateTimeText, "/by");
         return new Deadline(description, dueDateTime.dateTime(), dueDateTime.hasTime());
     }
 
     /**
      * Creates an event from a command after validating its description and time range.
      *
-     * @param command complete event command
-     * @return the parsed event
-     * @throws NovaException if a required event field is missing or out of order
+     * @param command complete event command.
+     * @return the parsed event.
+     * @throws NovaException if a required event field is missing or out of order.
      */
     private Task parseEvent(String command) throws NovaException {
         String arguments = command.substring("event".length()).trim();
@@ -148,19 +149,20 @@ public class Parser {
         }
 
         String description = arguments.substring(0, fromSeparator).trim();
-        String from = arguments.substring(fromSeparator + "/from".length(), toSeparator).trim();
-        String to = arguments.substring(toSeparator + "/to".length()).trim();
+        String startDateTimeText = arguments.substring(fromSeparator + "/from".length(), toSeparator).trim();
+        String endDateTimeText = arguments.substring(toSeparator + "/to".length()).trim();
         if (description.isEmpty()) {
             throw new NovaException("An event needs a description before /from.");
         }
-        if (from.isEmpty()) {
+        if (startDateTimeText.isEmpty()) {
             throw new NovaException("The /from field cannot be empty. Add a start date or time after /from.");
         }
-        if (to.isEmpty()) {
+        if (endDateTimeText.isEmpty()) {
             throw new NovaException("The /to field cannot be empty. Add an end date or time after /to.");
         }
-        TaskDateTime.ParsedValue start = TaskDateTime.parse(from, "/from");
-        TaskDateTime.ParsedValue end = TaskDateTime.parse(to, "/to");
+
+        TaskDateTime.ParsedValue start = TaskDateTime.parse(startDateTimeText, "/from");
+        TaskDateTime.ParsedValue end = TaskDateTime.parse(endDateTimeText, "/to");
         if (end.dateTime().isBefore(start.dateTime())) {
             throw new NovaException("An event's /to date/time cannot be before its /from date/time.");
         }
@@ -171,9 +173,9 @@ public class Parser {
     /**
      * Parses the date supplied to the date-search command.
      *
-     * @param command complete {@code on} command
-     * @return date whose scheduled tasks should be shown
-     * @throws NovaException if no valid date follows {@code on}
+     * @param command complete {@code on} command.
+     * @return date whose scheduled tasks should be shown.
+     * @throws NovaException if no valid date follows {@code on}.
      */
     private LocalDate parseSearchDate(String command) throws NovaException {
         String dateText = command.substring("on".length()).trim();
@@ -186,10 +188,10 @@ public class Parser {
     /**
      * Parses the task number in a mark, unmark, or delete command.
      *
-     * @param command complete mark, unmark, or delete command
-     * @param commandName command keyword used in error guidance
-     * @return one-based task number entered by the user
-     * @throws NovaException if the task number is missing or is not a whole number
+     * @param command complete mark, unmark, or delete command.
+     * @param commandName command keyword used in error guidance.
+     * @return one-based task number entered by the user.
+     * @throws NovaException if the task number is missing or is not a whole number.
      */
     private int parseTaskNumber(String command, String commandName) throws NovaException {
         String taskNumberText = command.substring(commandName.length()).trim();
@@ -212,9 +214,9 @@ public class Parser {
     /**
      * Finds a command marker only when it appears as a separate token.
      *
-     * @param text command arguments to search
-     * @param marker marker such as {@code /by}, {@code /from}, or {@code /to}
-     * @return the marker's index, or {@code -1} when it is absent
+     * @param text command arguments to search.
+     * @param marker marker such as {@code /by}, {@code /from}, or {@code /to}.
+     * @return the marker's index, or {@code -1} when it is absent.
      */
     private int findMarker(String text, String marker) {
         int markerIndex = text.indexOf(marker);

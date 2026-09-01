@@ -23,7 +23,7 @@ public class Nova {
      * Creates Nova and loads its saved tasks.
      * A loading error is retained so it can be shown after the welcome message.
      *
-     * @param filePath path of Nova's task data file
+     * @param filePath path of Nova's task data file.
      */
     public Nova(String filePath) {
         storage = new Storage(Path.of(filePath));
@@ -72,7 +72,7 @@ public class Nova {
     /**
      * Starts Nova using its default relative data-file path.
      *
-     * @param args command-line arguments, which Nova does not currently use
+     * @param args command-line arguments, which Nova does not currently use.
      */
     public static void main(String[] args) {
         new Nova("data/nova.txt").run();

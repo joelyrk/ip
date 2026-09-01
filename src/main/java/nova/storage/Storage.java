@@ -25,7 +25,7 @@ public class Storage {
     /**
      * Creates storage that writes to the given file.
      *
-     * @param filePath path of the task data file
+     * @param filePath path of the task data file.
      */
     public Storage(Path filePath) {
         this.filePath = filePath;
@@ -34,8 +34,8 @@ public class Storage {
     /**
      * Loads all tasks from the data file in their saved order.
      *
-     * @return the saved tasks, or an empty list if no data file exists yet
-     * @throws NovaException if the data file cannot be read or contains invalid data
+     * @return the saved tasks, or an empty list if no data file exists yet.
+     * @throws NovaException if the data file cannot be read or contains invalid data.
      */
     public List<Task> load() throws NovaException {
         if (!Files.exists(filePath)) {
@@ -67,8 +67,8 @@ public class Storage {
     /**
      * Rewrites the data file so that it reflects the current task list.
      *
-     * @param tasks current tasks in list order
-     * @throws NovaException if the directory or data file cannot be written
+     * @param tasks current tasks in list order.
+     * @throws NovaException if the directory or data file cannot be written.
      */
     public void save(List<Task> tasks) throws NovaException {
         Path temporaryFile = null;
@@ -104,8 +104,8 @@ public class Storage {
     /**
      * Reconstructs one task from its pipe-separated storage representation.
      *
-     * @param line one line from the data file
-     * @return the reconstructed task
+     * @param line one line from the data file.
+     * @return the reconstructed task.
      */
     private Task parseTask(String line) throws NovaException {
         List<String> fields = splitFields(line);
@@ -118,10 +118,10 @@ public class Storage {
 
         String taskType = fields.get(0);
         int expectedFieldCount = switch (taskType) {
-        case "T" -> 3;
-        case "D" -> 4;
-        case "E" -> 5;
-        default -> throw new NovaException("'" + taskType + "' is not a known task type.");
+            case "T" -> 3;
+            case "D" -> 4;
+            case "E" -> 5;
+            default -> throw new NovaException("'" + taskType + "' is not a known task type.");
         };
         if (fields.size() != expectedFieldCount) {
             throw new NovaException("task type " + taskType + " needs "
@@ -135,24 +135,24 @@ public class Storage {
 
         Task task;
         switch (taskType) {
-        case "T":
-            task = new Todo(fields.get(2));
-            break;
-        case "D":
-            TaskDateTime.ParsedValue due = TaskDateTime.parse(fields.get(3), "stored /by");
-            task = new Deadline(fields.get(2), due.dateTime(), due.hasTime());
-            break;
-        case "E":
-            TaskDateTime.ParsedValue start = TaskDateTime.parse(fields.get(3), "stored /from");
-            TaskDateTime.ParsedValue end = TaskDateTime.parse(fields.get(4), "stored /to");
-            if (end.dateTime().isBefore(start.dateTime())) {
-                throw new NovaException("the stored event ends before it starts.");
-            }
-            task = new Event(fields.get(2), start.dateTime(), start.hasTime(),
-                    end.dateTime(), end.hasTime());
-            break;
-        default:
-            throw new IllegalStateException("Task type was already validated: " + taskType);
+            case "T":
+                task = new Todo(fields.get(2));
+                break;
+            case "D":
+                TaskDateTime.ParsedValue due = TaskDateTime.parse(fields.get(3), "stored /by");
+                task = new Deadline(fields.get(2), due.dateTime(), due.hasTime());
+                break;
+            case "E":
+                TaskDateTime.ParsedValue start = TaskDateTime.parse(fields.get(3), "stored /from");
+                TaskDateTime.ParsedValue end = TaskDateTime.parse(fields.get(4), "stored /to");
+                if (end.dateTime().isBefore(start.dateTime())) {
+                    throw new NovaException("the stored event ends before it starts.");
+                }
+                task = new Event(fields.get(2), start.dateTime(), start.hasTime(),
+                        end.dateTime(), end.hasTime());
+                break;
+            default:
+                throw new IllegalStateException("Task type was already validated: " + taskType);
         }
 
         if (fields.get(1).equals("1")) {
@@ -164,8 +164,8 @@ public class Storage {
     /**
      * Splits a storage line while preserving escaped pipes and backslashes in task text.
      *
-     * @param line one line from the data file
-     * @return unescaped fields without separator padding
+     * @param line one line from the data file.
+     * @return unescaped fields without separator padding.
      */
     private List<String> splitFields(String line) {
         List<String> fields = new ArrayList<>();
@@ -198,8 +198,8 @@ public class Storage {
     /**
      * Replaces the old data file atomically when the file system supports it.
      *
-     * @param temporaryFile completely written replacement data
-     * @throws IOException if the replacement cannot be moved into place
+     * @param temporaryFile completely written replacement data.
+     * @throws IOException if the replacement cannot be moved into place.
      */
     private void replaceDataFile(Path temporaryFile) throws IOException {
         try {
