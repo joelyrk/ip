@@ -120,6 +120,23 @@ public class TaskList {
     }
 
     /**
+     * Finds tasks whose descriptions contain a keyword and retains their original task numbers.
+     *
+     * @param keyword keyword to find, ignoring letter case.
+     * @return matching tasks with their one-based task numbers.
+     */
+    public List<NumberedTask> findTasksByDescription(String keyword) {
+        List<NumberedTask> matchingTasks = new ArrayList<>();
+        for (int i = 0; i < tasks.size(); i++) {
+            Task task = tasks.get(i);
+            if (task.hasDescriptionContaining(keyword)) {
+                matchingTasks.add(new NumberedTask(i + 1, task));
+            }
+        }
+        return matchingTasks;
+    }
+
+    /**
      * Couples a task with its one-based number in the complete task list.
      *
      * @param number task number shown to the user.

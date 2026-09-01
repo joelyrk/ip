@@ -6,6 +6,7 @@ import nova.command.AddCommand;
 import nova.command.Command;
 import nova.command.DeleteCommand;
 import nova.command.ExitCommand;
+import nova.command.FindDateCommand;
 import nova.command.FindCommand;
 import nova.command.ListCommand;
 import nova.command.MarkCommand;
@@ -42,7 +43,8 @@ public class Parser {
             case TODO -> new AddCommand(parseTodo(fullCommand));
             case DEADLINE -> new AddCommand(parseDeadline(fullCommand));
             case EVENT -> new AddCommand(parseEvent(fullCommand));
-            case ON -> new FindCommand(parseSearchDate(fullCommand));
+            case FIND -> new FindCommand(parseSearchKeyword(fullCommand));
+            case ON -> new FindDateCommand(parseSearchDate(fullCommand));
             case MARK -> new MarkCommand(parseTaskNumber(fullCommand, "mark"));
             case UNMARK -> new UnmarkCommand(parseTaskNumber(fullCommand, "unmark"));
             case DELETE -> new DeleteCommand(parseTaskNumber(fullCommand, "delete"));
@@ -59,8 +61,8 @@ public class Parser {
      */
     private CommandType parseCommandType(String command) throws NovaException {
         if (command.isEmpty()) {
-            throw new NovaException("You entered a blank command. Try todo, deadline, event, on, list, mark, "
-                    + "unmark, delete, or bye.");
+            throw new NovaException("You entered a blank command. Try todo, deadline, event, find, on, list, "
+                    + "mark, unmark, delete, or bye.");
         }
 
         for (CommandType commandType : CommandType.values()) {
@@ -69,7 +71,7 @@ public class Parser {
             }
         }
 
-        throw new NovaException("I don't recognize that command. Start with todo, deadline, event, on, "
+        throw new NovaException("I don't recognize that command. Start with todo, deadline, event, find, on, "
                 + "list, mark, unmark, delete, or bye.");
     }
 
@@ -183,6 +185,21 @@ public class Parser {
             throw new NovaException("Tell me which date to search. Try: on 2019-12-02.");
         }
         return TaskDateTime.parseDate(dateText);
+    }
+
+    /**
+     * Parses the keyword supplied to the task-description search command.
+     *
+     * @param command complete {@code find} command.
+     * @return keyword to find in task descriptions.
+     * @throws NovaException if no keyword follows {@code find}.
+     */
+    private String parseSearchKeyword(String command) throws NovaException {
+        String keyword = command.substring("find".length()).trim();
+        if (keyword.isEmpty()) {
+            throw new NovaException("Tell me what to find. Try: find <keyword>.");
+        }
+        return keyword;
     }
 
     /**

@@ -198,10 +198,10 @@ ____________________________________________________________
  OOPS!!! A todo needs a description. Try: todo <description>.
 ____________________________________________________________
 ____________________________________________________________
- OOPS!!! I don't recognize that command. Start with todo, deadline, event, on, list, mark, unmark, delete, or bye.
+ OOPS!!! I don't recognize that command. Start with todo, deadline, event, find, on, list, mark, unmark, delete, or bye.
 ____________________________________________________________
 ____________________________________________________________
- OOPS!!! You entered a blank command. Try todo, deadline, event, on, list, mark, unmark, delete, or bye.
+ OOPS!!! You entered a blank command. Try todo, deadline, event, find, on, list, mark, unmark, delete, or bye.
 ____________________________________________________________
 ____________________________________________________________
  Bye. Hope to see you again soon!
@@ -859,6 +859,79 @@ ____________________________________________________________
 ____________________________________________________________
 ____________________________________________________________
  OOPS!!! The date after on must be a real date in yyyy-MM-dd or d/M/yyyy format, for example: on 2019-12-02.
+____________________________________________________________
+____________________________________________________________
+ Bye. Hope to see you again soon!
+____________________________________________________________
+```
+
+## TC-16: Find tasks by description keyword
+
+### Aim
+
+Verify that `find` searches only task descriptions without regard to letter case, retains original task numbers,
+reports no matches, and explains a missing keyword.
+
+### Input
+
+```text
+todo read book
+deadline return BOOK /by 2019-06-06
+event project meeting /from 2019-08-06 1400 /to 2019-08-06 1600
+mark 1
+mark 2
+find BoOk
+find 2019
+find
+bye
+```
+
+### Expected output
+
+```text
+____________________________________________________________
+ _   _                 
+| \ | | _____   ____ _ 
+|  \| |/ _ \ \ / / _` |
+| |\  | (_) \ V / (_| |
+|_| \_|\___/ \_/ \__,_|
+Hello! I'm Nova.
+What can I do for you?
+____________________________________________________________
+____________________________________________________________
+ Got it. I've added this task:
+   [T][ ] read book
+ Now you have 1 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+ Got it. I've added this task:
+   [D][ ] return BOOK (by: Jun 06 2019)
+ Now you have 2 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+ Got it. I've added this task:
+   [E][ ] project meeting (from: Aug 06 2019, 2:00 PM to: Aug 06 2019, 4:00 PM)
+ Now you have 3 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+ Nice! I've marked this task as done:
+   [T][X] read book
+____________________________________________________________
+____________________________________________________________
+ Nice! I've marked this task as done:
+   [D][X] return BOOK (by: Jun 06 2019)
+____________________________________________________________
+____________________________________________________________
+ Here are the matching tasks in your list:
+ 1.[T][X] read book
+ 2.[D][X] return BOOK (by: Jun 06 2019)
+____________________________________________________________
+____________________________________________________________
+ Here are the matching tasks in your list:
+ No matching tasks found.
+____________________________________________________________
+____________________________________________________________
+ OOPS!!! Tell me what to find. Try: find <keyword>.
 ____________________________________________________________
 ____________________________________________________________
  Bye. Hope to see you again soon!

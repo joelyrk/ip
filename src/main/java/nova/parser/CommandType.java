@@ -10,6 +10,8 @@ public enum CommandType {
     DEADLINE("deadline", true),
     /** Adds a task with a start and end date or time. */
     EVENT("event", true),
+    /** Finds tasks whose descriptions contain a keyword. */
+    FIND("find", true),
     /** Finds scheduled tasks occurring on a date. */
     ON("on", true),
     /** Displays all tasks. */

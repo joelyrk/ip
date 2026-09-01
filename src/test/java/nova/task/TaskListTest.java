@@ -59,6 +59,32 @@ public class TaskListTest {
     }
 
     @Test
+    public void findTasksByDescription_matchingKeyword_returnsTasksWithOriginalNumbers() {
+        Todo readBook = new Todo("read book");
+        Deadline returnBook = new Deadline("return BOOK",
+                LocalDateTime.of(2019, 12, 2, 0, 0), false);
+        Event meeting = new Event("project meeting",
+                LocalDateTime.of(2019, 12, 3, 14, 0), true,
+                LocalDateTime.of(2019, 12, 3, 16, 0), true);
+        TaskList tasks = new TaskList(List.of(readBook, meeting, returnBook));
+
+        List<TaskList.NumberedTask> result = tasks.findTasksByDescription("book");
+
+        assertEquals(2, result.size());
+        assertEquals(1, result.get(0).number());
+        assertSame(readBook, result.get(0).task());
+        assertEquals(3, result.get(1).number());
+        assertSame(returnBook, result.get(1).task());
+    }
+
+    @Test
+    public void findTasksByDescription_noMatchingKeyword_returnsEmptyList() {
+        TaskList tasks = new TaskList(List.of(new Todo("read book")));
+
+        assertEquals(List.of(), tasks.findTasksByDescription("meeting"));
+    }
+
+    @Test
     public void getTasks_returnedSnapshotCannotMutateTaskList() {
         Todo todo = new Todo("read book");
         TaskList tasks = new TaskList(List.of(todo));

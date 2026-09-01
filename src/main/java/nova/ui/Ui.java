@@ -149,6 +149,21 @@ public class Ui {
     }
 
     /**
+     * Displays tasks with descriptions matching a keyword while retaining their original numbers.
+     *
+     * @param tasks matching tasks with their original task numbers.
+     */
+    public void showMatchingTasks(List<TaskList.NumberedTask> tasks) {
+        System.out.println(" Here are the matching tasks in your list:");
+        for (TaskList.NumberedTask numberedTask : tasks) {
+            System.out.println(" " + numberedTask.number() + "." + numberedTask.task());
+        }
+        if (tasks.isEmpty()) {
+            System.out.println(" No matching tasks found.");
+        }
+    }
+
+    /**
      * Displays Nova's farewell message.
      */
     public void showGoodbye() {
