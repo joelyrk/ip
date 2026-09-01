@@ -9,6 +9,13 @@ import nova.ui.Ui;
  */
 public class ListCommand extends Command {
     /**
+     * Creates a command that lists all tasks.
+     */
+    public ListCommand() {
+        // This command has no arguments to initialize.
+    }
+
+    /**
      * Displays the current tasks in their list order.
      *
      * @param tasks task list to display

@@ -6,7 +6,10 @@ import java.time.LocalDate;
  * Represents a task and whether it has been completed.
  */
 public abstract class Task {
+    /** Description shown for this task. */
     protected String description;
+
+    /** Whether this task has been completed. */
     protected boolean isDone;
 
     /**

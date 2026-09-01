@@ -23,22 +23,34 @@ public class Deadline extends Task {
         this.hasTime = hasTime;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected String getTypeIcon() {
         return "D";
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean occursOn(LocalDate date) {
         return by.toLocalDate().equals(date);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toFileString() {
         return super.toFileString() + " | "
                 + TaskDateTime.formatForStorage(by, hasTime);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         return super.toString() + " (by: "

@@ -13,6 +13,9 @@ public class Todo extends Task {
         super(description);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected String getTypeIcon() {
         return "T";

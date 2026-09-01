@@ -16,6 +16,9 @@ public class MarkCommand extends TaskStatusCommand {
         super(taskNumber, "mark", true);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void showConfirmation(Ui ui, Task task) {
         ui.showTaskMarked(task);

@@ -101,6 +101,12 @@ public final class TaskDateTime {
         return dateTime.format(hasTime ? STORAGE_DATE_TIME : ISO_DATE);
     }
 
+    /**
+     * Creates a formatter that rejects invalid calendar values instead of adjusting them.
+     *
+     * @param pattern date/time pattern understood by {@link DateTimeFormatterBuilder}
+     * @return formatter using strict resolution and the English locale
+     */
     private static DateTimeFormatter strictFormatter(String pattern) {
         return new DateTimeFormatterBuilder()
                 .appendPattern(pattern)
@@ -115,6 +121,13 @@ public final class TaskDateTime {
      * @param hasTime whether the original value included a time
      */
     public record ParsedValue(LocalDateTime dateTime, boolean hasTime) {
+        /**
+         * Validates and creates a parsed date/time value.
+         *
+         * @param dateTime parsed date/time
+         * @param hasTime whether the original value included a time
+         * @throws DateTimeException if {@code dateTime} is {@code null}
+         */
         public ParsedValue {
             if (dateTime == null) {
                 throw new DateTimeException("dateTime cannot be null");

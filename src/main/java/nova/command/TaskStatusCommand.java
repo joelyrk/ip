@@ -56,6 +56,13 @@ public abstract class TaskStatusCommand extends TaskCommand {
      */
     protected abstract void showConfirmation(Ui ui, Task task);
 
+    /**
+     * Applies the requested completion state to a task.
+     *
+     * @param tasks task list containing the task to update
+     * @param taskIndex zero-based index of the task to update
+     * @param isDone whether the task should be marked as completed
+     */
     private void setStatus(TaskList tasks, int taskIndex, boolean isDone) {
         if (isDone) {
             tasks.mark(taskIndex);
