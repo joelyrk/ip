@@ -94,8 +94,8 @@ public class StorageTest {
         Files.writeString(dataFile, "T | 0 | valid\nT | yes | invalid\n",
                 StandardCharsets.UTF_8);
 
-        NovaException exception = assertThrows(NovaException.class,
-                () -> new Storage(dataFile).load());
+        NovaException exception = assertThrows(NovaException.class, () ->
+                new Storage(dataFile).load());
 
         assertEquals("I couldn't load your saved tasks because line 2 is invalid: "
                 + "the completion state must be 0 or 1. Starting with an empty task list.",
@@ -108,8 +108,8 @@ public class StorageTest {
         Files.writeString(dataFile,
                 "E | 0 | meeting | 2019-12-03 | 2019-12-02\n", StandardCharsets.UTF_8);
 
-        NovaException exception = assertThrows(NovaException.class,
-                () -> new Storage(dataFile).load());
+        NovaException exception = assertThrows(NovaException.class, () ->
+                new Storage(dataFile).load());
 
         assertEquals("I couldn't load your saved tasks because line 1 is invalid: "
                 + "the stored event ends before it starts. Starting with an empty task list.",

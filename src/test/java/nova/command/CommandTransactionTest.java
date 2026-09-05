@@ -31,8 +31,8 @@ public class CommandTransactionTest {
         TaskList tasks = new TaskList(List.of(new Todo("existing task")));
         AddCommand command = new AddCommand(new Todo("new task"));
 
-        NovaException exception = assertThrows(NovaException.class,
-                () -> command.execute(tasks, ui, failingStorage));
+        NovaException exception = assertThrows(NovaException.class, () ->
+                command.execute(tasks, ui, failingStorage));
 
         assertEquals(SAVE_ERROR, exception.getMessage());
         assertEquals(1, tasks.size());
@@ -46,8 +46,8 @@ public class CommandTransactionTest {
         Todo third = new Todo("third");
         TaskList tasks = new TaskList(List.of(first, second, third));
 
-        NovaException exception = assertThrows(NovaException.class,
-                () -> new DeleteCommand(2).execute(tasks, ui, failingStorage));
+        NovaException exception = assertThrows(NovaException.class, () ->
+                new DeleteCommand(2).execute(tasks, ui, failingStorage));
 
         assertEquals(SAVE_ERROR, exception.getMessage());
         assertEquals(3, tasks.size());
@@ -61,8 +61,8 @@ public class CommandTransactionTest {
         Todo task = new Todo("read book");
         TaskList tasks = new TaskList(List.of(task));
 
-        NovaException exception = assertThrows(NovaException.class,
-                () -> new MarkCommand(1).execute(tasks, ui, failingStorage));
+        NovaException exception = assertThrows(NovaException.class, () ->
+                new MarkCommand(1).execute(tasks, ui, failingStorage));
 
         assertEquals(SAVE_ERROR, exception.getMessage());
         assertFalse(task.isDone());
@@ -74,8 +74,8 @@ public class CommandTransactionTest {
         task.markAsDone();
         TaskList tasks = new TaskList(List.of(task));
 
-        NovaException exception = assertThrows(NovaException.class,
-                () -> new UnmarkCommand(1).execute(tasks, ui, failingStorage));
+        NovaException exception = assertThrows(NovaException.class, () ->
+                new UnmarkCommand(1).execute(tasks, ui, failingStorage));
 
         assertEquals(SAVE_ERROR, exception.getMessage());
         assertTrue(task.isDone());
@@ -86,8 +86,8 @@ public class CommandTransactionTest {
         Todo task = new Todo("read book");
         TaskList tasks = new TaskList(List.of(task));
 
-        NovaException exception = assertThrows(NovaException.class,
-                () -> new DeleteCommand(2).execute(tasks, ui, failingStorage));
+        NovaException exception = assertThrows(NovaException.class, () ->
+                new DeleteCommand(2).execute(tasks, ui, failingStorage));
 
         assertEquals("Task 2 does not exist. Choose a number from 1 to 1.", exception.getMessage());
         assertEquals(1, tasks.size());
