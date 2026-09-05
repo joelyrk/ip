@@ -1,6 +1,5 @@
 package nova.task;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -28,40 +27,32 @@ public class TaskDateTimeTest {
     public void parse_isoDate_returnsStartOfDayWithoutTime() throws NovaException {
         TaskDateTime.ParsedValue result = TaskDateTime.parse("2019-12-02", "/by");
 
-        assertAll(
-                () -> assertEquals(LocalDateTime.of(2019, 12, 2, 0, 0), result.dateTime()),
-                () -> assertFalse(result.hasTime())
-        );
+        assertEquals(LocalDateTime.of(2019, 12, 2, 0, 0), result.dateTime());
+        assertFalse(result.hasTime());
     }
 
     @Test
     public void parse_slashDate_returnsStartOfDayWithoutTime() throws NovaException {
         TaskDateTime.ParsedValue result = TaskDateTime.parse("2/12/2019", "/by");
 
-        assertAll(
-                () -> assertEquals(LocalDateTime.of(2019, 12, 2, 0, 0), result.dateTime()),
-                () -> assertFalse(result.hasTime())
-        );
+        assertEquals(LocalDateTime.of(2019, 12, 2, 0, 0), result.dateTime());
+        assertFalse(result.hasTime());
     }
 
     @Test
     public void parse_isoDateTime_returnsDateTimeWithTime() throws NovaException {
         TaskDateTime.ParsedValue result = TaskDateTime.parse("2019-12-02 1800", "/by");
 
-        assertAll(
-                () -> assertEquals(LocalDateTime.of(2019, 12, 2, 18, 0), result.dateTime()),
-                () -> assertTrue(result.hasTime())
-        );
+        assertEquals(LocalDateTime.of(2019, 12, 2, 18, 0), result.dateTime());
+        assertTrue(result.hasTime());
     }
 
     @Test
     public void parse_slashDateTime_returnsDateTimeWithTime() throws NovaException {
         TaskDateTime.ParsedValue result = TaskDateTime.parse("2/12/2019 1800", "/by");
 
-        assertAll(
-                () -> assertEquals(LocalDateTime.of(2019, 12, 2, 18, 0), result.dateTime()),
-                () -> assertTrue(result.hasTime())
-        );
+        assertEquals(LocalDateTime.of(2019, 12, 2, 18, 0), result.dateTime());
+        assertTrue(result.hasTime());
     }
 
     @Test
@@ -73,32 +64,32 @@ public class TaskDateTimeTest {
 
     @Test
     public void parse_invalidCalendarDate_throwsNovaException() {
-        NovaException exception = assertThrows(NovaException.class,
-                () -> TaskDateTime.parse("2019-02-29", "/by"));
+        NovaException exception = assertThrows(NovaException.class, () ->
+                TaskDateTime.parse("2019-02-29", "/by"));
 
         assertEquals(EXPECTED_ERROR_MESSAGE, exception.getMessage());
     }
 
     @Test
     public void parse_invalidTime_throwsNovaException() {
-        NovaException exception = assertThrows(NovaException.class,
-                () -> TaskDateTime.parse("2019-12-02 2400", "/by"));
+        NovaException exception = assertThrows(NovaException.class, () ->
+                TaskDateTime.parse("2019-12-02 2400", "/by"));
 
         assertEquals(EXPECTED_ERROR_MESSAGE, exception.getMessage());
     }
 
     @Test
     public void parse_unsupportedFormat_throwsNovaException() {
-        NovaException exception = assertThrows(NovaException.class,
-                () -> TaskDateTime.parse("December 2, 2019", "/by"));
+        NovaException exception = assertThrows(NovaException.class, () ->
+                TaskDateTime.parse("December 2, 2019", "/by"));
 
         assertEquals(EXPECTED_ERROR_MESSAGE, exception.getMessage());
     }
 
     @Test
     public void parse_differentFieldName_usesFieldNameInErrorMessage() {
-        NovaException exception = assertThrows(NovaException.class,
-                () -> TaskDateTime.parse("not-a-date", "/from"));
+        NovaException exception = assertThrows(NovaException.class, () ->
+                TaskDateTime.parse("not-a-date", "/from"));
 
         assertEquals(EXPECTED_ERROR_MESSAGE.replace("/by", "/from"), exception.getMessage());
     }
@@ -119,16 +110,16 @@ public class TaskDateTimeTest {
 
     @Test
     public void parseDate_invalidCalendarDate_throwsNovaException() {
-        NovaException exception = assertThrows(NovaException.class,
-                () -> TaskDateTime.parseDate("2019-02-29"));
+        NovaException exception = assertThrows(NovaException.class, () ->
+                TaskDateTime.parseDate("2019-02-29"));
 
         assertEquals(EXPECTED_DATE_ERROR_MESSAGE, exception.getMessage());
     }
 
     @Test
     public void parseDate_dateWithTime_throwsNovaException() {
-        NovaException exception = assertThrows(NovaException.class,
-                () -> TaskDateTime.parseDate("2019-12-02 1800"));
+        NovaException exception = assertThrows(NovaException.class, () ->
+                TaskDateTime.parseDate("2019-12-02 1800"));
 
         assertEquals(EXPECTED_DATE_ERROR_MESSAGE, exception.getMessage());
     }
@@ -163,8 +154,8 @@ public class TaskDateTimeTest {
 
     @Test
     public void parsedValue_nullDateTime_throwsDateTimeException() {
-        DateTimeException exception = assertThrows(DateTimeException.class,
-                () -> new TaskDateTime.ParsedValue(null, false));
+        DateTimeException exception = assertThrows(DateTimeException.class, () ->
+                new TaskDateTime.ParsedValue(null, false));
 
         assertEquals("dateTime cannot be null", exception.getMessage());
     }

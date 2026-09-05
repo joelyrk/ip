@@ -1,6 +1,5 @@
 package nova.parser;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -10,8 +9,8 @@ import org.junit.jupiter.api.Test;
 import nova.command.AddCommand;
 import nova.command.DeleteCommand;
 import nova.command.ExitCommand;
-import nova.command.FindDateCommand;
 import nova.command.FindCommand;
+import nova.command.FindDateCommand;
 import nova.command.ListCommand;
 import nova.command.MarkCommand;
 import nova.command.UnmarkCommand;
@@ -25,20 +24,18 @@ public class ParserTest {
 
     @Test
     public void parse_validCommands_returnsMatchingCommandTypes() throws NovaException {
-        assertAll(
-                () -> assertInstanceOf(AddCommand.class, parser.parse("todo read book")),
-                () -> assertInstanceOf(AddCommand.class,
-                        parser.parse("deadline return book /by 2019-12-02 1800")),
-                () -> assertInstanceOf(AddCommand.class,
-                        parser.parse("event meeting /from 2019-12-02 1400 /to 2019-12-02 1600")),
-                () -> assertInstanceOf(FindCommand.class, parser.parse("find book")),
-                () -> assertInstanceOf(FindDateCommand.class, parser.parse("on 2019-12-02")),
-                () -> assertInstanceOf(ListCommand.class, parser.parse("list")),
-                () -> assertInstanceOf(MarkCommand.class, parser.parse("mark 1")),
-                () -> assertInstanceOf(UnmarkCommand.class, parser.parse("unmark 1")),
-                () -> assertInstanceOf(DeleteCommand.class, parser.parse("delete 1")),
-                () -> assertInstanceOf(ExitCommand.class, parser.parse("bye"))
-        );
+        assertInstanceOf(AddCommand.class, parser.parse("todo read book"));
+        assertInstanceOf(AddCommand.class,
+                parser.parse("deadline return book /by 2019-12-02 1800"));
+        assertInstanceOf(AddCommand.class,
+                parser.parse("event meeting /from 2019-12-02 1400 /to 2019-12-02 1600"));
+        assertInstanceOf(FindCommand.class, parser.parse("find book"));
+        assertInstanceOf(FindDateCommand.class, parser.parse("on 2019-12-02"));
+        assertInstanceOf(ListCommand.class, parser.parse("list"));
+        assertInstanceOf(MarkCommand.class, parser.parse("mark 1"));
+        assertInstanceOf(UnmarkCommand.class, parser.parse("unmark 1"));
+        assertInstanceOf(DeleteCommand.class, parser.parse("delete 1"));
+        assertInstanceOf(ExitCommand.class, parser.parse("bye"));
     }
 
     @Test
@@ -51,8 +48,8 @@ public class ParserTest {
 
     @Test
     public void parse_keywordWithInvalidSuffix_throwsUnknownCommandException() {
-        NovaException exception = assertThrows(NovaException.class,
-                () -> parser.parse("list everything"));
+        NovaException exception = assertThrows(NovaException.class, () ->
+                parser.parse("list everything"));
 
         assertEquals("I don't recognize that command. Start with todo, deadline, event, find, on, "
                 + "list, mark, unmark, delete, or bye.", exception.getMessage());
@@ -67,8 +64,8 @@ public class ParserTest {
 
     @Test
     public void parse_deadlineMarkerInsideWord_throwsMissingMarkerException() {
-        NovaException exception = assertThrows(NovaException.class,
-                () -> parser.parse("deadline check /bypass 2019-12-02"));
+        NovaException exception = assertThrows(NovaException.class, () ->
+                parser.parse("deadline check /bypass 2019-12-02"));
 
         assertEquals("A deadline needs a /by date or time. "
                 + "Try: deadline check /bypass 2019-12-02 /by <date or time>.",
@@ -77,8 +74,8 @@ public class ParserTest {
 
     @Test
     public void parse_eventMarkersInWrongOrder_throwsActionableException() {
-        NovaException exception = assertThrows(NovaException.class,
-                () -> parser.parse("event meeting /to 2019-12-02 /from 2019-12-01"));
+        NovaException exception = assertThrows(NovaException.class, () ->
+                parser.parse("event meeting /to 2019-12-02 /from 2019-12-01"));
 
         assertEquals("Put /from before /to. "
                 + "Try: event <description> /from <start> /to <end>.", exception.getMessage());
@@ -86,8 +83,8 @@ public class ParserTest {
 
     @Test
     public void parse_eventEndingBeforeStart_throwsActionableException() {
-        NovaException exception = assertThrows(NovaException.class,
-                () -> parser.parse("event meeting /from 2019-12-03 /to 2019-12-02"));
+        NovaException exception = assertThrows(NovaException.class, () ->
+                parser.parse("event meeting /from 2019-12-03 /to 2019-12-02"));
 
         assertEquals("An event's /to date/time cannot be before its /from date/time.",
                 exception.getMessage());
@@ -95,8 +92,8 @@ public class ParserTest {
 
     @Test
     public void parse_taskNumberWithExtraText_throwsWholeNumberException() {
-        NovaException exception = assertThrows(NovaException.class,
-                () -> parser.parse("mark 1 now"));
+        NovaException exception = assertThrows(NovaException.class, () ->
+                parser.parse("mark 1 now"));
 
         assertEquals("The task number after mark must be a whole number, for example: mark 1.",
                 exception.getMessage());
