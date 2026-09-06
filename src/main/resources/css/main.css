@@ -1,0 +1,109 @@
+.root {
+    -fx-background-color: #f4f7fb;
+    -fx-font-family: "Avenir Next", "Segoe UI", sans-serif;
+}
+
+.title-bar {
+    -fx-background-color: linear-gradient(to right, #312e81, #6366f1);
+    -fx-padding: 18 22 18 22;
+}
+
+.title {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+.subtitle {
+    -fx-font-size: 13px;
+    -fx-text-fill: #dbeafe;
+}
+
+.scroll-pane,
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+.dialog-container {
+    -fx-padding: 16 14 16 14;
+}
+
+.dialog-box {
+    -fx-padding: 7 0 7 0;
+    -fx-spacing: 10;
+}
+
+.user-dialog,
+.nova-dialog {
+    -fx-font-size: 14px;
+    -fx-line-spacing: 3px;
+    -fx-padding: 11 14 11 14;
+    -fx-background-radius: 15;
+}
+
+.user-dialog {
+    -fx-background-color: #4f46e5;
+    -fx-text-fill: white;
+}
+
+.nova-dialog {
+    -fx-background-color: white;
+    -fx-border-color: #dbe2ea;
+    -fx-border-radius: 15;
+    -fx-text-fill: #1f2937;
+}
+
+.avatar {
+    -fx-alignment: center;
+    -fx-background-radius: 18;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-min-height: 36px;
+    -fx-min-width: 36px;
+    -fx-pref-height: 36px;
+    -fx-pref-width: 36px;
+    -fx-text-fill: white;
+}
+
+.user-avatar {
+    -fx-background-color: #111827;
+}
+
+.nova-avatar {
+    -fx-background-color: #10b981;
+}
+
+.input-bar {
+    -fx-background-color: white;
+    -fx-border-color: #dbe2ea transparent transparent transparent;
+    -fx-padding: 14;
+}
+
+.text-field {
+    -fx-background-color: #f3f4f6;
+    -fx-background-radius: 9;
+    -fx-border-color: transparent;
+    -fx-font-size: 14px;
+    -fx-padding: 11 13 11 13;
+}
+
+.text-field:focused {
+    -fx-border-color: #6366f1;
+    -fx-border-radius: 9;
+}
+
+.button {
+    -fx-background-color: #4f46e5;
+    -fx-background-radius: 9;
+    -fx-font-weight: bold;
+    -fx-padding: 11 20 11 20;
+    -fx-text-fill: white;
+}
+
+.button:hover {
+    -fx-background-color: #4338ca;
+}
+
+.button:disabled {
+    -fx-opacity: 0.55;
+}

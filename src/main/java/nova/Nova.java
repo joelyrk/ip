@@ -1,5 +1,8 @@
 package nova;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 
 import nova.command.Command;
@@ -13,6 +16,8 @@ import nova.ui.Ui;
  * Coordinates Nova's storage, task list, parser, and user interface.
  */
 public class Nova {
+    private static final String WELCOME_MESSAGE = "Hello! I'm Nova.\nWhat can I do for you?";
+
     private final Storage storage;
     private final TaskList tasks;
     private final Ui ui;
@@ -58,9 +63,7 @@ public class Nova {
             ui.showSeparator();
 
             try {
-                Command command = parser.parse(fullCommand);
-                command.execute(tasks, ui, storage);
-                isExit = command.isExit();
+                isExit = executeCommand(fullCommand, ui);
             } catch (NovaException e) {
                 ui.showError(e);
             } finally {
@@ -70,11 +73,69 @@ public class Nova {
     }
 
     /**
+     * Executes one command and returns text suitable for a graphical chat dialog.
+     *
+     * @param fullCommand complete command entered by the user.
+     * @return the chatbot's response and whether the command exits Nova.
+     */
+    public Response getResponse(String fullCommand) {
+        ByteArrayOutputStream responseBytes = new ByteArrayOutputStream();
+        boolean isExit = false;
+
+        try (PrintStream responseOutput = new PrintStream(responseBytes, true, StandardCharsets.UTF_8)) {
+            Ui responseUi = new Ui(responseOutput);
+            try {
+                isExit = executeCommand(fullCommand.trim(), responseUi);
+            } catch (NovaException e) {
+                responseUi.showError(e);
+            }
+        }
+
+        String message = responseBytes.toString(StandardCharsets.UTF_8).strip();
+        return new Response(message, isExit);
+    }
+
+    /**
+     * Returns the graphical interface's greeting, including any storage loading warning.
+     *
+     * @return welcome text to display when the graphical interface opens.
+     */
+    public String getWelcomeMessage() {
+        if (loadingError == null) {
+            return WELCOME_MESSAGE;
+        }
+        return WELCOME_MESSAGE + "\n\nOOPS!!! " + loadingError.getMessage();
+    }
+
+    /**
+     * Parses and executes one command using the supplied user interface.
+     *
+     * @param fullCommand complete command entered by the user.
+     * @param commandUi user interface that receives the command result.
+     * @return whether the command exits Nova.
+     * @throws NovaException if the command cannot be parsed or executed.
+     */
+    private boolean executeCommand(String fullCommand, Ui commandUi) throws NovaException {
+        Command command = parser.parse(fullCommand);
+        command.execute(tasks, commandUi, storage);
+        return command.isExit();
+    }
+
+    /**
      * Starts Nova using its default relative data-file path.
      *
      * @param args command-line arguments, which Nova does not currently use.
      */
     public static void main(String[] args) {
         new Nova("data/nova.txt").run();
+    }
+
+    /**
+     * Contains the result of executing one command from the graphical interface.
+     *
+     * @param message chatbot response to display.
+     * @param isExit whether Nova should stop accepting commands.
+     */
+    public record Response(String message, boolean isExit) {
     }
 }

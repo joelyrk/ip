@@ -20,6 +20,23 @@ checkstyle {
 
 dependencies {
     String jUnitVersion = '5.14.4'
+    String javaFxVersion = '17.0.7'
+    String operatingSystem = System.getProperty('os.name').toLowerCase()
+    String architecture = System.getProperty('os.arch').toLowerCase()
+    String javaFxPlatform
+
+    if (operatingSystem.contains('win')) {
+        javaFxPlatform = 'win'
+    } else if (operatingSystem.contains('mac')) {
+        javaFxPlatform = architecture.contains('aarch64') ? 'mac-aarch64' : 'mac'
+    } else {
+        javaFxPlatform = architecture.contains('aarch64') ? 'linux-aarch64' : 'linux'
+    }
+
+    implementation("org.openjfx:javafx-base:${javaFxVersion}:${javaFxPlatform}")
+    implementation("org.openjfx:javafx-controls:${javaFxVersion}:${javaFxPlatform}")
+    implementation("org.openjfx:javafx-fxml:${javaFxVersion}:${javaFxPlatform}")
+    implementation("org.openjfx:javafx-graphics:${javaFxVersion}:${javaFxPlatform}")
 
     testImplementation "org.junit.jupiter:junit-jupiter-api:${jUnitVersion}"
 
@@ -42,7 +59,7 @@ test {
 }
 
 application {
-    mainClass = 'nova.Nova'
+    mainClass = 'nova.Launcher'
 }
 
 jar {
