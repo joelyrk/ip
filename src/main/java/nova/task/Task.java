@@ -8,10 +8,10 @@ import java.util.Locale;
  */
 public abstract class Task {
     /** Description shown for this task. */
-    protected String description;
+    private final String description;
 
     /** Whether this task has been completed. */
-    protected boolean isDone;
+    private boolean isDone;
 
     /**
      * Creates an incomplete task with the given description.
