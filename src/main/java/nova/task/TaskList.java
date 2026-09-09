@@ -3,6 +3,9 @@ package nova.task;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * Owns Nova's in-memory task collection and its list operations.
@@ -109,14 +112,7 @@ public class TaskList {
      * @return matching tasks with their one-based task numbers.
      */
     public List<NumberedTask> findTasksOn(LocalDate date) {
-        List<NumberedTask> matchingTasks = new ArrayList<>();
-        for (int i = 0; i < tasks.size(); i++) {
-            Task task = tasks.get(i);
-            if (task.occursOn(date)) {
-                matchingTasks.add(new NumberedTask(i + 1, task));
-            }
-        }
-        return matchingTasks;
+        return findTasksMatching(task -> task.occursOn(date));
     }
 
     /**
@@ -126,14 +122,20 @@ public class TaskList {
      * @return matching tasks with their one-based task numbers.
      */
     public List<NumberedTask> findTasksByDescription(String keyword) {
-        List<NumberedTask> matchingTasks = new ArrayList<>();
-        for (int i = 0; i < tasks.size(); i++) {
-            Task task = tasks.get(i);
-            if (task.hasDescriptionContaining(keyword)) {
-                matchingTasks.add(new NumberedTask(i + 1, task));
-            }
-        }
-        return matchingTasks;
+        return findTasksMatching(task -> task.hasDescriptionContaining(keyword));
+    }
+
+    /**
+     * Finds tasks satisfying a condition while retaining their original task numbers.
+     *
+     * @param condition condition used to select tasks.
+     * @return matching tasks with their one-based task numbers.
+     */
+    private List<NumberedTask> findTasksMatching(Predicate<Task> condition) {
+        return IntStream.range(0, tasks.size())
+                .filter(index -> condition.test(tasks.get(index)))
+                .mapToObj(index -> new NumberedTask(index + 1, tasks.get(index)))
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     /**
