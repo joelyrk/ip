@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * Owns Nova's in-memory task collection and its list operations.
@@ -130,14 +132,10 @@ public class TaskList {
      * @return matching tasks with their one-based task numbers.
      */
     private List<NumberedTask> findTasksMatching(Predicate<Task> condition) {
-        List<NumberedTask> matchingTasks = new ArrayList<>();
-        for (int i = 0; i < tasks.size(); i++) {
-            Task task = tasks.get(i);
-            if (condition.test(task)) {
-                matchingTasks.add(new NumberedTask(i + 1, task));
-            }
-        }
-        return matchingTasks;
+        return IntStream.range(0, tasks.size())
+                .filter(index -> condition.test(tasks.get(index)))
+                .mapToObj(index -> new NumberedTask(index + 1, tasks.get(index)))
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     /**
