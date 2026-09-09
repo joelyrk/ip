@@ -122,6 +122,23 @@ public class Storage {
      */
     private Task parseTask(String line) throws NovaException {
         List<String> fields = splitFields(line);
+        validateTaskFields(fields);
+
+        String taskType = fields.get(0);
+        Task task = createTask(taskType, fields);
+        if (fields.get(1).equals("1")) {
+            task.markAsDone();
+        }
+        return task;
+    }
+
+    /**
+     * Validates the structure and common values of stored task fields.
+     *
+     * @param fields unescaped fields from one storage line.
+     * @throws NovaException if required fields are missing or invalid.
+     */
+    private void validateTaskFields(List<String> fields) throws NovaException {
         if (fields.size() < 2) {
             throw new NovaException("the task type or completion state is missing.");
         }
@@ -145,33 +162,52 @@ public class Storage {
                 throw new NovaException("task details cannot be empty.");
             }
         }
+    }
 
-        Task task;
-        switch (taskType) {
-            case "T":
-                task = new Todo(fields.get(2));
-                break;
-            case "D":
-                TaskDateTime.ParsedValue due = TaskDateTime.parse(fields.get(3), "stored /by");
-                task = new Deadline(fields.get(2), due.dateTime(), due.hasTime());
-                break;
-            case "E":
-                TaskDateTime.ParsedValue start = TaskDateTime.parse(fields.get(3), "stored /from");
-                TaskDateTime.ParsedValue end = TaskDateTime.parse(fields.get(4), "stored /to");
-                if (end.dateTime().isBefore(start.dateTime())) {
-                    throw new NovaException("the stored event ends before it starts.");
-                }
-                task = new Event(fields.get(2), start.dateTime(), start.hasTime(),
-                        end.dateTime(), end.hasTime());
-                break;
-            default:
-                throw new IllegalStateException("Task type was already validated: " + taskType);
-        }
+    /**
+     * Creates a task from fields whose common structure has been validated.
+     *
+     * @param taskType stored task type symbol.
+     * @param fields validated task fields.
+     * @return task reconstructed from the fields.
+     * @throws NovaException if a stored date or time is invalid.
+     */
+    private Task createTask(String taskType, List<String> fields) throws NovaException {
+        return switch (taskType) {
+            case "T" -> new Todo(fields.get(2));
+            case "D" -> createDeadline(fields);
+            case "E" -> createEvent(fields);
+            default -> throw new IllegalStateException("Task type was already validated: " + taskType);
+        };
+    }
 
-        if (fields.get(1).equals("1")) {
-            task.markAsDone();
+    /**
+     * Creates a deadline from validated storage fields.
+     *
+     * @param fields validated deadline fields.
+     * @return reconstructed deadline.
+     * @throws NovaException if the stored due value is invalid.
+     */
+    private Task createDeadline(List<String> fields) throws NovaException {
+        TaskDateTime.ParsedValue due = TaskDateTime.parse(fields.get(3), "stored /by");
+        return new Deadline(fields.get(2), due.dateTime(), due.hasTime());
+    }
+
+    /**
+     * Creates an event from validated storage fields.
+     *
+     * @param fields validated event fields.
+     * @return reconstructed event.
+     * @throws NovaException if a stored endpoint is invalid or the event ends before it starts.
+     */
+    private Task createEvent(List<String> fields) throws NovaException {
+        TaskDateTime.ParsedValue start = TaskDateTime.parse(fields.get(3), "stored /from");
+        TaskDateTime.ParsedValue end = TaskDateTime.parse(fields.get(4), "stored /to");
+        if (end.dateTime().isBefore(start.dateTime())) {
+            throw new NovaException("the stored event ends before it starts.");
         }
-        return task;
+        return new Event(fields.get(2), start.dateTime(), start.hasTime(),
+                end.dateTime(), end.hasTime());
     }
 
     /**
