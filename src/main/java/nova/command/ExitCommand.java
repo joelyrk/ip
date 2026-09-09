@@ -9,13 +9,6 @@ import nova.ui.Ui;
  */
 public class ExitCommand extends Command {
     /**
-     * Creates a command that exits Nova.
-     */
-    public ExitCommand() {
-        // This command has no arguments to initialize.
-    }
-
-    /**
      * Displays Nova's farewell message.
      *
      * @param tasks unused because exiting does not inspect or change tasks.

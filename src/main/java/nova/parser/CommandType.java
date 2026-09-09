@@ -51,4 +51,23 @@ public enum CommandType {
                 && command.startsWith(keyword + " ");
         return isExactMatch || isCommandWithArguments;
     }
+
+    /**
+     * Returns this command's user-facing keyword.
+     *
+     * @return word that identifies this command.
+     */
+    String getKeyword() {
+        return keyword;
+    }
+
+    /**
+     * Extracts the argument text from a command of this type.
+     *
+     * @param command matching complete command.
+     * @return trimmed text following the command keyword.
+     */
+    String extractArguments(String command) {
+        return command.substring(keyword.length()).trim();
+    }
 }
