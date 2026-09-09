@@ -2,6 +2,7 @@ package nova.task;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 /**
  * Represents a task that must be completed by a particular date or time.
@@ -19,6 +20,9 @@ public class Deadline extends Task {
      */
     public Deadline(String description, LocalDateTime dueDateTime, boolean hasTime) {
         super(description);
+        assert dueDateTime != null : "Deadline due date/time must not be null";
+        assert hasTime || dueDateTime.toLocalTime().equals(LocalTime.MIDNIGHT)
+                : "A date-only deadline must use midnight";
         this.dueDateTime = dueDateTime;
         this.hasTime = hasTime;
     }

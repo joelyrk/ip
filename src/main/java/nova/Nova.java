@@ -117,6 +117,7 @@ public class Nova {
      */
     private boolean executeCommand(String fullCommand, Ui commandUi) throws NovaException {
         Command command = parser.parse(fullCommand);
+        assert command != null : "Parser must return a command for valid input";
         command.execute(tasks, commandUi, storage);
         return command.isExit();
     }
