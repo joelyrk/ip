@@ -27,13 +27,6 @@ public class Parser {
     private static final String MARKER_EVENT_END = "/to";
 
     /**
-     * Creates a parser for Nova's supported commands.
-     */
-    public Parser() {
-        // The parser is stateless.
-    }
-
-    /**
      * Converts a complete line of user input into an executable command.
      *
      * @param fullCommand complete command entered by the user.
