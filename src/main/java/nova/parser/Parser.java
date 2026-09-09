@@ -47,6 +47,7 @@ public class Parser {
             case UNMARK -> new UnmarkCommand(parseTaskNumber(arguments, commandType.getKeyword()));
             case DELETE -> new DeleteCommand(parseTaskNumber(arguments, commandType.getKeyword()));
             case BYE -> new ExitCommand();
+            default -> throw new IllegalStateException("Unsupported command type: " + commandType);
         };
     }
 
