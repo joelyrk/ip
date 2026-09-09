@@ -163,9 +163,7 @@ public class Ui {
      */
     public void showTasksOn(LocalDate date, List<TaskList.NumberedTask> tasks) {
         output.println(" Here are the tasks occurring on " + date.format(DISPLAY_DATE_FORMATTER) + ":");
-        for (TaskList.NumberedTask numberedTask : tasks) {
-            output.println(" " + numberedTask.number() + "." + numberedTask.task());
-        }
+        showNumberedTasks(tasks);
         if (tasks.isEmpty()) {
             output.println(" No deadlines or events occur on this date.");
         }
@@ -178,11 +176,20 @@ public class Ui {
      */
     public void showMatchingTasks(List<TaskList.NumberedTask> tasks) {
         output.println(" Here are the matching tasks in your list:");
-        for (TaskList.NumberedTask numberedTask : tasks) {
-            output.println(" " + numberedTask.number() + "." + numberedTask.task());
-        }
+        showNumberedTasks(tasks);
         if (tasks.isEmpty()) {
             output.println(" No matching tasks found.");
+        }
+    }
+
+    /**
+     * Displays tasks using their original one-based numbers.
+     *
+     * @param tasks numbered tasks to display.
+     */
+    private void showNumberedTasks(List<TaskList.NumberedTask> tasks) {
+        for (TaskList.NumberedTask numberedTask : tasks) {
+            output.println(" " + numberedTask.number() + "." + numberedTask.task());
         }
     }
 
