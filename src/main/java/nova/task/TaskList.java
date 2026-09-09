@@ -143,5 +143,12 @@ public class TaskList {
      * @param task matching task.
      */
     public record NumberedTask(int number, Task task) {
+        /**
+         * Validates the internal one-based task reference.
+         */
+        public NumberedTask {
+            assert number > 0 : "Displayed task number must be positive";
+            assert task != null : "Numbered task must reference a task";
+        }
     }
 }

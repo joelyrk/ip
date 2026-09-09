@@ -152,6 +152,7 @@ public class Storage {
                         end.dateTime(), end.hasTime());
                 break;
             default:
+                assert false : "Task type must have been validated before reconstruction";
                 throw new IllegalStateException("Task type was already validated: " + taskType);
         }
 
