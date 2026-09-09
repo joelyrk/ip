@@ -2,6 +2,7 @@ package nova.task;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 /**
  * Represents a task that takes place between a start and an end date or time.
@@ -24,6 +25,13 @@ public class Event extends Task {
     public Event(String description, LocalDateTime startDateTime, boolean startHasTime,
             LocalDateTime endDateTime, boolean endHasTime) {
         super(description);
+        assert startDateTime != null : "Event start date/time must not be null";
+        assert endDateTime != null : "Event end date/time must not be null";
+        assert !endDateTime.isBefore(startDateTime) : "Event must not end before it starts";
+        assert startHasTime || startDateTime.toLocalTime().equals(LocalTime.MIDNIGHT)
+                : "A date-only event start must use midnight";
+        assert endHasTime || endDateTime.toLocalTime().equals(LocalTime.MIDNIGHT)
+                : "A date-only event end must use midnight";
         this.startDateTime = startDateTime;
         this.startHasTime = startHasTime;
         this.endDateTime = endDateTime;

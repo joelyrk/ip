@@ -177,7 +177,10 @@ public class Storage {
             case "T" -> new Todo(fields.get(2));
             case "D" -> createDeadline(fields);
             case "E" -> createEvent(fields);
-            default -> throw new IllegalStateException("Task type was already validated: " + taskType);
+            default -> {
+                assert false : "Task type must have been validated before reconstruction";
+                throw new IllegalStateException("Task type was already validated: " + taskType);
+            }
         };
     }
 
