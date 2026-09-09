@@ -47,21 +47,34 @@ public class Storage {
             List<String> lines = Files.readAllLines(filePath, StandardCharsets.UTF_8);
             for (int i = 0; i < lines.size(); i++) {
                 String line = lines.get(i);
-                if (!line.isBlank()) {
-                    try {
-                        tasks.add(parseTask(line));
-                    } catch (NovaException e) {
-                        throw new NovaException("I couldn't load your saved tasks because line "
-                                + (i + 1) + " is invalid: " + e.getMessage()
-                                + " Starting with an empty task list.", e);
-                    }
+                if (line.isBlank()) {
+                    continue;
                 }
+                tasks.add(parseTaskAtLine(line, i + 1));
             }
         } catch (IOException e) {
             throw new NovaException("I couldn't read the task data file. "
                     + "Starting with an empty task list.", e);
         }
         return tasks;
+    }
+
+    /**
+     * Parses one storage line and adds its location to any validation error.
+     *
+     * @param line storage line to parse.
+     * @param lineNumber one-based location in the data file.
+     * @return task reconstructed from the line.
+     * @throws NovaException if the line contains invalid task data.
+     */
+    private Task parseTaskAtLine(String line, int lineNumber) throws NovaException {
+        try {
+            return parseTask(line);
+        } catch (NovaException e) {
+            throw new NovaException("I couldn't load your saved tasks because line "
+                    + lineNumber + " is invalid: " + e.getMessage()
+                    + " Starting with an empty task list.", e);
+        }
     }
 
     /**
