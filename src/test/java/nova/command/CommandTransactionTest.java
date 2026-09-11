@@ -82,6 +82,21 @@ public class CommandTransactionTest {
     }
 
     @Test
+    public void execute_editSaveFails_restoresOriginalTask() {
+        Todo task = new Todo("read book");
+        task.markAsDone();
+        TaskList tasks = new TaskList(List.of(task));
+
+        NovaException exception = assertThrows(NovaException.class, () ->
+                new EditCommand(1, EditField.DESCRIPTION, "read novel")
+                        .execute(tasks, ui, failingStorage));
+
+        assertEquals(SAVE_ERROR, exception.getMessage());
+        assertSame(task, tasks.get(0));
+        assertTrue(tasks.get(0).isDone());
+    }
+
+    @Test
     public void execute_taskNumberOutsideList_throwsRangeExceptionWithoutMutation() {
         Todo task = new Todo("read book");
         TaskList tasks = new TaskList(List.of(task));

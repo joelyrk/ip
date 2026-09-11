@@ -22,6 +22,8 @@ public enum CommandType {
     UNMARK("unmark", true),
     /** Removes a task. */
     DELETE("delete", true),
+    /** Changes one detail of a task. */
+    EDIT("edit", true),
     /** Exits Nova. */
     BYE("bye", false);
 

@@ -36,6 +36,24 @@ public class Deadline extends Task {
     }
 
     /**
+     * Returns this deadline's due date and optional time.
+     *
+     * @return due date/time.
+     */
+    public LocalDateTime getDueDateTime() {
+        return dueDateTime;
+    }
+
+    /**
+     * Returns whether the deadline includes an explicit time.
+     *
+     * @return {@code true} if the due value includes a time.
+     */
+    public boolean hasTime() {
+        return hasTime;
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override

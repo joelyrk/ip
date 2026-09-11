@@ -47,6 +47,42 @@ public class Event extends Task {
     }
 
     /**
+     * Returns this event's start date and optional time.
+     *
+     * @return start date/time.
+     */
+    public LocalDateTime getStartDateTime() {
+        return startDateTime;
+    }
+
+    /**
+     * Returns whether the event start includes an explicit time.
+     *
+     * @return {@code true} if the start includes a time.
+     */
+    public boolean hasStartTime() {
+        return startHasTime;
+    }
+
+    /**
+     * Returns this event's end date and optional time.
+     *
+     * @return end date/time.
+     */
+    public LocalDateTime getEndDateTime() {
+        return endDateTime;
+    }
+
+    /**
+     * Returns whether the event end includes an explicit time.
+     *
+     * @return {@code true} if the end includes a time.
+     */
+    public boolean hasEndTime() {
+        return endHasTime;
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override

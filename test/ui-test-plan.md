@@ -198,10 +198,10 @@ ____________________________________________________________
  OOPS!!! A todo needs a description. Try: todo <description>.
 ____________________________________________________________
 ____________________________________________________________
- OOPS!!! I don't recognize that command. Start with todo, deadline, event, find, on, list, mark, unmark, delete, or bye.
+ OOPS!!! I don't recognize that command. Start with todo, deadline, event, find, on, list, mark, unmark, delete, edit, or bye.
 ____________________________________________________________
 ____________________________________________________________
- OOPS!!! You entered a blank command. Try todo, deadline, event, find, on, list, mark, unmark, delete, or bye.
+ OOPS!!! You entered a blank command. Try todo, deadline, event, find, on, list, mark, unmark, delete, edit, or bye.
 ____________________________________________________________
 ____________________________________________________________
  Bye. Hope to see you again soon!
@@ -735,7 +735,7 @@ D | 1 | discuss \| review \\ notes | 2019-08-09 1700
 
 ### Aim
 
-Verify that failed mark, unmark, and delete saves restore the original in-memory task states and list order.
+Verify that failed mark, unmark, delete, and edit saves restore the original in-memory task states and list order.
 
 ### Initial data file
 
@@ -756,6 +756,7 @@ read-only-directory
 mark 1
 unmark 2
 delete 1
+edit 1 /description read novel
 list
 bye
 ```
@@ -782,9 +783,189 @@ ____________________________________________________________
  OOPS!!! I couldn't save the task data file. Your latest change was not kept.
 ____________________________________________________________
 ____________________________________________________________
+ OOPS!!! I couldn't save the task data file. Your latest change was not kept.
+____________________________________________________________
+____________________________________________________________
  Here are the tasks in your list:
  1.[T][ ] read book
  2.[D][X] return book (by: Dec 02 2019)
+____________________________________________________________
+____________________________________________________________
+ Bye. Hope to see you again soon!
+____________________________________________________________
+```
+
+## TC-17: Edit one task detail while preserving all others
+
+### Aim
+
+Verify that description, date-only, and time-only edits preserve task types, completion status,
+list positions, and unspecified values, and that edited values are persisted.
+
+### Input
+
+```text
+todo read book
+deadline return book /by 2019-06-06 1800
+event project meeting /from 2019-08-06 1400 /to 2019-08-06 1600
+mark 2
+edit 1 /description read novel
+edit 2 /by 2019-06-07
+edit 3 /to 1700
+list
+bye
+```
+
+### Expected output
+
+```text
+____________________________________________________________
+ _   _                 
+| \ | | _____   ____ _ 
+|  \| |/ _ \ \ / / _` |
+| |\  | (_) \ V / (_| |
+|_| \_|\___/ \_/ \__,_|
+Hello! I'm Nova.
+What can I do for you?
+____________________________________________________________
+____________________________________________________________
+ Got it. I've added this task:
+   [T][ ] read book
+ Now you have 1 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+ Got it. I've added this task:
+   [D][ ] return book (by: Jun 06 2019, 6:00 PM)
+ Now you have 2 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+ Got it. I've added this task:
+   [E][ ] project meeting (from: Aug 06 2019, 2:00 PM to: Aug 06 2019, 4:00 PM)
+ Now you have 3 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+ Nice! I've marked this task as done:
+   [D][X] return book (by: Jun 06 2019, 6:00 PM)
+____________________________________________________________
+____________________________________________________________
+ Got it. I've updated this task:
+   Before: [T][ ] read book
+   After:  [T][ ] read novel
+____________________________________________________________
+____________________________________________________________
+ Got it. I've updated this task:
+   Before: [D][X] return book (by: Jun 06 2019, 6:00 PM)
+   After:  [D][X] return book (by: Jun 07 2019)
+____________________________________________________________
+____________________________________________________________
+ Got it. I've updated this task:
+   Before: [E][ ] project meeting (from: Aug 06 2019, 2:00 PM to: Aug 06 2019, 4:00 PM)
+   After:  [E][ ] project meeting (from: Aug 06 2019, 2:00 PM to: Aug 06 2019, 5:00 PM)
+____________________________________________________________
+____________________________________________________________
+ Here are the tasks in your list:
+ 1.[T][ ] read novel
+ 2.[D][X] return book (by: Jun 07 2019)
+ 3.[E][ ] project meeting (from: Aug 06 2019, 2:00 PM to: Aug 06 2019, 5:00 PM)
+____________________________________________________________
+____________________________________________________________
+ Bye. Hope to see you again soon!
+____________________________________________________________
+```
+
+### Expected data file
+
+```text
+T | 0 | read novel
+D | 1 | return book | 2019-06-07
+E | 0 | project meeting | 2019-08-06 1400 | 2019-08-06 1700
+```
+
+## TC-18: Explain invalid edit commands
+
+### Aim
+
+Verify that malformed edits, unsupported fields, invalid times, and invalid event ranges produce
+actionable errors without changing any tasks.
+
+### Input
+
+```text
+todo read book
+deadline return book /by 2019-06-06
+event meeting /from 2019-08-06 1400 /to 2019-08-06 1600
+edit
+edit first /description read novel
+edit 1
+edit 4 /description missing task
+edit 1 /to 1700
+edit 2 /from 2019-06-07
+edit 3 /from 1700
+edit 3 /to 2500
+edit 3 /from 2019-08-06 1300 /to 2019-08-06 1700
+list
+bye
+```
+
+### Expected output
+
+```text
+____________________________________________________________
+ _   _                 
+| \ | | _____   ____ _ 
+|  \| |/ _ \ \ / / _` |
+| |\  | (_) \ V / (_| |
+|_| \_|\___/ \_/ \__,_|
+Hello! I'm Nova.
+What can I do for you?
+____________________________________________________________
+____________________________________________________________
+ Got it. I've added this task:
+   [T][ ] read book
+ Now you have 1 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+ Got it. I've added this task:
+   [D][ ] return book (by: Jun 06 2019)
+ Now you have 2 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+ Got it. I've added this task:
+   [E][ ] meeting (from: Aug 06 2019, 2:00 PM to: Aug 06 2019, 4:00 PM)
+ Now you have 3 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+ OOPS!!! Tell me which task to edit. Try: edit <task number> <field> <new value>.
+____________________________________________________________
+____________________________________________________________
+ OOPS!!! The task number after edit must be a whole number, for example: edit 1.
+____________________________________________________________
+____________________________________________________________
+ OOPS!!! Tell me which field to edit in task 1. Use /description, /by, /from, or /to.
+____________________________________________________________
+____________________________________________________________
+ OOPS!!! Task 4 does not exist. Choose a number from 1 to 3.
+____________________________________________________________
+____________________________________________________________
+ OOPS!!! A todo can only edit /description.
+____________________________________________________________
+____________________________________________________________
+ OOPS!!! A deadline can only edit /description or /by.
+____________________________________________________________
+____________________________________________________________
+ OOPS!!! An event's /to date/time cannot be before its /from date/time.
+____________________________________________________________
+____________________________________________________________
+ OOPS!!! The /to time must be a real time in HHmm format, for example: 1700.
+____________________________________________________________
+____________________________________________________________
+ OOPS!!! Edit one field at a time. Use a separate edit command for each field.
+____________________________________________________________
+____________________________________________________________
+ Here are the tasks in your list:
+ 1.[T][ ] read book
+ 2.[D][ ] return book (by: Jun 06 2019)
+ 3.[E][ ] meeting (from: Aug 06 2019, 2:00 PM to: Aug 06 2019, 4:00 PM)
 ____________________________________________________________
 ____________________________________________________________
  Bye. Hope to see you again soon!

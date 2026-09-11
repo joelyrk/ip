@@ -3,6 +3,7 @@ package nova.task;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.DateTimeParseException;
@@ -32,6 +33,7 @@ public final class TaskDateTime {
             DateTimeFormatter.ofPattern("MMM dd uuuu, h:mm a", Locale.ENGLISH);
     private static final DateTimeFormatter DATE_TIME_FORMATTER_STORAGE_DATE_TIME =
             DateTimeFormatter.ofPattern("uuuu-MM-dd HHmm");
+    private static final DateTimeFormatter DATE_TIME_FORMATTER_TIME = strictFormatter("HHmm");
 
     private TaskDateTime() {
         // Utility class; do not instantiate.
@@ -63,6 +65,31 @@ public final class TaskDateTime {
         throw new NovaException("The " + fieldName + " date/time must be a real date in "
                 + "yyyy-MM-dd or d/M/yyyy format, optionally followed by HHmm, for example: "
                 + "2019-12-02 1800.");
+    }
+
+    /**
+     * Parses a replacement date/time, allowing a time to reuse the existing date.
+     *
+     * @param value user-entered replacement value.
+     * @param fieldName name used in error guidance, such as {@code /to}.
+     * @param existingDateTime current value whose date is retained for a time-only edit.
+     * @return parsed replacement and whether it includes a time.
+     * @throws NovaException if the replacement is not a supported date or time.
+     */
+    public static ParsedValue parseForEdit(String value, String fieldName,
+            LocalDateTime existingDateTime) throws NovaException {
+        assert existingDateTime != null : "Existing date/time must not be null";
+        if (!value.matches("\\d{4}")) {
+            return parse(value, fieldName);
+        }
+
+        try {
+            LocalTime time = LocalTime.parse(value, DATE_TIME_FORMATTER_TIME);
+            return new ParsedValue(existingDateTime.toLocalDate().atTime(time), true);
+        } catch (DateTimeParseException e) {
+            throw new NovaException("The " + fieldName
+                    + " time must be a real time in HHmm format, for example: 1700.");
+        }
     }
 
     /**

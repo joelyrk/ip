@@ -156,6 +156,18 @@ public class Ui {
     }
 
     /**
+     * Displays the task before and after a successful edit.
+     *
+     * @param originalTask task before editing.
+     * @param updatedTask task after editing.
+     */
+    public void showTaskEdited(Task originalTask, Task updatedTask) {
+        output.println(" Got it. I've updated this task:");
+        output.println("   Before: " + originalTask);
+        output.println("   After:  " + updatedTask);
+    }
+
+    /**
      * Displays scheduled tasks occurring on a date while retaining their original numbers.
      *
      * @param date date being searched.
