@@ -40,13 +40,34 @@ public class NovaTest {
     }
 
     @Test
+    public void getResponse_editThenReload_preservesEditedTask() {
+        Path dataFile = temporaryDirectory.resolve("nova.txt");
+        Nova nova = new Nova(dataFile.toString());
+        nova.getResponse("event meeting /from 2019-12-03 1400 /to 2019-12-03 1600");
+
+        Nova.Response editResponse = nova.getResponse("edit 1 /to 1700");
+        Nova reloadedNova = new Nova(dataFile.toString());
+        Nova.Response listResponse = reloadedNova.getResponse("list");
+
+        assertEquals(String.join(System.lineSeparator(),
+                "Got it. I've updated this task:",
+                "   Before: [E][ ] meeting (from: Dec 03 2019, 2:00 PM to: Dec 03 2019, 4:00 PM)",
+                "   After:  [E][ ] meeting (from: Dec 03 2019, 2:00 PM to: Dec 03 2019, 5:00 PM)"),
+                editResponse.message());
+        assertEquals(String.join(System.lineSeparator(),
+                "Here are the tasks in your list:",
+                " 1.[E][ ] meeting (from: Dec 03 2019, 2:00 PM to: Dec 03 2019, 5:00 PM)"),
+                listResponse.message());
+    }
+
+    @Test
     public void getResponse_invalidCommand_returnsErrorWithoutExiting() {
         Nova nova = new Nova(temporaryDirectory.resolve("nova.txt").toString());
 
         Nova.Response response = nova.getResponse("unknown");
 
         assertEquals("OOPS!!! I don't recognize that command. Start with todo, deadline, event, find, on, "
-                + "list, mark, unmark, delete, or bye.", response.message());
+                + "list, mark, unmark, delete, edit, or bye.", response.message());
         assertFalse(response.isExit());
     }
 

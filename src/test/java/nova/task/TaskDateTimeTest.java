@@ -87,6 +87,28 @@ public class TaskDateTimeTest {
     }
 
     @Test
+    public void parseForEdit_timeOnly_retainsExistingDate() throws NovaException {
+        LocalDateTime existingDateTime = LocalDateTime.of(2019, 12, 3, 16, 0);
+
+        TaskDateTime.ParsedValue result = TaskDateTime.parseForEdit(
+                "1700", "/to", existingDateTime);
+
+        assertEquals(LocalDateTime.of(2019, 12, 3, 17, 0), result.dateTime());
+        assertTrue(result.hasTime());
+    }
+
+    @Test
+    public void parseForEdit_invalidTime_throwsActionableException() {
+        LocalDateTime existingDateTime = LocalDateTime.of(2019, 12, 3, 16, 0);
+
+        NovaException exception = assertThrows(NovaException.class, () ->
+                TaskDateTime.parseForEdit("2500", "/to", existingDateTime));
+
+        assertEquals("The /to time must be a real time in HHmm format, for example: 1700.",
+                exception.getMessage());
+    }
+
+    @Test
     public void parse_differentFieldName_usesFieldNameInErrorMessage() {
         NovaException exception = assertThrows(NovaException.class, () ->
                 TaskDateTime.parse("not-a-date", "/from"));

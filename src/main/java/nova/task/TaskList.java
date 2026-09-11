@@ -88,6 +88,17 @@ public class TaskList {
     }
 
     /**
+     * Replaces and returns the task at a zero-based index.
+     *
+     * @param index zero-based task index.
+     * @param task replacement task.
+     * @return task previously stored at the index.
+     */
+    public Task set(int index, Task task) {
+        return tasks.set(index, task);
+    }
+
+    /**
      * Marks a task as completed.
      *
      * @param index zero-based task index.
