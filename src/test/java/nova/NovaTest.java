@@ -26,11 +26,16 @@ public class NovaTest {
         Nova.Response addResponse = nova.getResponse("todo read book");
         Nova.Response listResponse = nova.getResponse("list");
 
-        assertEquals("Got it. I've added this task:\n"
-                + "   [T][ ] read book\n"
-                + " Now you have 1 tasks in the list.", addResponse.message());
+        String expectedAddMessage = String.join(System.lineSeparator(),
+                "Got it. I've added this task:",
+                "   [T][ ] read book",
+                " Now you have 1 tasks in the list.");
+        assertEquals(expectedAddMessage, addResponse.message());
         assertFalse(addResponse.isExit());
-        assertEquals("Here are the tasks in your list:\n 1.[T][ ] read book", listResponse.message());
+        String expectedListMessage = String.join(System.lineSeparator(),
+                "Here are the tasks in your list:",
+                " 1.[T][ ] read book");
+        assertEquals(expectedListMessage, listResponse.message());
         assertFalse(listResponse.isExit());
     }
 

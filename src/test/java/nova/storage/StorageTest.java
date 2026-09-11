@@ -68,7 +68,7 @@ public class StorageTest {
 
         storage.save(List.of(new Todo("current task")));
 
-        assertEquals("T | 0 | current task\n",
+        assertEquals("T | 0 | current task" + System.lineSeparator(),
                 Files.readString(dataFile, StandardCharsets.UTF_8));
         try (Stream<Path> files = Files.list(temporaryDirectory)) {
             assertFalse(files.anyMatch(path -> path.getFileName().toString().startsWith("nova-")));
