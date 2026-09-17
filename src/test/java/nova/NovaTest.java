@@ -27,14 +27,14 @@ public class NovaTest {
         Nova.Response listResponse = nova.getResponse("list");
 
         String expectedAddMessage = String.join(System.lineSeparator(),
-                "Got it. I've added this task:",
+                "Mission logged and ready for launch:",
                 "   [T][ ] read book",
-                " Now you have 1 tasks in the list.");
+                " You now have 1 mission in orbit.");
         assertEquals(expectedAddMessage, addResponse.message());
         assertFalse(addResponse.isExit());
         assertFalse(addResponse.isError());
         String expectedListMessage = String.join(System.lineSeparator(),
-                "Here are the tasks in your list:",
+                "Here's your mission log:",
                 " 1.[T][ ] read book");
         assertEquals(expectedListMessage, listResponse.message());
         assertFalse(listResponse.isExit());
@@ -52,12 +52,12 @@ public class NovaTest {
         Nova.Response listResponse = reloadedNova.getResponse("list");
 
         assertEquals(String.join(System.lineSeparator(),
-                "Got it. I've updated this task:",
+                "Flight plan updated:",
                 "   Before: [E][ ] meeting (from: Dec 03 2019, 2:00 PM to: Dec 03 2019, 4:00 PM)",
                 "   After:  [E][ ] meeting (from: Dec 03 2019, 2:00 PM to: Dec 03 2019, 5:00 PM)"),
                 editResponse.message());
         assertEquals(String.join(System.lineSeparator(),
-                "Here are the tasks in your list:",
+                "Here's your mission log:",
                 " 1.[E][ ] meeting (from: Dec 03 2019, 2:00 PM to: Dec 03 2019, 5:00 PM)"),
                 listResponse.message());
     }
@@ -68,8 +68,8 @@ public class NovaTest {
 
         Nova.Response response = nova.getResponse("unknown");
 
-        assertEquals("OOPS!!! I don't recognize that command. Start with todo, deadline, event, find, on, "
-                + "list, mark, unmark, delete, edit, or bye.", response.message());
+        assertEquals("NAVIGATION ALERT: I don't recognize that command. Start with todo, deadline, event, "
+                + "find, on, list, mark, unmark, delete, edit, or bye.", response.message());
         assertFalse(response.isExit());
         assertTrue(response.isError());
     }
@@ -80,7 +80,7 @@ public class NovaTest {
 
         Nova.Response response = nova.getResponse("bye");
 
-        assertEquals("Bye. Hope to see you again soon!", response.message());
+        assertEquals("Returning to base. Until our next mission!", response.message());
         assertTrue(response.isExit());
         assertFalse(response.isError());
     }
@@ -92,8 +92,8 @@ public class NovaTest {
 
         Nova nova = new Nova(dataFile.toString());
 
-        assertEquals("Hello! I'm Nova.\nWhat can I do for you?\n\n"
-                + "OOPS!!! I couldn't load your saved tasks because line 1 is invalid: "
+        assertEquals("Nova online! Your mission navigator is ready.\nWhat shall we launch today?\n\n"
+                + "NAVIGATION ALERT: I couldn't load your saved tasks because line 1 is invalid: "
                 + "the completion state must be 0 or 1. Starting with an empty task list.",
                 nova.getWelcomeMessage());
     }

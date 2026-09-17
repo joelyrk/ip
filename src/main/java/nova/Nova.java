@@ -16,7 +16,8 @@ import nova.ui.Ui;
  * Coordinates Nova's storage, task list, parser, and user interface.
  */
 public class Nova {
-    private static final String WELCOME_MESSAGE = "Hello! I'm Nova.\nWhat can I do for you?";
+    private static final String WELCOME_MESSAGE = "Nova online! Your mission navigator is ready.\n"
+            + "What shall we launch today?";
 
     private final Storage storage;
     private final TaskList tasks;
@@ -106,7 +107,7 @@ public class Nova {
         if (loadingError == null) {
             return WELCOME_MESSAGE;
         }
-        return WELCOME_MESSAGE + "\n\nOOPS!!! " + loadingError.getMessage();
+        return WELCOME_MESSAGE + "\n\nNAVIGATION ALERT: " + loadingError.getMessage();
     }
 
     /**

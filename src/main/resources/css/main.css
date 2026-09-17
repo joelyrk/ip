@@ -1,11 +1,19 @@
 .root {
-    -fx-background-color: #f4f7fb;
-    -fx-font-family: "Avenir Next", "Segoe UI", sans-serif;
+    -fx-background-color: linear-gradient(to bottom, #070b1d, #11183a);
+    -fx-font-family: "Avenir Next", "Inter", "Segoe UI", sans-serif;
 }
 
 .title-bar {
-    -fx-background-color: linear-gradient(to right, #312e81, #6366f1);
+    -fx-background-color: linear-gradient(to right, #151a42, #392b77, #1c4d70);
+    -fx-border-color: transparent transparent #5ee7f7 transparent;
+    -fx-border-width: 0 0 1 0;
     -fx-padding: 18 22 18 22;
+}
+
+.title-icon {
+    -fx-effect: dropshadow(gaussian, #78f3ff, 12, 0.55, 0, 0);
+    -fx-font-size: 30px;
+    -fx-text-fill: #9af7ff;
 }
 
 .title {
@@ -15,8 +23,17 @@
 }
 
 .subtitle {
-    -fx-font-size: 13px;
-    -fx-text-fill: #dbeafe;
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #aab8e8;
+}
+
+.status-pill {
+    -fx-alignment: center-right;
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+    -fx-max-width: Infinity;
+    -fx-text-fill: #69f0c3;
 }
 
 .scroll-pane,
@@ -25,7 +42,7 @@
 }
 
 .dialog-container {
-    -fx-padding: 16 14 16 14;
+    -fx-padding: 20 16 20 16;
 }
 
 .dialog-box {
@@ -41,31 +58,31 @@
 }
 
 .user-command {
-    -fx-background-color: #e0e7ff;
-    -fx-background-radius: 7;
+    -fx-background-color: linear-gradient(to bottom right, #5246b8, #345f9d);
+    -fx-background-radius: 16 16 4 16;
     -fx-font-family: "SFMono-Regular", "Consolas", monospace;
-    -fx-padding: 7 11 7 11;
-    -fx-text-fill: #3730a3;
+    -fx-padding: 9 13 9 13;
+    -fx-text-fill: #f4f7ff;
 }
 
 .nova-dialog {
-    -fx-background-color: white;
-    -fx-border-color: #dbe2ea;
-    -fx-border-radius: 15;
-    -fx-background-radius: 15;
+    -fx-background-color: rgba(28, 35, 78, 0.96);
+    -fx-border-color: #455aa3;
+    -fx-border-radius: 4 16 16 16;
+    -fx-background-radius: 4 16 16 16;
     -fx-padding: 11 14 11 14;
-    -fx-text-fill: #1f2937;
+    -fx-text-fill: #edf2ff;
 }
 
 .error-dialog {
-    -fx-background-color: #fef2f2;
-    -fx-background-radius: 10;
-    -fx-border-color: #fca5a5;
-    -fx-border-radius: 10;
+    -fx-background-color: #3a1c43;
+    -fx-background-radius: 4 16 16 16;
+    -fx-border-color: #ff7897;
+    -fx-border-radius: 4 16 16 16;
     -fx-border-width: 1.5;
     -fx-font-weight: bold;
     -fx-padding: 11 14 11 14;
-    -fx-text-fill: #991b1b;
+    -fx-text-fill: #ffd9e2;
 }
 
 .avatar {
@@ -81,34 +98,38 @@
 }
 
 .nova-avatar {
-    -fx-background-color: #10b981;
+    -fx-background-color: linear-gradient(to bottom right, #7868e6, #24bed1);
+    -fx-effect: dropshadow(gaussian, #4bdbea, 10, 0.35, 0, 0);
 }
 
 .error-avatar {
-    -fx-background-color: #dc2626;
+    -fx-background-color: #e34c78;
 }
 
 .input-bar {
-    -fx-background-color: white;
-    -fx-border-color: #dbe2ea transparent transparent transparent;
+    -fx-background-color: #0d122d;
+    -fx-border-color: #293667 transparent transparent transparent;
     -fx-padding: 14;
 }
 
 .text-field {
-    -fx-background-color: #f3f4f6;
+    -fx-background-color: #181f45;
     -fx-background-radius: 9;
-    -fx-border-color: transparent;
+    -fx-border-color: #303d70;
+    -fx-border-radius: 9;
     -fx-font-size: 14px;
     -fx-padding: 11 13 11 13;
+    -fx-prompt-text-fill: #7f8bb9;
+    -fx-text-fill: #f2f5ff;
 }
 
 .text-field:focused {
-    -fx-border-color: #6366f1;
+    -fx-border-color: #5ee7f7;
     -fx-border-radius: 9;
 }
 
 .button {
-    -fx-background-color: #4f46e5;
+    -fx-background-color: linear-gradient(to right, #7257d6, #248cae);
     -fx-background-radius: 9;
     -fx-font-weight: bold;
     -fx-padding: 11 20 11 20;
@@ -116,7 +137,7 @@
 }
 
 .button:hover {
-    -fx-background-color: #4338ca;
+    -fx-background-color: linear-gradient(to right, #8268e7, #2ea5c6);
 }
 
 .button:disabled {

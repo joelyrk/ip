@@ -31,7 +31,7 @@ edit 3 /to 1700
 Nova shows the task before and after the edit:
 
 ```text
-Got it. I've updated this task:
+Flight plan updated:
   Before: [E][ ] project meeting (from: Aug 06 2019, 2:00 PM to: Aug 06 2019, 4:00 PM)
   After:  [E][ ] project meeting (from: Aug 06 2019, 2:00 PM to: Aug 06 2019, 5:00 PM)
 ```

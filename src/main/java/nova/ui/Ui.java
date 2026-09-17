@@ -60,8 +60,8 @@ public class Ui {
     public void showWelcome() {
         output.println(DISPLAY_SEPARATOR);
         output.print(DISPLAY_BANNER);
-        output.println("Hello! I'm Nova.");
-        output.println("What can I do for you?");
+        output.println("Nova online! Your mission navigator is ready.");
+        output.println("What shall we launch today?");
         output.println(DISPLAY_SEPARATOR);
     }
 
@@ -96,7 +96,7 @@ public class Ui {
      * @param error error to explain to the user.
      */
     public void showError(NovaException error) {
-        output.println(" OOPS!!! " + error.getMessage());
+        output.println(" NAVIGATION ALERT: " + error.getMessage());
     }
 
     /**
@@ -105,7 +105,7 @@ public class Ui {
      * @param tasks tasks to display.
      */
     public void showTaskList(List<Task> tasks) {
-        output.println(" Here are the tasks in your list:");
+        output.println(" Here's your mission log:");
         for (int i = 0; i < tasks.size(); i++) {
             output.println(" " + (i + 1) + "." + tasks.get(i));
         }
@@ -118,9 +118,9 @@ public class Ui {
      * @param taskCount total number of tasks after the addition.
      */
     public void showTaskAdded(Task task, int taskCount) {
-        output.println(" Got it. I've added this task:");
+        output.println(" Mission logged and ready for launch:");
         output.println("   " + task);
-        output.println(" Now you have " + taskCount + " tasks in the list.");
+        output.println(" You now have " + taskCount + " " + getMissionCountLabel(taskCount) + " in orbit.");
     }
 
     /**
@@ -129,7 +129,7 @@ public class Ui {
      * @param task task that was marked.
      */
     public void showTaskMarked(Task task) {
-        output.println(" Nice! I've marked this task as done:");
+        output.println(" Mission accomplished! Stellar work:");
         output.println("   " + task);
     }
 
@@ -139,7 +139,7 @@ public class Ui {
      * @param task task that was unmarked.
      */
     public void showTaskUnmarked(Task task) {
-        output.println(" OK, I've marked this task as not done yet:");
+        output.println(" Mission reopened and back on course:");
         output.println("   " + task);
     }
 
@@ -150,9 +150,9 @@ public class Ui {
      * @param taskCount total number of remaining tasks.
      */
     public void showTaskDeleted(Task task, int taskCount) {
-        output.println(" Noted. I've removed this task:");
+        output.println(" Mission removed from the flight plan:");
         output.println("   " + task);
-        output.println(" Now you have " + taskCount + " tasks in the list.");
+        output.println(" You now have " + taskCount + " " + getMissionCountLabel(taskCount) + " in orbit.");
     }
 
     /**
@@ -162,7 +162,7 @@ public class Ui {
      * @param updatedTask task after editing.
      */
     public void showTaskEdited(Task originalTask, Task updatedTask) {
-        output.println(" Got it. I've updated this task:");
+        output.println(" Flight plan updated:");
         output.println("   Before: " + originalTask);
         output.println("   After:  " + updatedTask);
     }
@@ -174,10 +174,10 @@ public class Ui {
      * @param tasks matching tasks with their original task numbers.
      */
     public void showTasksOn(LocalDate date, List<TaskList.NumberedTask> tasks) {
-        output.println(" Here are the tasks occurring on " + date.format(DISPLAY_DATE_FORMATTER) + ":");
+        output.println(" Missions scheduled for " + date.format(DISPLAY_DATE_FORMATTER) + ":");
         showNumberedTasks(tasks);
         if (tasks.isEmpty()) {
-            output.println(" No deadlines or events occur on this date.");
+            output.println(" No timed missions are in orbit for this date.");
         }
     }
 
@@ -187,10 +187,10 @@ public class Ui {
      * @param tasks matching tasks with their original task numbers.
      */
     public void showMatchingTasks(List<TaskList.NumberedTask> tasks) {
-        output.println(" Here are the matching tasks in your list:");
+        output.println(" Scan complete. Here are the matching missions:");
         showNumberedTasks(tasks);
         if (tasks.isEmpty()) {
-            output.println(" No matching tasks found.");
+            output.println(" No matching missions detected.");
         }
     }
 
@@ -206,9 +206,19 @@ public class Ui {
     }
 
     /**
+     * Returns the singular or plural label for a displayed mission count.
+     *
+     * @param taskCount number of missions.
+     * @return appropriately pluralized mission label.
+     */
+    private String getMissionCountLabel(int taskCount) {
+        return taskCount == 1 ? "mission" : "missions";
+    }
+
+    /**
      * Displays Nova's farewell message.
      */
     public void showGoodbye() {
-        output.println(" Bye. Hope to see you again soon!");
+        output.println(" Returning to base. Until our next mission!");
     }
 }

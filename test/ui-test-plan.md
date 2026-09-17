@@ -30,38 +30,38 @@ ____________________________________________________________
 |  \| |/ _ \ \ / / _` |
 | |\  | (_) \ V / (_| |
 |_| \_|\___/ \_/ \__,_|
-Hello! I'm Nova.
-What can I do for you?
+Nova online! Your mission navigator is ready.
+What shall we launch today?
 ____________________________________________________________
 ____________________________________________________________
- Got it. I've added this task:
+ Mission logged and ready for launch:
    [T][ ] read book
- Now you have 1 tasks in the list.
+ You now have 1 mission in orbit.
 ____________________________________________________________
 ____________________________________________________________
- Got it. I've added this task:
+ Mission logged and ready for launch:
    [D][ ] return book (by: Dec 02 2019, 6:00 PM)
- Now you have 2 tasks in the list.
+ You now have 2 missions in orbit.
 ____________________________________________________________
 ____________________________________________________________
- Got it. I've added this task:
+ Mission logged and ready for launch:
    [E][ ] project meeting (from: Dec 03 2019, 2:00 PM to: Dec 03 2019, 4:00 PM)
- Now you have 3 tasks in the list.
+ You now have 3 missions in orbit.
 ____________________________________________________________
 ____________________________________________________________
- Got it. I've added this task:
+ Mission logged and ready for launch:
    [D][ ] do homework (by: Dec 04 2019)
- Now you have 4 tasks in the list.
+ You now have 4 missions in orbit.
 ____________________________________________________________
 ____________________________________________________________
- Here are the tasks in your list:
+ Here's your mission log:
  1.[T][ ] read book
  2.[D][ ] return book (by: Dec 02 2019, 6:00 PM)
  3.[E][ ] project meeting (from: Dec 03 2019, 2:00 PM to: Dec 03 2019, 4:00 PM)
  4.[D][ ] do homework (by: Dec 04 2019)
 ____________________________________________________________
 ____________________________________________________________
- Bye. Hope to see you again soon!
+ Returning to base. Until our next mission!
 ____________________________________________________________
 ```
 
@@ -90,30 +90,30 @@ ____________________________________________________________
 |  \| |/ _ \ \ / / _` |
 | |\  | (_) \ V / (_| |
 |_| \_|\___/ \_/ \__,_|
-Hello! I'm Nova.
-What can I do for you?
+Nova online! Your mission navigator is ready.
+What shall we launch today?
 ____________________________________________________________
 ____________________________________________________________
- Got it. I've added this task:
+ Mission logged and ready for launch:
    [T][ ] read book
- Now you have 1 tasks in the list.
+ You now have 1 mission in orbit.
 ____________________________________________________________
 ____________________________________________________________
- Got it. I've added this task:
+ Mission logged and ready for launch:
    [D][ ] return book (by: Dec 02 2019)
- Now you have 2 tasks in the list.
+ You now have 2 missions in orbit.
 ____________________________________________________________
 ____________________________________________________________
- Nice! I've marked this task as done:
+ Mission accomplished! Stellar work:
    [D][X] return book (by: Dec 02 2019)
 ____________________________________________________________
 ____________________________________________________________
- Here are the tasks in your list:
+ Here's your mission log:
  1.[T][ ] read book
  2.[D][X] return book (by: Dec 02 2019)
 ____________________________________________________________
 ____________________________________________________________
- Bye. Hope to see you again soon!
+ Returning to base. Until our next mission!
 ____________________________________________________________
 ```
 
@@ -142,28 +142,28 @@ ____________________________________________________________
 |  \| |/ _ \ \ / / _` |
 | |\  | (_) \ V / (_| |
 |_| \_|\___/ \_/ \__,_|
-Hello! I'm Nova.
-What can I do for you?
+Nova online! Your mission navigator is ready.
+What shall we launch today?
 ____________________________________________________________
 ____________________________________________________________
- Got it. I've added this task:
+ Mission logged and ready for launch:
    [E][ ] orientation week (from: Oct 04 2019 to: Oct 11 2019)
- Now you have 1 tasks in the list.
+ You now have 1 mission in orbit.
 ____________________________________________________________
 ____________________________________________________________
- Nice! I've marked this task as done:
+ Mission accomplished! Stellar work:
    [E][X] orientation week (from: Oct 04 2019 to: Oct 11 2019)
 ____________________________________________________________
 ____________________________________________________________
- OK, I've marked this task as not done yet:
+ Mission reopened and back on course:
    [E][ ] orientation week (from: Oct 04 2019 to: Oct 11 2019)
 ____________________________________________________________
 ____________________________________________________________
- Here are the tasks in your list:
+ Here's your mission log:
  1.[E][ ] orientation week (from: Oct 04 2019 to: Oct 11 2019)
 ____________________________________________________________
 ____________________________________________________________
- Bye. Hope to see you again soon!
+ Returning to base. Until our next mission!
 ____________________________________________________________
 ```
 
@@ -191,20 +191,20 @@ ____________________________________________________________
 |  \| |/ _ \ \ / / _` |
 | |\  | (_) \ V / (_| |
 |_| \_|\___/ \_/ \__,_|
-Hello! I'm Nova.
-What can I do for you?
+Nova online! Your mission navigator is ready.
+What shall we launch today?
 ____________________________________________________________
 ____________________________________________________________
- OOPS!!! A todo needs a description. Try: todo <description>.
+ NAVIGATION ALERT: A todo needs a description. Try: todo <description>.
 ____________________________________________________________
 ____________________________________________________________
- OOPS!!! I don't recognize that command. Start with todo, deadline, event, find, on, list, mark, unmark, delete, edit, or bye.
+ NAVIGATION ALERT: I don't recognize that command. Start with todo, deadline, event, find, on, list, mark, unmark, delete, edit, or bye.
 ____________________________________________________________
 ____________________________________________________________
- OOPS!!! You entered a blank command. Try todo, deadline, event, find, on, list, mark, unmark, delete, edit, or bye.
+ NAVIGATION ALERT: You entered a blank command. Try todo, deadline, event, find, on, list, mark, unmark, delete, edit, or bye.
 ____________________________________________________________
 ____________________________________________________________
- Bye. Hope to see you again soon!
+ Returning to base. Until our next mission!
 ____________________________________________________________
 ```
 
@@ -239,60 +239,60 @@ ____________________________________________________________
 |  \| |/ _ \ \ / / _` |
 | |\  | (_) \ V / (_| |
 |_| \_|\___/ \_/ \__,_|
-Hello! I'm Nova.
-What can I do for you?
+Nova online! Your mission navigator is ready.
+What shall we launch today?
 ____________________________________________________________
 ____________________________________________________________
- Got it. I've added this task:
+ Mission logged and ready for launch:
    [T][ ] read book
- Now you have 1 tasks in the list.
+ You now have 1 mission in orbit.
 ____________________________________________________________
 ____________________________________________________________
- Got it. I've added this task:
+ Mission logged and ready for launch:
    [D][ ] return book (by: Jun 06 2019)
- Now you have 2 tasks in the list.
+ You now have 2 missions in orbit.
 ____________________________________________________________
 ____________________________________________________________
- Got it. I've added this task:
+ Mission logged and ready for launch:
    [E][ ] project meeting (from: Aug 06 2019, 2:00 PM to: Aug 06 2019, 4:00 PM)
- Now you have 3 tasks in the list.
+ You now have 3 missions in orbit.
 ____________________________________________________________
 ____________________________________________________________
- Got it. I've added this task:
+ Mission logged and ready for launch:
    [T][ ] join sports club
- Now you have 4 tasks in the list.
+ You now have 4 missions in orbit.
 ____________________________________________________________
 ____________________________________________________________
- Got it. I've added this task:
+ Mission logged and ready for launch:
    [T][ ] borrow book
- Now you have 5 tasks in the list.
+ You now have 5 missions in orbit.
 ____________________________________________________________
 ____________________________________________________________
- Nice! I've marked this task as done:
+ Mission accomplished! Stellar work:
    [T][X] read book
 ____________________________________________________________
 ____________________________________________________________
- Nice! I've marked this task as done:
+ Mission accomplished! Stellar work:
    [D][X] return book (by: Jun 06 2019)
 ____________________________________________________________
 ____________________________________________________________
- Nice! I've marked this task as done:
+ Mission accomplished! Stellar work:
    [T][X] join sports club
 ____________________________________________________________
 ____________________________________________________________
- Noted. I've removed this task:
+ Mission removed from the flight plan:
    [E][ ] project meeting (from: Aug 06 2019, 2:00 PM to: Aug 06 2019, 4:00 PM)
- Now you have 4 tasks in the list.
+ You now have 4 missions in orbit.
 ____________________________________________________________
 ____________________________________________________________
- Here are the tasks in your list:
+ Here's your mission log:
  1.[T][X] read book
  2.[D][X] return book (by: Jun 06 2019)
  3.[T][X] join sports club
  4.[T][ ] borrow book
 ____________________________________________________________
 ____________________________________________________________
- Bye. Hope to see you again soon!
+ Returning to base. Until our next mission!
 ____________________________________________________________
 ```
 
@@ -324,35 +324,35 @@ ____________________________________________________________
 |  \| |/ _ \ \ / / _` |
 | |\  | (_) \ V / (_| |
 |_| \_|\___/ \_/ \__,_|
-Hello! I'm Nova.
-What can I do for you?
+Nova online! Your mission navigator is ready.
+What shall we launch today?
 ____________________________________________________________
 ____________________________________________________________
- OOPS!!! Tell me which task to delete. Try: delete <task number>.
+ NAVIGATION ALERT: Tell me which task to delete. Try: delete <task number>.
 ____________________________________________________________
 ____________________________________________________________
- OOPS!!! The task number after delete must be a whole number, for example: delete 1.
+ NAVIGATION ALERT: The task number after delete must be a whole number, for example: delete 1.
 ____________________________________________________________
 ____________________________________________________________
- OOPS!!! There are no tasks to delete yet. Add a task first.
+ NAVIGATION ALERT: There are no tasks to delete yet. Add a task first.
 ____________________________________________________________
 ____________________________________________________________
- Got it. I've added this task:
+ Mission logged and ready for launch:
    [T][ ] read book
- Now you have 1 tasks in the list.
+ You now have 1 mission in orbit.
 ____________________________________________________________
 ____________________________________________________________
- OOPS!!! Task 0 does not exist. Choose a number from 1 to 1.
+ NAVIGATION ALERT: Task 0 does not exist. Choose a number from 1 to 1.
 ____________________________________________________________
 ____________________________________________________________
- OOPS!!! Task 2 does not exist. Choose a number from 1 to 1.
+ NAVIGATION ALERT: Task 2 does not exist. Choose a number from 1 to 1.
 ____________________________________________________________
 ____________________________________________________________
- Here are the tasks in your list:
+ Here's your mission log:
  1.[T][ ] read book
 ____________________________________________________________
 ____________________________________________________________
- Bye. Hope to see you again soon!
+ Returning to base. Until our next mission!
 ____________________________________________________________
 ```
 
@@ -388,44 +388,44 @@ ____________________________________________________________
 |  \| |/ _ \ \ / / _` |
 | |\  | (_) \ V / (_| |
 |_| \_|\___/ \_/ \__,_|
-Hello! I'm Nova.
-What can I do for you?
+Nova online! Your mission navigator is ready.
+What shall we launch today?
 ____________________________________________________________
 ____________________________________________________________
- OOPS!!! A deadline needs a description. Try: deadline <description> /by <date or time>.
+ NAVIGATION ALERT: A deadline needs a description. Try: deadline <description> /by <date or time>.
 ____________________________________________________________
 ____________________________________________________________
- OOPS!!! A deadline needs a /by date or time. Try: deadline return book /by <date or time>.
+ NAVIGATION ALERT: A deadline needs a /by date or time. Try: deadline return book /by <date or time>.
 ____________________________________________________________
 ____________________________________________________________
- OOPS!!! A deadline needs a description before /by.
+ NAVIGATION ALERT: A deadline needs a description before /by.
 ____________________________________________________________
 ____________________________________________________________
- OOPS!!! The /by field cannot be empty. Add a date or time after /by.
+ NAVIGATION ALERT: The /by field cannot be empty. Add a date or time after /by.
 ____________________________________________________________
 ____________________________________________________________
- OOPS!!! An event needs a description and a time range. Try: event <description> /from <start> /to <end>.
+ NAVIGATION ALERT: An event needs a description and a time range. Try: event <description> /from <start> /to <end>.
 ____________________________________________________________
 ____________________________________________________________
- OOPS!!! An event needs a /from start date or time.
+ NAVIGATION ALERT: An event needs a /from start date or time.
 ____________________________________________________________
 ____________________________________________________________
- OOPS!!! An event needs a /to end date or time.
+ NAVIGATION ALERT: An event needs a /to end date or time.
 ____________________________________________________________
 ____________________________________________________________
- OOPS!!! Put /from before /to. Try: event <description> /from <start> /to <end>.
+ NAVIGATION ALERT: Put /from before /to. Try: event <description> /from <start> /to <end>.
 ____________________________________________________________
 ____________________________________________________________
- OOPS!!! An event needs a description before /from.
+ NAVIGATION ALERT: An event needs a description before /from.
 ____________________________________________________________
 ____________________________________________________________
- OOPS!!! The /from field cannot be empty. Add a start date or time after /from.
+ NAVIGATION ALERT: The /from field cannot be empty. Add a start date or time after /from.
 ____________________________________________________________
 ____________________________________________________________
- OOPS!!! The /to field cannot be empty. Add an end date or time after /to.
+ NAVIGATION ALERT: The /to field cannot be empty. Add an end date or time after /to.
 ____________________________________________________________
 ____________________________________________________________
- Bye. Hope to see you again soon!
+ Returning to base. Until our next mission!
 ____________________________________________________________
 ```
 
@@ -458,37 +458,37 @@ ____________________________________________________________
 |  \| |/ _ \ \ / / _` |
 | |\  | (_) \ V / (_| |
 |_| \_|\___/ \_/ \__,_|
-Hello! I'm Nova.
-What can I do for you?
+Nova online! Your mission navigator is ready.
+What shall we launch today?
 ____________________________________________________________
 ____________________________________________________________
- OOPS!!! Tell me which task to mark. Try: mark <task number>.
+ NAVIGATION ALERT: Tell me which task to mark. Try: mark <task number>.
 ____________________________________________________________
 ____________________________________________________________
- OOPS!!! Tell me which task to unmark. Try: unmark <task number>.
+ NAVIGATION ALERT: Tell me which task to unmark. Try: unmark <task number>.
 ____________________________________________________________
 ____________________________________________________________
- OOPS!!! The task number after mark must be a whole number, for example: mark 1.
+ NAVIGATION ALERT: The task number after mark must be a whole number, for example: mark 1.
 ____________________________________________________________
 ____________________________________________________________
- OOPS!!! There are no tasks to unmark yet. Add a task first.
+ NAVIGATION ALERT: There are no tasks to unmark yet. Add a task first.
 ____________________________________________________________
 ____________________________________________________________
- Got it. I've added this task:
+ Mission logged and ready for launch:
    [T][ ] read book
- Now you have 1 tasks in the list.
+ You now have 1 mission in orbit.
 ____________________________________________________________
 ____________________________________________________________
- OOPS!!! Task 0 does not exist. Choose a number from 1 to 1.
+ NAVIGATION ALERT: Task 0 does not exist. Choose a number from 1 to 1.
 ____________________________________________________________
 ____________________________________________________________
- OOPS!!! Task 2 does not exist. Choose a number from 1 to 1.
+ NAVIGATION ALERT: Task 2 does not exist. Choose a number from 1 to 1.
 ____________________________________________________________
 ____________________________________________________________
- OOPS!!! The task number after unmark must be a whole number, for example: unmark 1.
+ NAVIGATION ALERT: The task number after unmark must be a whole number, for example: unmark 1.
 ____________________________________________________________
 ____________________________________________________________
- Bye. Hope to see you again soon!
+ Returning to base. Until our next mission!
 ____________________________________________________________
 ```
 
@@ -517,30 +517,30 @@ ____________________________________________________________
 |  \| |/ _ \ \ / / _` |
 | |\  | (_) \ V / (_| |
 |_| \_|\___/ \_/ \__,_|
-Hello! I'm Nova.
-What can I do for you?
+Nova online! Your mission navigator is ready.
+What shall we launch today?
 ____________________________________________________________
 ____________________________________________________________
- Got it. I've added this task:
+ Mission logged and ready for launch:
    [T][ ] read book
- Now you have 1 tasks in the list.
+ You now have 1 mission in orbit.
 ____________________________________________________________
 ____________________________________________________________
- Got it. I've added this task:
+ Mission logged and ready for launch:
    [D][ ] return book (by: Jun 06 2019)
- Now you have 2 tasks in the list.
+ You now have 2 missions in orbit.
 ____________________________________________________________
 ____________________________________________________________
- Nice! I've marked this task as done:
+ Mission accomplished! Stellar work:
    [D][X] return book (by: Jun 06 2019)
 ____________________________________________________________
 ____________________________________________________________
- Noted. I've removed this task:
+ Mission removed from the flight plan:
    [T][ ] read book
- Now you have 1 tasks in the list.
+ You now have 1 mission in orbit.
 ____________________________________________________________
 ____________________________________________________________
- Bye. Hope to see you again soon!
+ Returning to base. Until our next mission!
 ____________________________________________________________
 ```
 
@@ -580,17 +580,17 @@ ____________________________________________________________
 |  \| |/ _ \ \ / / _` |
 | |\  | (_) \ V / (_| |
 |_| \_|\___/ \_/ \__,_|
-Hello! I'm Nova.
-What can I do for you?
+Nova online! Your mission navigator is ready.
+What shall we launch today?
 ____________________________________________________________
 ____________________________________________________________
- Here are the tasks in your list:
+ Here's your mission log:
  1.[T][X] read book
  2.[D][ ] return book (by: Jun 06 2019)
  3.[E][X] project meeting (from: Aug 06 2019, 2:00 PM to: Aug 06 2019, 4:00 PM)
 ____________________________________________________________
 ____________________________________________________________
- Bye. Hope to see you again soon!
+ Returning to base. Until our next mission!
 ____________________________________________________________
 ```
 
@@ -622,16 +622,16 @@ ____________________________________________________________
 |  \| |/ _ \ \ / / _` |
 | |\  | (_) \ V / (_| |
 |_| \_|\___/ \_/ \__,_|
-Hello! I'm Nova.
-What can I do for you?
+Nova online! Your mission navigator is ready.
+What shall we launch today?
 ____________________________________________________________
- OOPS!!! I couldn't load your saved tasks because line 1 is invalid: the completion state must be 0 or 1. Starting with an empty task list.
-____________________________________________________________
-____________________________________________________________
- Here are the tasks in your list:
+ NAVIGATION ALERT: I couldn't load your saved tasks because line 1 is invalid: the completion state must be 0 or 1. Starting with an empty task list.
 ____________________________________________________________
 ____________________________________________________________
- Bye. Hope to see you again soon!
+ Here's your mission log:
+____________________________________________________________
+____________________________________________________________
+ Returning to base. Until our next mission!
 ____________________________________________________________
 ```
 
@@ -664,19 +664,19 @@ ____________________________________________________________
 |  \| |/ _ \ \ / / _` |
 | |\  | (_) \ V / (_| |
 |_| \_|\___/ \_/ \__,_|
-Hello! I'm Nova.
-What can I do for you?
+Nova online! Your mission navigator is ready.
+What shall we launch today?
 ____________________________________________________________
- OOPS!!! I couldn't read the task data file. Starting with an empty task list.
-____________________________________________________________
-____________________________________________________________
- OOPS!!! I couldn't save the task data file. Your latest change was not kept.
+ NAVIGATION ALERT: I couldn't read the task data file. Starting with an empty task list.
 ____________________________________________________________
 ____________________________________________________________
- Here are the tasks in your list:
+ NAVIGATION ALERT: I couldn't save the task data file. Your latest change was not kept.
 ____________________________________________________________
 ____________________________________________________________
- Bye. Hope to see you again soon!
+ Here's your mission log:
+____________________________________________________________
+____________________________________________________________
+ Returning to base. Until our next mission!
 ____________________________________________________________
 ```
 
@@ -709,19 +709,19 @@ ____________________________________________________________
 |  \| |/ _ \ \ / / _` |
 | |\  | (_) \ V / (_| |
 |_| \_|\___/ \_/ \__,_|
-Hello! I'm Nova.
-What can I do for you?
+Nova online! Your mission navigator is ready.
+What shall we launch today?
 ____________________________________________________________
 ____________________________________________________________
- Nice! I've marked this task as done:
+ Mission accomplished! Stellar work:
    [D][X] discuss | review \ notes (by: Aug 09 2019, 5:00 PM)
 ____________________________________________________________
 ____________________________________________________________
- Here are the tasks in your list:
+ Here's your mission log:
  1.[D][X] discuss | review \ notes (by: Aug 09 2019, 5:00 PM)
 ____________________________________________________________
 ____________________________________________________________
- Bye. Hope to see you again soon!
+ Returning to base. Until our next mission!
 ____________________________________________________________
 ```
 
@@ -770,28 +770,28 @@ ____________________________________________________________
 |  \| |/ _ \ \ / / _` |
 | |\  | (_) \ V / (_| |
 |_| \_|\___/ \_/ \__,_|
-Hello! I'm Nova.
-What can I do for you?
+Nova online! Your mission navigator is ready.
+What shall we launch today?
 ____________________________________________________________
 ____________________________________________________________
- OOPS!!! I couldn't save the task data file. Your latest change was not kept.
+ NAVIGATION ALERT: I couldn't save the task data file. Your latest change was not kept.
 ____________________________________________________________
 ____________________________________________________________
- OOPS!!! I couldn't save the task data file. Your latest change was not kept.
+ NAVIGATION ALERT: I couldn't save the task data file. Your latest change was not kept.
 ____________________________________________________________
 ____________________________________________________________
- OOPS!!! I couldn't save the task data file. Your latest change was not kept.
+ NAVIGATION ALERT: I couldn't save the task data file. Your latest change was not kept.
 ____________________________________________________________
 ____________________________________________________________
- OOPS!!! I couldn't save the task data file. Your latest change was not kept.
+ NAVIGATION ALERT: I couldn't save the task data file. Your latest change was not kept.
 ____________________________________________________________
 ____________________________________________________________
- Here are the tasks in your list:
+ Here's your mission log:
  1.[T][ ] read book
  2.[D][X] return book (by: Dec 02 2019)
 ____________________________________________________________
 ____________________________________________________________
- Bye. Hope to see you again soon!
+ Returning to base. Until our next mission!
 ____________________________________________________________
 ```
 
@@ -825,51 +825,51 @@ ____________________________________________________________
 |  \| |/ _ \ \ / / _` |
 | |\  | (_) \ V / (_| |
 |_| \_|\___/ \_/ \__,_|
-Hello! I'm Nova.
-What can I do for you?
+Nova online! Your mission navigator is ready.
+What shall we launch today?
 ____________________________________________________________
 ____________________________________________________________
- Got it. I've added this task:
+ Mission logged and ready for launch:
    [T][ ] read book
- Now you have 1 tasks in the list.
+ You now have 1 mission in orbit.
 ____________________________________________________________
 ____________________________________________________________
- Got it. I've added this task:
+ Mission logged and ready for launch:
    [D][ ] return book (by: Jun 06 2019, 6:00 PM)
- Now you have 2 tasks in the list.
+ You now have 2 missions in orbit.
 ____________________________________________________________
 ____________________________________________________________
- Got it. I've added this task:
+ Mission logged and ready for launch:
    [E][ ] project meeting (from: Aug 06 2019, 2:00 PM to: Aug 06 2019, 4:00 PM)
- Now you have 3 tasks in the list.
+ You now have 3 missions in orbit.
 ____________________________________________________________
 ____________________________________________________________
- Nice! I've marked this task as done:
+ Mission accomplished! Stellar work:
    [D][X] return book (by: Jun 06 2019, 6:00 PM)
 ____________________________________________________________
 ____________________________________________________________
- Got it. I've updated this task:
+ Flight plan updated:
    Before: [T][ ] read book
    After:  [T][ ] read novel
 ____________________________________________________________
 ____________________________________________________________
- Got it. I've updated this task:
+ Flight plan updated:
    Before: [D][X] return book (by: Jun 06 2019, 6:00 PM)
    After:  [D][X] return book (by: Jun 07 2019)
 ____________________________________________________________
 ____________________________________________________________
- Got it. I've updated this task:
+ Flight plan updated:
    Before: [E][ ] project meeting (from: Aug 06 2019, 2:00 PM to: Aug 06 2019, 4:00 PM)
    After:  [E][ ] project meeting (from: Aug 06 2019, 2:00 PM to: Aug 06 2019, 5:00 PM)
 ____________________________________________________________
 ____________________________________________________________
- Here are the tasks in your list:
+ Here's your mission log:
  1.[T][ ] read novel
  2.[D][X] return book (by: Jun 07 2019)
  3.[E][ ] project meeting (from: Aug 06 2019, 2:00 PM to: Aug 06 2019, 5:00 PM)
 ____________________________________________________________
 ____________________________________________________________
- Bye. Hope to see you again soon!
+ Returning to base. Until our next mission!
 ____________________________________________________________
 ```
 
@@ -916,59 +916,59 @@ ____________________________________________________________
 |  \| |/ _ \ \ / / _` |
 | |\  | (_) \ V / (_| |
 |_| \_|\___/ \_/ \__,_|
-Hello! I'm Nova.
-What can I do for you?
+Nova online! Your mission navigator is ready.
+What shall we launch today?
 ____________________________________________________________
 ____________________________________________________________
- Got it. I've added this task:
+ Mission logged and ready for launch:
    [T][ ] read book
- Now you have 1 tasks in the list.
+ You now have 1 mission in orbit.
 ____________________________________________________________
 ____________________________________________________________
- Got it. I've added this task:
+ Mission logged and ready for launch:
    [D][ ] return book (by: Jun 06 2019)
- Now you have 2 tasks in the list.
+ You now have 2 missions in orbit.
 ____________________________________________________________
 ____________________________________________________________
- Got it. I've added this task:
+ Mission logged and ready for launch:
    [E][ ] meeting (from: Aug 06 2019, 2:00 PM to: Aug 06 2019, 4:00 PM)
- Now you have 3 tasks in the list.
+ You now have 3 missions in orbit.
 ____________________________________________________________
 ____________________________________________________________
- OOPS!!! Tell me which task to edit. Try: edit <task number> <field> <new value>.
+ NAVIGATION ALERT: Tell me which task to edit. Try: edit <task number> <field> <new value>.
 ____________________________________________________________
 ____________________________________________________________
- OOPS!!! The task number after edit must be a whole number, for example: edit 1.
+ NAVIGATION ALERT: The task number after edit must be a whole number, for example: edit 1.
 ____________________________________________________________
 ____________________________________________________________
- OOPS!!! Tell me which field to edit in task 1. Use /description, /by, /from, or /to.
+ NAVIGATION ALERT: Tell me which field to edit in task 1. Use /description, /by, /from, or /to.
 ____________________________________________________________
 ____________________________________________________________
- OOPS!!! Task 4 does not exist. Choose a number from 1 to 3.
+ NAVIGATION ALERT: Task 4 does not exist. Choose a number from 1 to 3.
 ____________________________________________________________
 ____________________________________________________________
- OOPS!!! A todo can only edit /description.
+ NAVIGATION ALERT: A todo can only edit /description.
 ____________________________________________________________
 ____________________________________________________________
- OOPS!!! A deadline can only edit /description or /by.
+ NAVIGATION ALERT: A deadline can only edit /description or /by.
 ____________________________________________________________
 ____________________________________________________________
- OOPS!!! An event's /to date/time cannot be before its /from date/time.
+ NAVIGATION ALERT: An event's /to date/time cannot be before its /from date/time.
 ____________________________________________________________
 ____________________________________________________________
- OOPS!!! The /to time must be a real time in HHmm format, for example: 1700.
+ NAVIGATION ALERT: The /to time must be a real time in HHmm format, for example: 1700.
 ____________________________________________________________
 ____________________________________________________________
- OOPS!!! Edit one field at a time. Use a separate edit command for each field.
+ NAVIGATION ALERT: Edit one field at a time. Use a separate edit command for each field.
 ____________________________________________________________
 ____________________________________________________________
- Here are the tasks in your list:
+ Here's your mission log:
  1.[T][ ] read book
  2.[D][ ] return book (by: Jun 06 2019)
  3.[E][ ] meeting (from: Aug 06 2019, 2:00 PM to: Aug 06 2019, 4:00 PM)
 ____________________________________________________________
 ____________________________________________________________
- Bye. Hope to see you again soon!
+ Returning to base. Until our next mission!
 ____________________________________________________________
 ```
 
@@ -1002,47 +1002,47 @@ ____________________________________________________________
 |  \| |/ _ \ \ / / _` |
 | |\  | (_) \ V / (_| |
 |_| \_|\___/ \_/ \__,_|
-Hello! I'm Nova.
-What can I do for you?
+Nova online! Your mission navigator is ready.
+What shall we launch today?
 ____________________________________________________________
 ____________________________________________________________
- Got it. I've added this task:
+ Mission logged and ready for launch:
    [D][ ] return book (by: Dec 02 2019, 6:00 PM)
- Now you have 1 tasks in the list.
+ You now have 1 mission in orbit.
 ____________________________________________________________
 ____________________________________________________________
- Got it. I've added this task:
+ Mission logged and ready for launch:
    [E][ ] conference (from: Dec 01 2019 to: Dec 03 2019)
- Now you have 2 tasks in the list.
+ You now have 2 missions in orbit.
 ____________________________________________________________
 ____________________________________________________________
- Got it. I've added this task:
+ Mission logged and ready for launch:
    [T][ ] undated
- Now you have 3 tasks in the list.
+ You now have 3 missions in orbit.
 ____________________________________________________________
 ____________________________________________________________
- Here are the tasks occurring on Dec 02 2019:
+ Missions scheduled for Dec 02 2019:
  1.[D][ ] return book (by: Dec 02 2019, 6:00 PM)
  2.[E][ ] conference (from: Dec 01 2019 to: Dec 03 2019)
 ____________________________________________________________
 ____________________________________________________________
- Here are the tasks occurring on Dec 04 2019:
- No deadlines or events occur on this date.
+ Missions scheduled for Dec 04 2019:
+ No timed missions are in orbit for this date.
 ____________________________________________________________
 ____________________________________________________________
- OOPS!!! The /by date/time must be a real date in yyyy-MM-dd or d/M/yyyy format, optionally followed by HHmm, for example: 2019-12-02 1800.
+ NAVIGATION ALERT: The /by date/time must be a real date in yyyy-MM-dd or d/M/yyyy format, optionally followed by HHmm, for example: 2019-12-02 1800.
 ____________________________________________________________
 ____________________________________________________________
- OOPS!!! An event's /to date/time cannot be before its /from date/time.
+ NAVIGATION ALERT: An event's /to date/time cannot be before its /from date/time.
 ____________________________________________________________
 ____________________________________________________________
- OOPS!!! Tell me which date to search. Try: on 2019-12-02.
+ NAVIGATION ALERT: Tell me which date to search. Try: on 2019-12-02.
 ____________________________________________________________
 ____________________________________________________________
- OOPS!!! The date after on must be a real date in yyyy-MM-dd or d/M/yyyy format, for example: on 2019-12-02.
+ NAVIGATION ALERT: The date after on must be a real date in yyyy-MM-dd or d/M/yyyy format, for example: on 2019-12-02.
 ____________________________________________________________
 ____________________________________________________________
- Bye. Hope to see you again soon!
+ Returning to base. Until our next mission!
 ____________________________________________________________
 ```
 
@@ -1076,45 +1076,45 @@ ____________________________________________________________
 |  \| |/ _ \ \ / / _` |
 | |\  | (_) \ V / (_| |
 |_| \_|\___/ \_/ \__,_|
-Hello! I'm Nova.
-What can I do for you?
+Nova online! Your mission navigator is ready.
+What shall we launch today?
 ____________________________________________________________
 ____________________________________________________________
- Got it. I've added this task:
+ Mission logged and ready for launch:
    [T][ ] read book
- Now you have 1 tasks in the list.
+ You now have 1 mission in orbit.
 ____________________________________________________________
 ____________________________________________________________
- Got it. I've added this task:
+ Mission logged and ready for launch:
    [D][ ] return BOOK (by: Jun 06 2019)
- Now you have 2 tasks in the list.
+ You now have 2 missions in orbit.
 ____________________________________________________________
 ____________________________________________________________
- Got it. I've added this task:
+ Mission logged and ready for launch:
    [E][ ] project meeting (from: Aug 06 2019, 2:00 PM to: Aug 06 2019, 4:00 PM)
- Now you have 3 tasks in the list.
+ You now have 3 missions in orbit.
 ____________________________________________________________
 ____________________________________________________________
- Nice! I've marked this task as done:
+ Mission accomplished! Stellar work:
    [T][X] read book
 ____________________________________________________________
 ____________________________________________________________
- Nice! I've marked this task as done:
+ Mission accomplished! Stellar work:
    [D][X] return BOOK (by: Jun 06 2019)
 ____________________________________________________________
 ____________________________________________________________
- Here are the matching tasks in your list:
+ Scan complete. Here are the matching missions:
  1.[T][X] read book
  2.[D][X] return BOOK (by: Jun 06 2019)
 ____________________________________________________________
 ____________________________________________________________
- Here are the matching tasks in your list:
- No matching tasks found.
+ Scan complete. Here are the matching missions:
+ No matching missions detected.
 ____________________________________________________________
 ____________________________________________________________
- OOPS!!! Tell me what to find. Try: find <keyword>.
+ NAVIGATION ALERT: Tell me what to find. Try: find <keyword>.
 ____________________________________________________________
 ____________________________________________________________
- Bye. Hope to see you again soon!
+ Returning to base. Until our next mission!
 ____________________________________________________________
 ```
