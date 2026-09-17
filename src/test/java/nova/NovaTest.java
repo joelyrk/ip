@@ -32,11 +32,13 @@ public class NovaTest {
                 " Now you have 1 tasks in the list.");
         assertEquals(expectedAddMessage, addResponse.message());
         assertFalse(addResponse.isExit());
+        assertFalse(addResponse.isError());
         String expectedListMessage = String.join(System.lineSeparator(),
                 "Here are the tasks in your list:",
                 " 1.[T][ ] read book");
         assertEquals(expectedListMessage, listResponse.message());
         assertFalse(listResponse.isExit());
+        assertFalse(listResponse.isError());
     }
 
     @Test
@@ -69,6 +71,7 @@ public class NovaTest {
         assertEquals("OOPS!!! I don't recognize that command. Start with todo, deadline, event, find, on, "
                 + "list, mark, unmark, delete, edit, or bye.", response.message());
         assertFalse(response.isExit());
+        assertTrue(response.isError());
     }
 
     @Test
@@ -79,6 +82,7 @@ public class NovaTest {
 
         assertEquals("Bye. Hope to see you again soon!", response.message());
         assertTrue(response.isExit());
+        assertFalse(response.isError());
     }
 
     @Test

@@ -33,24 +33,39 @@
     -fx-spacing: 10;
 }
 
-.user-dialog,
-.nova-dialog {
+.user-command,
+.nova-dialog,
+.error-dialog {
     -fx-font-size: 14px;
     -fx-line-spacing: 3px;
-    -fx-padding: 11 14 11 14;
-    -fx-background-radius: 15;
 }
 
-.user-dialog {
-    -fx-background-color: #4f46e5;
-    -fx-text-fill: white;
+.user-command {
+    -fx-background-color: #e0e7ff;
+    -fx-background-radius: 7;
+    -fx-font-family: "SFMono-Regular", "Consolas", monospace;
+    -fx-padding: 7 11 7 11;
+    -fx-text-fill: #3730a3;
 }
 
 .nova-dialog {
     -fx-background-color: white;
     -fx-border-color: #dbe2ea;
     -fx-border-radius: 15;
+    -fx-background-radius: 15;
+    -fx-padding: 11 14 11 14;
     -fx-text-fill: #1f2937;
+}
+
+.error-dialog {
+    -fx-background-color: #fef2f2;
+    -fx-background-radius: 10;
+    -fx-border-color: #fca5a5;
+    -fx-border-radius: 10;
+    -fx-border-width: 1.5;
+    -fx-font-weight: bold;
+    -fx-padding: 11 14 11 14;
+    -fx-text-fill: #991b1b;
 }
 
 .avatar {
@@ -65,12 +80,12 @@
     -fx-text-fill: white;
 }
 
-.user-avatar {
-    -fx-background-color: #111827;
-}
-
 .nova-avatar {
     -fx-background-color: #10b981;
+}
+
+.error-avatar {
+    -fx-background-color: #dc2626;
 }
 
 .input-bar {

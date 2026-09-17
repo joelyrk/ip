@@ -63,7 +63,9 @@ public class MainWindow extends AnchorPane {
 
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input),
-                DialogBox.getNovaDialog(response.message()));
+                response.isError()
+                        ? DialogBox.getErrorDialog(response.message())
+                        : DialogBox.getNovaDialog(response.message()));
         userInput.clear();
 
         if (response.isExit()) {
