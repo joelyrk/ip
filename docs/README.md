@@ -1,65 +1,186 @@
 # Nova User Guide
 
-// Update the title above to match the actual product name
+Nova is a cheerful, space-themed task manager that helps you track todos, deadlines, and events
+through simple typed commands.
 
-// Product screenshot goes here
+![Nova's graphical interface](Ui.png)
 
-// Product intro goes here
+## Quick start
 
-## Editing task details
+1. Ensure that Java 25 is installed.
+2. Place `nova.jar` in the folder where you want Nova to keep its data.
+3. Open a terminal in that folder and run:
 
-Use `edit` to change one detail of an existing task while preserving its type, completion status,
-list position, and all other details.
+   ```shell
+   java -jar nova.jar
+   ```
 
-```text
-edit <task number> <field> <new value>
-```
+4. Type a command in the box at the bottom of the window, then press **Enter** or click
+   **LAUNCH**.
 
-The supported fields depend on the task type:
-
-- Todos: `/description`
-- Deadlines: `/description` and `/by`
-- Events: `/description`, `/from`, and `/to`
-
-For example, this changes only the end time of task 3. A four-digit time retains the endpoint's
-existing date:
+Try these commands to get started:
 
 ```text
-edit 3 /to 1700
+todo Read the project requirements
+deadline Submit user guide /by 2026-09-18 1800
+event Team meeting /from 2026-09-19 1400 /to 2026-09-19 1530
+list
 ```
 
-Nova shows the task before and after the edit:
+Nova saves changes automatically, so there is no save command.
 
-```text
-Flight plan updated:
-  Before: [E][ ] project meeting (from: Aug 06 2019, 2:00 PM to: Aug 06 2019, 4:00 PM)
-  After:  [E][ ] project meeting (from: Aug 06 2019, 2:00 PM to: Aug 06 2019, 5:00 PM)
-```
+## Understanding commands
 
-You can also supply a complete date or date-time in the formats accepted when adding tasks. A
-date without a time changes the field to a date-only value. Edit one field per command. Nova
-rejects fields that do not belong to the selected task type and event ranges whose end would be
-before their start.
+- Words in `UPPER_CASE` are values you supply. For example, replace `DESCRIPTION` with
+  `Read the project requirements`.
+- `TASK_NUMBER` is the number shown beside a task by `list`, `find`, or `on`.
+- Dates can use `yyyy-MM-dd` or `d/M/yyyy`, such as `2026-09-18` or `18/9/2026`.
+- Add an optional four-digit, 24-hour time (`HHmm`) after a date, such as `2026-09-18 1800`.
+- Task descriptions may contain spaces.
 
-## Adding deadlines
+The symbols in the task list show each task's type and status:
 
-// Describe the action and its outcome.
+| Symbol | Meaning |
+|---|---|
+| `[T]` | Todo |
+| `[D]` | Deadline |
+| `[E]` | Event |
+| `[ ]` | Not completed |
+| `[X]` | Completed |
 
-// Give examples of usage
+## Features
 
-Example: `keyword (optional arguments)`
+### Adding a todo: `todo`
 
-// A description of the expected outcome goes here
+Adds a task without a date or time.
 
-```
-expected output
-```
+Format: `todo DESCRIPTION`
 
-## Feature ABC
+Example: `todo Review pull request feedback`
 
-// Feature details
+### Adding a deadline: `deadline`
 
+Adds a task that must be completed by a particular date or date-time.
 
-## Feature XYZ
+Format: `deadline DESCRIPTION /by DATE_OR_DATETIME`
 
-// Feature details
+Examples:
+
+- `deadline Submit user guide /by 2026-09-18`
+- `deadline Submit user guide /by 18/9/2026 1800`
+
+### Adding an event: `event`
+
+Adds an activity with a start and end. The end cannot be earlier than the start.
+
+Format: `event DESCRIPTION /from START /to END`
+
+Examples:
+
+- `event Orientation week /from 21/9/2026 /to 25/9/2026`
+- `event Project meeting /from 2026-09-19 1400 /to 2026-09-19 1530`
+
+### Viewing all tasks: `list`
+
+Shows every task in its current order. Use the displayed numbers with commands such as `mark`,
+`edit`, and `delete`.
+
+Format: `list`
+
+### Finding tasks by description: `find`
+
+Shows tasks whose descriptions contain the given text. Matching is case-insensitive, and results
+retain their numbers from the full task list.
+
+Format: `find KEYWORD`
+
+Example: `find project`
+
+### Finding tasks by date: `on`
+
+Shows deadlines due on a date and events occurring on that date. A multi-day event matches every
+date from its start through its end. Todos are not included because they have no date.
+
+Format: `on DATE`
+
+Example: `on 2026-09-19`
+
+### Marking a task as completed: `mark`
+
+Changes the selected task's status from `[ ]` to `[X]`.
+
+Format: `mark TASK_NUMBER`
+
+Example: `mark 2`
+
+### Reopening a task: `unmark`
+
+Changes the selected task's status from `[X]` to `[ ]`.
+
+Format: `unmark TASK_NUMBER`
+
+Example: `unmark 2`
+
+### Editing task details: `edit`
+
+Changes one field while preserving the task's type, completion status, list position, and other
+details.
+
+Format: `edit TASK_NUMBER FIELD NEW_VALUE`
+
+Supported fields:
+
+| Task type | Fields |
+|---|---|
+| Todo | `/description` |
+| Deadline | `/description`, `/by` |
+| Event | `/description`, `/from`, `/to` |
+
+Examples:
+
+- `edit 1 /description Review final pull request`
+- `edit 2 /by 2026-09-18 2000`
+- `edit 3 /to 1700`
+
+When editing `/by`, `/from`, or `/to`, you may provide a complete date or date-time. You may also
+provide only an `HHmm` time, as in the last example, to retain that field's existing date. Edit one
+field per command; an edited event must still end at or after its start.
+
+### Deleting a task: `delete`
+
+Permanently removes the selected task. Remaining tasks are renumbered.
+
+Format: `delete TASK_NUMBER`
+
+Example: `delete 3`
+
+### Exiting Nova: `bye`
+
+Displays a farewell message and closes Nova.
+
+Format: `bye`
+
+## Saving data
+
+Nova automatically saves after every command that changes your tasks. Saved tasks are loaded the
+next time Nova starts.
+
+Data is stored in `data/nova.txt`, relative to the folder from which Nova is run. Keep this file if
+you move Nova to another computer. Avoid editing it manually unless you have made a backup, as
+invalid data may prevent Nova from loading the saved tasks.
+
+## Command summary
+
+| Action | Command | Example |
+|---|---|---|
+| Add a todo | `todo DESCRIPTION` | `todo Review feedback` |
+| Add a deadline | `deadline DESCRIPTION /by DATE_OR_DATETIME` | `deadline Submit report /by 2026-09-18 1800` |
+| Add an event | `event DESCRIPTION /from START /to END` | `event Team sync /from 2026-09-19 1400 /to 2026-09-19 1530` |
+| List tasks | `list` | `list` |
+| Find by description | `find KEYWORD` | `find report` |
+| Find by date | `on DATE` | `on 2026-09-19` |
+| Complete a task | `mark TASK_NUMBER` | `mark 2` |
+| Reopen a task | `unmark TASK_NUMBER` | `unmark 2` |
+| Edit one field | `edit TASK_NUMBER FIELD NEW_VALUE` | `edit 2 /by 2026-09-20` |
+| Delete a task | `delete TASK_NUMBER` | `delete 3` |
+| Exit | `bye` | `bye` |
