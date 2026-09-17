@@ -21,22 +21,19 @@ checkstyle {
 dependencies {
     String jUnitVersion = '5.14.4'
     String javaFxVersion = '17.0.7'
-    String operatingSystem = System.getProperty('os.name').toLowerCase()
-    String architecture = System.getProperty('os.arch').toLowerCase()
-    String javaFxPlatform
 
-    if (operatingSystem.contains('win')) {
-        javaFxPlatform = 'win'
-    } else if (operatingSystem.contains('mac')) {
-        javaFxPlatform = architecture.contains('aarch64') ? 'mac-aarch64' : 'mac'
-    } else {
-        javaFxPlatform = architecture.contains('aarch64') ? 'linux-aarch64' : 'linux'
-    }
-
-    implementation("org.openjfx:javafx-base:${javaFxVersion}:${javaFxPlatform}")
-    implementation("org.openjfx:javafx-controls:${javaFxVersion}:${javaFxPlatform}")
-    implementation("org.openjfx:javafx-fxml:${javaFxVersion}:${javaFxPlatform}")
-    implementation("org.openjfx:javafx-graphics:${javaFxVersion}:${javaFxPlatform}")
+    implementation("org.openjfx:javafx-base:${javaFxVersion}:win")
+    implementation("org.openjfx:javafx-base:${javaFxVersion}:mac")
+    implementation("org.openjfx:javafx-base:${javaFxVersion}:linux")
+    implementation("org.openjfx:javafx-controls:${javaFxVersion}:win")
+    implementation("org.openjfx:javafx-controls:${javaFxVersion}:mac")
+    implementation("org.openjfx:javafx-controls:${javaFxVersion}:linux")
+    implementation("org.openjfx:javafx-fxml:${javaFxVersion}:win")
+    implementation("org.openjfx:javafx-fxml:${javaFxVersion}:mac")
+    implementation("org.openjfx:javafx-fxml:${javaFxVersion}:linux")
+    implementation("org.openjfx:javafx-graphics:${javaFxVersion}:win")
+    implementation("org.openjfx:javafx-graphics:${javaFxVersion}:mac")
+    implementation("org.openjfx:javafx-graphics:${javaFxVersion}:linux")
 
     testImplementation "org.junit.jupiter:junit-jupiter-api:${jUnitVersion}"
 
