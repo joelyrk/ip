@@ -9,7 +9,7 @@ import javafx.scene.layout.HBox;
  */
 public class DialogBox extends HBox {
     private static final double MAXIMUM_DIALOG_WIDTH = 340.0;
-    private static final String NOVA_INITIAL = "N";
+    private static final String NOVA_SYMBOL = "✦";
     private static final String ERROR_SYMBOL = "!";
 
     private DialogBox(String message, DialogType dialogType) {
@@ -29,7 +29,7 @@ public class DialogBox extends HBox {
         setAlignment(Pos.TOP_LEFT);
         dialog.getStyleClass().add(isError ? "error-dialog" : "nova-dialog");
 
-        Label avatar = new Label(isError ? ERROR_SYMBOL : NOVA_INITIAL);
+        Label avatar = new Label(isError ? ERROR_SYMBOL : NOVA_SYMBOL);
         avatar.getStyleClass().addAll("avatar", isError ? "error-avatar" : "nova-avatar");
         getChildren().addAll(avatar, dialog);
     }

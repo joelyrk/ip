@@ -119,7 +119,7 @@ public class EditCommandTest {
                 .execute(tasks, ui, createStorage());
 
         assertEquals(String.join(System.lineSeparator(),
-                " Got it. I've updated this task:",
+                " Flight plan updated:",
                 "   Before: [T][ ] read book",
                 "   After:  [T][ ] read book",
                 ""), outputBytes.toString(StandardCharsets.UTF_8));

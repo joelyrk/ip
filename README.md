@@ -1,6 +1,6 @@
 # Nova
 
-Nova is a chatbot with both a JavaFX graphical interface and a console interface.
+Nova is a cheerful space-themed mission navigator with both a JavaFX graphical interface and a console interface.
 
 ## Setting up in Intellij
 
@@ -23,10 +23,10 @@ Prerequisites: JDK 25, update Intellij to the most recent version.
    |  \| |/ _ \ \ / / _` |
    | |\  | (_) \ V / (_| |
    |_| \_|\___/ \_/ \__,_|
-   Hello! I'm Nova.
-   What can I do for you?
+   Nova online! Your mission navigator is ready.
+   What shall we launch today?
    ____________________________________________________________
-   Bye. Hope to see you again soon!
+   Returning to base. Until our next mission!
    ____________________________________________________________
    ```
 
