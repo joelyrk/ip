@@ -81,18 +81,20 @@ public class Nova {
     public Response getResponse(String fullCommand) {
         ByteArrayOutputStream responseBytes = new ByteArrayOutputStream();
         boolean isExit = false;
+        boolean isError = false;
 
         try (PrintStream responseOutput = new PrintStream(responseBytes, true, StandardCharsets.UTF_8)) {
             Ui responseUi = new Ui(responseOutput);
             try {
                 isExit = executeCommand(fullCommand.trim(), responseUi);
             } catch (NovaException e) {
+                isError = true;
                 responseUi.showError(e);
             }
         }
 
         String message = responseBytes.toString(StandardCharsets.UTF_8).strip();
-        return new Response(message, isExit);
+        return new Response(message, isExit, isError);
     }
 
     /**
@@ -136,7 +138,8 @@ public class Nova {
      *
      * @param message chatbot response to display.
      * @param isExit whether Nova should stop accepting commands.
+     * @param isError whether the command produced an error.
      */
-    public record Response(String message, boolean isExit) {
+    public record Response(String message, boolean isExit, boolean isError) {
     }
 }
